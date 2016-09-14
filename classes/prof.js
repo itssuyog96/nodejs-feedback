@@ -5,21 +5,21 @@
 var db=require('../db-config');
 var Professor=function (info) {
 
-    var data = {
+    this.data = {
         col_id: null,
         dept_id: null,
         prof_id: null,
         prof_name: null
     };
     this.set = function (info) {
-        for(var p in data){
-            if(data[p] !=='undefined'){
-                data[p]=info[p];
+        for(var p in this.data){
+            if(this.data[p] !=='undefined'){
+                this.data[p]=info[p];
             }
 
         }
-        console.log(data);
-        db.query('INSERT INTO professor SET ?',data, function(err, result) {
+        console.log(this.data);
+        db.query('INSERT INTO professor SET ?',this.data, function(err, result) {
 
             if (err) throw err;
             else{
@@ -47,24 +47,24 @@ var Professor=function (info) {
 
 
     this.getcol_id=function () {
-        return data.col_id;
+        return this.data.col_id;
 
     };
 
 
     this.getdept_id=function () {
-        return data.dept_id;
+        return this.data.dept_id;
 
     };
 
     this.getprof_id=function () {
-        return data.prof_id;
+        return this.data.prof_id;
     };
 
     this.getprof_name=function () {
-        return data.prof_name;
+        return this.data.prof_name;
 
-    }
+    };
 
 
 };//end of professor class
