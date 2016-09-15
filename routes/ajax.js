@@ -17,7 +17,7 @@ router.get('/load_colg', function(req, res, next) {
         else
         {
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.write(JSON.stringify(result));
+            res.write('{data:'+JSON.stringify(result)+'}');
             res.end();
         }
     });
@@ -35,7 +35,7 @@ router.get('/load_dept', function(req, res, next) {
         else
         {
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.write(JSON.stringify(result));
+            res.write('{data:'+JSON.stringify(result)+'}');
             res.end();
         }
     });
@@ -53,7 +53,7 @@ router.get('/load_prof', function(req, res, next) {
         else
         {
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.write(JSON.stringify(result));
+            res.write('{data:'+JSON.stringify(result)+'}');
             res.end();
         }
     });
@@ -70,7 +70,7 @@ router.get('/load_sub', function(req, res, next) {
         else
         {
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.write(JSON.stringify(result));
+            res.write('{data:'+JSON.stringify(result)+'}');
             res.end();
         }
     });
