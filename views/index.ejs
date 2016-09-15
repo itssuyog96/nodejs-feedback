@@ -9,17 +9,4 @@
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
   </body>
-
-  <script type="text/javascript">
-    $(document).ready(function () {
-      $.ajax({
-        url:'/select',
-        method:'GET',
-        success:function (data) {
-          console.log(data);
-        }
-      });
-
-    });
-  </script>
 </html>
