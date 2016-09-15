@@ -9,6 +9,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var blank = require('./routes/blank');
 var admin = require('./routes/admin');
+var ajax=require('./routes/ajax');
 
 var app = express();
 
@@ -31,16 +32,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/blank', blank);
 app.use('/admin', admin);
-app.get('/select', function(req, res, next) {
-
-  var data={
-    colg_id:123,
-    clog_name:'Aditya'
-  };
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.write(data);
-  res.end();
-});
+app.use('/ajax',ajax);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
