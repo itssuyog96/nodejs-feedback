@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<% include tpl/header.ejs %>
+
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
+<!-- BEGIN HEADER -->
+<div class="page-header navbar navbar-fixed-top">
+    <!-- BEGIN HEADER INNER -->
+    <div class="page-header-inner ">
+
+        <% include tpl/logo.ejs %>
+
+        <% include tpl/menu.ejs %>
+
+        <!-- BEGIN CONTAINER -->
+        <div class="page-container">
+            <!-- BEGIN SIDEBAR -->
+            <div class="page-sidebar-wrapper">
+                <!-- END SIDEBAR -->
+                <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+                <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+                <div class="page-sidebar navbar-collapse collapse">
+                    <!-- BEGIN SIDEBAR MENU -->
+                    <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+                    <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+                    <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+                    <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+                    <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+                    <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+                    <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+                        <li class="nav-item start ">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-home"></i>
+                                <span class="title">Dashboard</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item start ">
+                                    <a href="index.html" class="nav-link ">
+                                        <i class="icon-bar-chart"></i>
+                                        <span class="title">Dashboard 1</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start ">
+                                    <a href="dashboard_2.html" class="nav-link ">
+                                        <i class="icon-bulb"></i>
+                                        <span class="title">Dashboard 2</span>
+                                        <span class="badge badge-success">1</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start ">
+                                    <a href="dashboard_3.html" class="nav-link ">
+                                        <i class="icon-graph"></i>
+                                        <span class="title">Dashboard 3</span>
+                                        <span class="badge badge-danger">5</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- END SIDEBAR MENU -->
+                </div>
+                <!-- END SIDEBAR -->
+            </div>
+            <!-- END SIDEBAR -->
+            <!-- BEGIN CONTENT -->
+            <div class="page-content-wrapper">
+                <!-- BEGIN CONTENT BODY -->
+                <div class="page-content">
+                    <!-- BEGIN PAGE HEADER-->
+                    <!-- BEGIN THEME PANEL -->
+                    <div class="theme-panel">
+                        <div class="toggler tooltips" data-container="body" data-placement="left" data-html="true" data-original-title="Click to open advance theme customizer panel">
+                            <i class="icon-settings"></i>
+                        </div>
+                        <div class="toggler-close">
+                            <i class="icon-close"></i>
+                        </div>
+                        <div class="theme-options">
+                            <div class="theme-option theme-colors clearfix">
+                                <span> THEME COLOR </span>
+                                <ul>
+                                    <li class="color-default current tooltips" data-style="default" data-container="body" data-original-title="Default"> </li>
+                                    <li class="color-grey tooltips" data-style="grey" data-container="body" data-original-title="Grey"> </li>
+                                    <li class="color-blue tooltips" data-style="blue" data-container="body" data-original-title="Blue"> </li>
+                                    <li class="color-dark tooltips" data-style="dark" data-container="body" data-original-title="Dark"> </li>
+                                    <li class="color-light tooltips" data-style="light" data-container="body" data-original-title="Light"> </li>
+                                </ul>
+                            </div>
+                            <div class="theme-option">
+                                <span> Theme Style </span>
+                                <select class="layout-style-option form-control input-small">
+                                    <option value="square" selected="selected">Square corners</option>
+                                    <option value="rounded">Rounded corners</option>
+                                </select>
+                            </div>
+                            <div class="theme-option">
+                                <span> Layout </span>
+                                <select class="layout-option form-control input-small">
+                                    <option value="fluid" selected="selected">Fluid</option>
+                                    <option value="boxed">Boxed</option>
+                                </select>
+                            </div>
+                            <div class="theme-option">
+                                <span> Header </span>
+                                <select class="page-header-option form-control input-small">
+                                    <option value="fixed" selected="selected">Fixed</option>
+                                    <option value="default">Default</option>
+                                </select>
+                            </div>
+                            <div class="theme-option">
+                                <span> Top Dropdown</span>
+                                <select class="page-header-top-dropdown-style-option form-control input-small">
+                                    <option value="light" selected="selected">Light</option>
+                                    <option value="dark">Dark</option>
+                                </select>
+                            </div>
+                            <div class="theme-option">
+                                <span> Sidebar Mode</span>
+                                <select class="sidebar-option form-control input-small">
+                                    <option value="fixed">Fixed</option>
+                                    <option value="default" selected="selected">Default</option>
+                                </select>
+                            </div>
+                            <div class="theme-option">
+                                <span> Sidebar Style</span>
+                                <select class="sidebar-style-option form-control input-small">
+                                    <option value="default" selected="selected">Default</option>
+                                    <option value="compact">Compact</option>
+                                </select>
+                            </div>
+                            <div class="theme-option">
+                                <span> Sidebar Menu </span>
+                                <select class="sidebar-menu-option form-control input-small">
+                                    <option value="accordion" selected="selected">Accordion</option>
+                                    <option value="hover">Hover</option>
+                                </select>
+                            </div>
+                            <div class="theme-option">
+                                <span> Sidebar Position </span>
+                                <select class="sidebar-pos-option form-control input-small">
+                                    <option value="left" selected="selected">Left</option>
+                                    <option value="right">Right</option>
+                                </select>
+                            </div>
+                            <div class="theme-option">
+                                <span> Footer </span>
+                                <select class="page-footer-option form-control input-small">
+                                    <option value="fixed">Fixed</option>
+                                    <option value="default" selected="selected">Default</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END THEME PANEL -->
+                    <h3 class="page-title"> Blank Page Layout
+                        <small>blank page layout</small>
+                    </h3>
+                    <div class="page-bar">
+                        <ul class="page-breadcrumb">
+                            <li>
+                                <i class="icon-home"></i>
+                                <a href="index.html">Home</a>
+                                <i class="fa fa-angle-right"></i>
+                            </li>
+                            <li>
+                                <a href="#">Blank Page</a>
+                                <i class="fa fa-angle-right"></i>
+                            </li>
+                            <li>
+                                <span>Page Layouts</span>
+                            </li>
+                        </ul>
+                        <div class="page-toolbar">
+                            <div class="btn-group pull-right">
+                                <button type="button" class="btn btn-fit-height grey-salt dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true"> Actions
+                                    <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon-bell"></i> Action</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon-shield"></i> Another action</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon-user"></i> Something else here</a>
+                                    </li>
+                                    <li class="divider"> </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon-bag"></i> Separated link</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END PAGE HEADER-->
+                    <div class="note note-info">
+                        <p> A black page template with a minimal dependency assets to use as a base for any custom page you create </p>
+                    </div>
+                </div>
+                <!-- END CONTENT BODY -->
+            </div>
+            <!-- END CONTENT -->
+            <!-- BEGIN QUICK SIDEBAR -->
+            <a href="javascript:;" class="page-quick-sidebar-toggler">
+                <i class="icon-login"></i>
+            </a>
+            <div class="page-quick-sidebar-wrapper" data-close-on-body-click="false">
+                <div class="page-quick-sidebar">
+                    <div class="tab-content">
+                        <div class="tab-pane page-quick-sidebar-settings" id="quick_sidebar_tab_3">
+                            <div class="page-quick-sidebar-settings-list">
+                                <h3 class="list-heading">General Settings</h3>
+                                <ul class="list-items borderless">
+                                    <li> Enable Notifications
+                                        <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="success" data-on-text="ON" data-off-color="default" data-off-text="OFF"> </li>
+                                    <li> Allow Tracking
+                                        <input type="checkbox" class="make-switch" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF"> </li>
+                                    <li> Log Errors
+                                        <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="danger" data-on-text="ON" data-off-color="default" data-off-text="OFF"> </li>
+                                    <li> Auto Sumbit Issues
+                                        <input type="checkbox" class="make-switch" data-size="small" data-on-color="warning" data-on-text="ON" data-off-color="default" data-off-text="OFF"> </li>
+                                    <li> Enable SMS Alerts
+                                        <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="success" data-on-text="ON" data-off-color="default" data-off-text="OFF"> </li>
+                                </ul>
+                                <h3 class="list-heading">System Settings</h3>
+                                <ul class="list-items borderless">
+                                    <li> Security Level
+                                        <select class="form-control input-inline input-sm input-small">
+                                            <option value="1">Normal</option>
+                                            <option value="2" selected>Medium</option>
+                                            <option value="e">High</option>
+                                        </select>
+                                    </li>
+                                    <li> Failed Email Attempts
+                                        <input class="form-control input-inline input-sm input-small" value="5" /> </li>
+                                    <li> Secondary SMTP Port
+                                        <input class="form-control input-inline input-sm input-small" value="3560" /> </li>
+                                    <li> Notify On System Error
+                                        <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="danger" data-on-text="ON" data-off-color="default" data-off-text="OFF"> </li>
+                                    <li> Notify On SMTP Error
+                                        <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="warning" data-on-text="ON" data-off-color="default" data-off-text="OFF"> </li>
+                                </ul>
+                                <div class="inner-content">
+                                    <button class="btn btn-success">
+                                        <i class="icon-settings"></i> Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END QUICK SIDEBAR -->
+        </div>
+
+        <!-- END CONTAINER -->
+
+        <% include tpl/footer.ejs %>
+</body>
+
+</html>
