@@ -1,29 +1,33 @@
 {
   "college"   :{
 
-    "columns" : ["SR. NO.", "COLLEGE ID", "COLLEGE NAME"],
-    "name"    : "table-colg"
+      "columns"     : ["SR. NO.", "COLLEGE ID", "COLLEGE NAME", "OPTIONS"],
+      "name"        : "table_colg",
+      "column_data" : ["colg_id", "colg_name"]
 
   },
 
   "department":{
 
     "columns" : ["SR. NO.", "DEPARTMENT ID", "DEPARTMENT NAME"],
-    "name"    : "table-dept"
+    "name"    : "table_dept",
+    "column_data" : ["dept_id", "dept_name"]
 
   },
 
   "professor" :{
 
     "columns" : ["SR. NO.", "PROFESSOR ID", "PROFESSOR NAME"],
-    "name"    : "table-prof"
+    "name"    : "table_prof",
+    "column_data" : ["prof_id", "prof_name"]
 
   },
 
   "subject"   :{
 
-    "columns" : ["SR. NO.", "SUBJECT ID", "SUBJECT NAME"],
-    "name"    : "table-subj"
+    "columns" : ["SR. NO.", "SUBJECT ID", "SUBJECT NAME", "SEMESTER"],
+    "name"    : "table_subj",
+    "column_data" : ["subj_id", "subj_name"]
 
   }
 }

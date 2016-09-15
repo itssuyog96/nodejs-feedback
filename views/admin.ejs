@@ -128,13 +128,74 @@
     $(".div-<%= profs.name %>").css("display", "none");
     $(".div-<%= subj.name %>").css("display", "none");
 
-    $("#<%= col.name %>").DataTable({
+    function load_<%= col.name %>(){
+        var i = 1;
+        $("#<%= col.name %>").DataTable().destroy();
+        $("#<%= col.name %>").DataTable({
+            ajax : 'ajax/college_list',
+            columns : [
+                i++,
+                <% col.column_data.forEach(function(item){ %>
+                {data : <%= item %>},
+                <% }) %>
+                {data : function(data){
+                    var dept_btn = '<a class="btn blue btn-outline" href="javascript:load_<%= dept.name %>('+data.<%= col.column_data[0] %>+')" target="_blank">DEPARTMENTS</a>';
+                    var del_btn = '<a class="btn blue btn-outline" href="javascript:del_colg('+data.<%= col.column_data[0] %>+')" target="_blank">DELETE</a>';
 
-    });
+                    var btns = dept_btn+'&amp;&amp;'+del_btn;
 
-    $("#<%= dept.name %>").DataTable({
+                    return btns;
+                }}
+            ]
+        });
+    }
 
-    });
+    load_<%= col.name %>();
+
+
+    function load_<%= dept.name %>(id){
+        var i = 1;
+        $("#<%= dept.name %>").DataTable().destroy();
+        $("#<%= dept.name %>").DataTable({
+            ajax: {
+                url: 'ajax/dept_list',
+                data: id
+            },
+            columns : [
+                i++,
+                <% dept.column_data.forEach(function(item){ %>
+                {data : <%= item %>},
+                <% }) %>
+                {data : function(data){
+                    var profs_btn = '<a class="btn blue btn-outline" href="javascript:load_<%= profs.name %>('+data.<%= dept.column_data[0] %>+')" target="_blank">DEPARTMENTS</a>';
+                    var subj_btn = '<a class="btn blue btn-outline" href="javascript:load_<%= subj.name %>('+data.<%= dept.column_data[0] %>+')" target="_blank">DEPARTMENTS</a>';
+                    var del_btn = '<a class="btn blue btn-outline" href="javascript:del_dept('+data.<%= dept.column_data[0] %>+')" target="_blank">DELETE</a>';
+
+                    var btns = profs_btn+'&amp;&amp;'+subj_btn+'$amp;&amp;'+del_btn;
+
+                    return btns;
+                }}
+            ]
+
+        });
+    }
+
+    function del_colg(id){
+        $.ajax({
+            url : 'ajax/',
+            data : id,
+            success: function(data){
+                load_<%= col.name %>();
+                //toast the success message
+            },
+            error: function(data){
+                //toast the error out
+            }
+        });
+    }
+
+
+
 
     $("#<%= profs.name %>").DataTable({
 
