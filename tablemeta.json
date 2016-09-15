@@ -1,25 +1,29 @@
 {
   "college"   :{
 
-    "columns" : ["SR. NO.", "COLLEGE ID", "COLLEGE NAME"]
+    "columns" : ["SR. NO.", "COLLEGE ID", "COLLEGE NAME"],
+    "name"    : "table-colg"
 
   },
 
   "department":{
 
-    "columns" : ["SR. NO.", "DEPARTMENT ID", "DEPARTMENT NAME"]
+    "columns" : ["SR. NO.", "DEPARTMENT ID", "DEPARTMENT NAME"],
+    "name"    : "table-dept"
 
   },
 
   "professor" :{
 
-    "columns" : ["SR. NO.", "PROFESSOR ID", "PROFESSOR NAME"]
+    "columns" : ["SR. NO.", "PROFESSOR ID", "PROFESSOR NAME"],
+    "name"    : "table-prof"
 
   },
 
   "subject"   :{
 
-    "columns" : ["SR. NO.", "SUBJECT ID", "SUBJECT NAME"]
+    "columns" : ["SR. NO.", "SUBJECT ID", "SUBJECT NAME"],
+    "name"    : "table-subj"
 
   }
 }
