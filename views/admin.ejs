@@ -43,13 +43,63 @@
                 <h3>Data Entry Hub</h3>
                 <p> All types of entries are done here. </p>
                 <p> Start from selecting department in college table.
-                    <a class="btn red btn-outline" href="http://datatables.net/" target="_blank">the official documentation</a>
+                    <a class="btn red btn-outline" href="#" target="_blank">for admins to enter college</a>
                 </p>
             </div>
 
             <div class="row">
                 <div class="col-md-12">
+                    <table>
+                        <thead>
+                            <tr>
+                                <% col.columns.forEach(function (items) { %>
+                                    <th><%= items %></th>
+                                <% }); %>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
 
+            <div class="row">
+                <div class="col-md-12">
+                    <table>
+                        <thead>
+                        <tr>
+                            <% dept.columns.forEach(function (items) { %>
+                            <th><%= items %></th>
+                            <% }); %>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <table>
+                        <thead>
+                        <tr>
+                            <% profs.columns.forEach(function (items) { %>
+                            <th><%= items %></th>
+                            <% }); %>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <table>
+                        <thead>
+                        <tr>
+                            <% subj.columns.forEach(function (items) { %>
+                            <th><%= items %></th>
+                            <% }); %>
+                        </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
 

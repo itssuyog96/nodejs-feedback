@@ -1,17 +1,25 @@
 {
   "college"   :{
 
+    "columns" : ["SR. NO.", "COLLEGE ID", "COLLEGE NAME"]
+
   },
 
   "department":{
+
+    "columns" : ["SR. NO.", "DEPARTMENT ID", "DEPARTMENT NAME"]
 
   },
 
   "professor" :{
 
+    "columns" : ["SR. NO.", "PROFESSOR ID", "PROFESSOR NAME"]
+
   },
 
   "subject"   :{
+
+    "columns" : ["SR. NO.", "SUBJECT ID", "SUBJECT NAME"]
 
   }
 }
