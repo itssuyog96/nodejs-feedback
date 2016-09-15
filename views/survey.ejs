@@ -37,14 +37,10 @@
 
 
             <!--START EDITING FROM HERE-->
-
-            <div class="note note-info">
-                <p> A black page template with a minimal dependency assets to use as a base for any custom page you create </p>
-            </div>
             <div class="portlet box blue">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="fa fa-gift"></i>FEEDBACK </div>
+                        <i class="fa fa-gift"></i>FEEDBACK</div>
                     <div class="tools">
                         <a href="javascript:;" class="collapse"> </a>
                         <a href="#portlet-config" data-toggle="modal" class="config"> </a>
@@ -53,11 +49,14 @@
                 <div class="portlet-body">
                     <div class="tabbable-custom nav-justified">
                             <ul class="nav nav-tabs nav-justified">
-                                <li class="active"><a href="#tab-first" data-toggle="tab">SUB I</a></li>
-                                <li><a href="#tab-second" data-toggle="tab">SUB II</a></li>
-                                <li><a href="#tab-third" data-toggle="tab">SUB III</a></li>
-                                <li><a href="#tab-fourth" data-toggle="tab">SUB IV</a></li>
-                                <li><a href="#tab-fifth" data-toggle="tab">SUB V</a></li>
+                                <% var i = 0;
+                                  subject.forEach(function(item){ %>
+                                <li <% if(i == 0) { %>
+                                        class = "active"
+                                        <% } %> ><a href="#tab-<%= item %>" data-toggle="tab"><%= item %></a></li>
+                                <% i++ %>
+                                <% }) %>
+
                             </ul>
                             <div class="panel-body tab-content">
                                 <div class="tab-pane active" id="tab-first">
