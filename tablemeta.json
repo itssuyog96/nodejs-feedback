@@ -3,7 +3,7 @@
 
       "columns"     : ["SR. NO.", "COLLEGE ID", "COLLEGE NAME", "OPTIONS"],
       "name"        : "table_colg",
-      "column_data" : ["colg_id", "colg_name"]
+      "column_data" : ["col_id", "col_name"]
 
   },
 
@@ -27,7 +27,7 @@
 
     "columns" : ["SR. NO.", "SUBJECT ID", "SUBJECT NAME", "SEMESTER"],
     "name"    : "table_subj",
-    "column_data" : ["subj_id", "subj_name"]
+    "column_data" : ["subj_id", "subj_name", "sem"]
 
   }
 }
