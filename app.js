@@ -14,6 +14,7 @@ var survey = require('./routes/survey');
 var subadd = require('./routes/subadd');
 var tablesurvey = require('./routes/tablesurvey');
 var profentry = require('./routes/projentry');
+var settings = require('./routes/settings');
 
 var app = express();
 
@@ -41,6 +42,7 @@ app.use('/survey', survey);
 app.use('/subadd', subadd);
 app.use('/tablesurvey',tablesurvey);
 app.use('/profentry',profentry);
+app.use('/settings',settings);
 
 
 // catch 404 and forward to error handler
