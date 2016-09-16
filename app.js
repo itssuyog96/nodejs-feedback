@@ -12,6 +12,7 @@ var admin = require('./routes/admin');
 var ajax = require('./routes/ajax');
 var survey = require('./routes/survey');
 var subadd = require('./routes/subadd');
+var tablesurvey = require('./routes/tablesurvey');
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.use('/admin', admin);
 app.use('/ajax',ajax);
 app.use('/survey', survey);
 app.use('/subadd', subadd);
+app.use('/tablesurvey',tablesurvey);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
