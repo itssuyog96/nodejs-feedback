@@ -276,7 +276,7 @@ router.post('/add_col', function (req, res, next) {
     try{
         col = new College();
 
-        col.set(info);
+        col.set(req.body);
     }catch (e){
         res.writeHead(500, {'Content-Type': 'text/html'});
         res.write('Error in database!' + e);
@@ -284,7 +284,7 @@ router.post('/add_col', function (req, res, next) {
     }
 
     res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write('College added');
+    res.write('College added!');
     res.end();
 
 });
