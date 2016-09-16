@@ -6,6 +6,10 @@ var db = require('../db-config');
 var express = require('express');
 var router = express.Router();
 var Professor = require('../classes/prof');
+var Subject = require('../classes/subject');
+var Department = require('../classes/dept');
+var College = require('../classes/college');
+var info = require('../tablemeta.json');
 
 
 /* GET home page. */
@@ -91,5 +95,198 @@ router.post('/del_prof', function (req, res, next) {
 
 });
 
+router.post('/update_prof', function (req, res, next) {
+
+    try {
+        prof = new Professor();
+
+        prof.update(req.body.id, req.body.name);
+    }catch (e){
+        res.writeHead(500, {'Content-Type': 'text/html'});
+        res.write('Error in database!' + e);
+        res.end();
+    }
+
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('Professor updated');
+    res.end();
+});
+
+router.post('/add_prof', function (req, res, next) {
+
+    try{
+        prof = new Professor();
+
+        prof.set(info.professor);
+    }catch (e){
+        res.writeHead(500, {'Content-Type': 'text/html'});
+        res.write('Error in database!' + e);
+        res.end();
+    }
+
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('Professor added');
+    res.end();
+
+});
+
+router.post('/del_subject', function (req, res, next) {
+
+    try {
+        sub = new Subject();
+
+        sub.delete(req.body.id);
+    }catch (e){
+        res.writeHead(500, {'Content-Type': 'text/html'});
+        res.write('Error in database!' + e);
+        res.end();
+    }
+
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('Subject deleted');
+    res.end();
+
+});
+
+router.post('/update_sub', function (req, res, next) {
+
+    try {
+        sub = new Subject();
+
+        sub.update(req.body.id, req.body.name);
+    }catch (e){
+        res.writeHead(500, {'Content-Type': 'text/html'});
+        res.write('Error in database!' + e);
+        res.end();
+    }
+
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('Subject updated');
+    res.end();
+});
+
+router.post('/add_subject', function (req, res, next) {
+
+    try{
+        sub = new Subject();
+
+        sub.set(info.subject);
+    }catch (e){
+        res.writeHead(500, {'Content-Type': 'text/html'});
+        res.write('Error in database!' + e);
+        res.end();
+    }
+
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('Subject added');
+    res.end();
+
+});
+
+router.post('/del_dept', function (req, res, next) {
+
+    try {
+        dept = new Department();
+
+        dept.delete(req.body.id);
+    }catch (e){
+        res.writeHead(500, {'Content-Type': 'text/html'});
+        res.write('Error in database!' + e);
+        res.end();
+    }
+
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('Department deleted');
+    res.end();
+
+});
+
+router.post('/update_dept', function (req, res, next) {
+
+    try {
+        dept = new Department();
+
+        dept.update(req.body.id, req.body.name);
+    }catch (e){
+        res.writeHead(500, {'Content-Type': 'text/html'});
+        res.write('Error in database!' + e);
+        res.end();
+    }
+
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('Department updated');
+    res.end();
+});
+
+router.post('/add_dept', function (req, res, next) {
+
+    try{
+        dept = new Department();
+
+        dept.set(info);
+    }catch (e){
+        res.writeHead(500, {'Content-Type': 'text/html'});
+        res.write('Error in database!' + e);
+        res.end();
+    }
+
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('Subject added');
+    res.end();
+
+});
+
+router.post('/del_col', function (req, res, next) {
+
+    try {
+        col = new College();
+
+        col.delete(req.body.id);
+    }catch (e){
+        res.writeHead(500, {'Content-Type': 'text/html'});
+        res.write('Error in database!' + e);
+        res.end();
+    }
+
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('College deleted');
+    res.end();
+
+});
+
+router.post('/update_col', function (req, res, next) {
+
+    try {
+        col = new College();
+
+        col.update(req.body.id, req.body.name);
+    }catch (e){
+        res.writeHead(500, {'Content-Type': 'text/html'});
+        res.write('Error in database!' + e);
+        res.end();
+    }
+
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('College updated');
+    res.end();
+});
+
+router.post('/add_col', function (req, res, next) {
+
+    try{
+        col = new College();
+
+        col.set(info);
+    }catch (e){
+        res.writeHead(500, {'Content-Type': 'text/html'});
+        res.write('Error in database!' + e);
+        res.end();
+    }
+
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('College added');
+    res.end();
+
+});
 
 module.exports = router;

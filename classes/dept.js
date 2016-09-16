@@ -1,15 +1,14 @@
 /**
- * Created by adikr on 14-09-2016.
+ * Created by arun on 16/09/2016.
  */
 
 var db=require('../db-config');
-var Professor=function (info) {
+var Department=function (info) {
 
     this.data = {
         col_id: null,
         dept_id: null,
-        prof_id: null,
-        prof_name: null
+        dept_name: null
     };
     this.set = function (info) {
         for(var p in this.data){
@@ -19,7 +18,7 @@ var Professor=function (info) {
 
         }
         console.log(this.data);
-        db.query('INSERT INTO professor SET ?',this.data, function(err, result) {
+        db.query('INSERT INTO department SET ?',this.data, function(err, result) {
 
             if (err) throw err;
             else{
@@ -30,7 +29,7 @@ var Professor=function (info) {
     };
 
     this.update = function (id, name) {
-        db.query('UPDATE professor SET name=? WHERE id=?', [id, name], function (err, result) {
+        db.query('UPDATE department SET name=? WHERE id=?', [id, name], function (err, result) {
 
             if (err) throw err;
             else{
@@ -40,19 +39,19 @@ var Professor=function (info) {
     };
 
     this.delete = function (id) {
-        db.query('DELETE FROM `professor` WHERE `prof_id`=?',[id],function (err,result) {
+        db.query('DELETE FROM `department` WHERE `dept_id`=?',[id],function (err,result) {
             if (err) throw err;
             else {
-                console.log("Professor ID: "+id+" deleted.");
+                console.log("Department ID: "+id+" deleted.");
             }
         });
 
     };
 
     this.retrieve =function (info) {
-            db.query('SELECT * FROM `professor` WHERE `col_id`=?'[info.col_id],function (err,result) {
+        db.query('SELECT * FROM `department` WHERE `dept_id`=?'[info.dept_id],function (err,result) {
 
-            })
+        })
     };
 
 
@@ -67,14 +66,9 @@ var Professor=function (info) {
 
     };
 
-    this.getprof_id=function () {
-        return this.data.prof_id;
-    };
-
-    this.getprof_name=function () {
-        return this.data.prof_name;
-
-    };
+    this.getdept_name = function () {
+        return this.data.dept_name;
+    }
 
 
 };//end of professor class
@@ -82,4 +76,4 @@ var Professor=function (info) {
 
 
 
-module.exports=Professor;
+module.exports=Department;

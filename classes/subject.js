@@ -1,15 +1,16 @@
 /**
- * Created by adikr on 14-09-2016.
+ * Created by arun on 16/09/2016.
  */
 
 var db=require('../db-config');
-var Professor=function (info) {
+var Subject=function (info) {
 
     this.data = {
         col_id: null,
         dept_id: null,
-        prof_id: null,
-        prof_name: null
+        sub_id: null,
+        sub_name: null,
+        sem: null
     };
     this.set = function (info) {
         for(var p in this.data){
@@ -19,7 +20,7 @@ var Professor=function (info) {
 
         }
         console.log(this.data);
-        db.query('INSERT INTO professor SET ?',this.data, function(err, result) {
+        db.query('INSERT INTO subject SET ?',this.data, function(err, result) {
 
             if (err) throw err;
             else{
@@ -30,7 +31,7 @@ var Professor=function (info) {
     };
 
     this.update = function (id, name) {
-        db.query('UPDATE professor SET name=? WHERE id=?', [id, name], function (err, result) {
+        db.query('UPDATE subject SET name=? WHERE id=?', [id, name], function (err, result) {
 
             if (err) throw err;
             else{
@@ -40,19 +41,19 @@ var Professor=function (info) {
     };
 
     this.delete = function (id) {
-        db.query('DELETE FROM `professor` WHERE `prof_id`=?',[id],function (err,result) {
+        db.query('DELETE FROM `subject` WHERE `sub_id`=?',[id],function (err,result) {
             if (err) throw err;
             else {
-                console.log("Professor ID: "+id+" deleted.");
+                console.log("Subject ID: "+id+" deleted.");
             }
         });
 
     };
 
     this.retrieve =function (info) {
-            db.query('SELECT * FROM `professor` WHERE `col_id`=?'[info.col_id],function (err,result) {
+        db.query('SELECT * FROM `subject` WHERE `sub_id`=?'[info.sub_id],function (err,result) {
 
-            })
+        })
     };
 
 
@@ -67,19 +68,23 @@ var Professor=function (info) {
 
     };
 
-    this.getprof_id=function () {
-        return this.data.prof_id;
+    this.getsub_id=function () {
+        return this.data.sub_id;
     };
 
-    this.getprof_name=function () {
-        return this.data.prof_name;
+    this.getsub_name=function () {
+        return this.data.sub_name;
 
     };
 
+    this.getsem = function () {
+        return this.data.sem;
+    }
 
-};//end of professor class
+
+};//end of subject class
 
 
 
 
-module.exports=Professor;
+module.exports=Subject;
