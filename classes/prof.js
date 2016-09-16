@@ -29,11 +29,11 @@ var Professor=function (info) {
 
     };
 
-    this.delete = function (info) {
-        db.query('DELETE FROM `professor` WHERE `col_id`=?',[info.col_id],function (err,result) {
+    this.delete = function (id) {
+        db.query('DELETE FROM `professor` WHERE `prof_id`=?',[id],function (err,result) {
             if (err) throw err;
             else {
-                console.log(info.col_id);
+                console.log("Professor ID: "+id+" deleted.");
             }
         });
 
