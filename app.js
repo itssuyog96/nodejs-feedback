@@ -1,9 +1,14 @@
 var express = require('express');
+var app = express();
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var passport=require('passport');
+var flash=require('connect-flash');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session=require('express-session');
+require('./config/passport')(passport);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -16,7 +21,7 @@ var tablesurvey = require('./routes/tablesurvey');
 var profentry = require('./routes/projentry');
 var settings = require('./routes/settings');
 
-var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,8 +35,15 @@ app.locals.appname = 'Feedback System';
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser());
 app.use(cookieParser());
+app.use(session({ secret: 'mynameadi' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
+require('./routes/log')(app,passport);
+
 
 app.use('/', routes);
 app.use('/users', users);
