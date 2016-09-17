@@ -4,7 +4,7 @@
 
 var express = require('express');
 var router = express.Router();
-var tdata = require('../tablemeta.json');
+var tdata = require('../tablemeta.json').admin;
 var mdata = require('../modalmeta.json');
 
 /* GET home page. */

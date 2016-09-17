@@ -1,33 +1,114 @@
 {
-  "college"   :{
-
-      "columns"     : ["SR. NO.", "COLLEGE ID", "COLLEGE NAME", "OPTIONS"],
-      "name"        : "table_colg",
-      "column_data" : ["col_id", "col_name"]
-
+  "admin": {
+    "college": {
+      "columns": [
+        "SR. NO.",
+        "COLLEGE ID",
+        "COLLEGE NAME",
+        "OPTIONS"
+      ],
+      "name": "table_colg",
+      "column_data": [
+        "col_id",
+        "col_name"
+      ]
+    },
+    "department": {
+      "columns": [
+        "SR. NO.",
+        "DEPARTMENT ID",
+        "DEPARTMENT NAME",
+        "OPTIONS"
+      ],
+      "name": "table_dept",
+      "column_data": [
+        "dept_id",
+        "dept_name"
+      ]
+    },
+    "professor": {
+      "columns": [
+        "SR. NO.",
+        "PROFESSOR ID",
+        "PROFESSOR NAME",
+        "OPTIONS"
+      ],
+      "name": "table_prof",
+      "column_data": [
+        "prof_id",
+        "prof_name"
+      ]
+    },
+    "subject": {
+      "columns": [
+        "SR. NO.",
+        "SUBJECT ID",
+        "SUBJECT NAME",
+        "SEMESTER",
+        "OPTIONS"
+      ],
+      "name": "table_subj",
+      "column_data": [
+        "sub_id",
+        "sub_name",
+        "sem"
+      ]
+    }
   },
-
-  "department":{
-
-    "columns" : ["SR. NO.", "DEPARTMENT ID", "DEPARTMENT NAME", "OPTIONS"],
-    "name"    : "table_dept",
-    "column_data" : ["dept_id", "dept_name"]
-
-  },
-
-  "professor" :{
-
-    "columns" : ["SR. NO.", "PROFESSOR ID", "PROFESSOR NAME", "OPTIONS"],
-    "name"    : "table_prof",
-    "column_data" : ["prof_id", "prof_name"]
-
-  },
-
-  "subject"   :{
-
-    "columns" : ["SR. NO.", "SUBJECT ID", "SUBJECT NAME", "SEMESTER", "OPTIONS"],
-    "name"    : "table_subj",
-    "column_data" : ["sub_id", "sub_name", "sem"]
-
-  }
+  "other": {
+    "college": {
+      "columns": [
+        "SR. NO.",
+        "COLLEGE ID",
+        "COLLEGE NAME",
+        "OPTIONS"
+      ],
+      "name": "table_colg",
+      "column_data": [
+        "col_id",
+        "col_name"
+      ]
+    },
+    "department": {
+      "columns": [
+        "SR. NO.",
+        "DEPARTMENT ID",
+        "DEPARTMENT NAME",
+        "OPTIONS"
+      ],
+      "name": "table_dept",
+      "column_data": [
+        "dept_id",
+        "dept_name"
+      ]
+    },
+    "professor": {
+      "columns": [
+        "SR. NO.",
+        "PROFESSOR ID",
+        "PROFESSOR NAME",
+        "OPTIONS"
+      ],
+      "name": "table_prof",
+      "column_data": [
+        "prof_id",
+        "prof_name"
+      ]
+    },
+    "subject": {
+      "columns": [
+        "SR. NO.",
+        "SUBJECT ID",
+        "SUBJECT NAME",
+        "SEMESTER",
+        "OPTIONS"
+      ],
+      "name": "table_subj",
+      "column_data": [
+        "sub_id",
+        "sub_name",
+        "sem"
+      ]
+    }}
 }
+

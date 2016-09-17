@@ -117,7 +117,7 @@ router.post('/add_prof', function (req, res, next) {
     try{
         prof = new Professor();
 
-        prof.set(info.professor);
+        prof.set(req.body);
     }catch (e){
         res.writeHead(500, {'Content-Type': 'text/html'});
         res.write('Error in database!' + e);
@@ -170,7 +170,7 @@ router.post('/add_subject', function (req, res, next) {
     try{
         sub = new Subject();
 
-        sub.set(info.subject);
+        sub.set(req.body);
     }catch (e){
         res.writeHead(500, {'Content-Type': 'text/html'});
         res.write('Error in database!' + e);
@@ -222,8 +222,8 @@ router.post('/add_dept', function (req, res, next) {
 
     try{
         dept = new Department();
-
-        dept.set(info);
+        console.log("Request Values: "+JSON.stringify(req.body));
+        dept.set(req.body);
     }catch (e){
         res.writeHead(500, {'Content-Type': 'text/html'});
         res.write('Error in database!' + e);
