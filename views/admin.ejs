@@ -270,9 +270,9 @@
         var i = 1;
 
         $('.col_id').val(id);
-        $('.col_id').prop("disabled", true);
+        $('.col_id').prop("readonly", true);
         $('.dept_id').val('');
-        $('.dept_id').prop("disabled", false);
+        $('.dept_id').prop("readonly", false);
 
         $('.div-<%= profs.name %>').css("display", "none");
         $('.div-<%= subj.name %>').css("display", "none");
@@ -312,7 +312,7 @@
     function load_<%= subj.name %>(id) {
         var i = 1;
         $('.dept_id').val(id);
-        $('.dept_id').prop("disabled", true);
+        $('.dept_id').prop("readonly", true);
 
         $("#<%= subj.name %>").DataTable().destroy();
         $("#<%= subj.name %>").DataTable({
@@ -347,7 +347,7 @@
         var i = 1;
 
         $('.dept_id').val(id);
-        $('.dept_id').prop("disabled", true);
+        $('.dept_id').prop("readonly", true);
 
         $("#<%= profs.name %>").DataTable().destroy();
         $("#<%= profs.name %>").DataTable({
@@ -475,14 +475,54 @@
 
     $('.div_m_dept').on('click', '.m_dept', function(e){
         e.preventDefault();
+
+        $.ajax({
+            url: 'ajax/add_dept',
+            data: $('#form-m_dept').serialize(),
+            method: 'POST',
+            success: function(data){
+                $('.close-m_dept').click();
+                load_<%= dept.name %>();
+            },
+            error: function(data){
+                console.log("Error occured while adding department! "+data);
+            }
+        });
+
     });
 
     $('.div_m_prof').on('click', '.m_prof', function(e){
         e.preventDefault();
+
+        $.ajax({
+            url: 'ajax/add_prof',
+            data: $('#form-m_prof').serialize(),
+            method: 'POST',
+            success: function(data){
+                $('.close-m_prof').click();
+                load_<%= profs.name %>();
+            },
+            error: function(data){
+                console.log("Error occured while adding professor! "+data);
+            }
+        });
     });
 
     $('.div_m_subj').on('click', '.m_subj', function(e){
         e.preventDefault();
+
+        $.ajax({
+            url: 'ajax/add_subject',
+            data: $('#form-m_subj').serialize(),
+            method: 'POST',
+            success: function(data){
+                $('.close-m_subj').click();
+                load_<%= subj.name %>();
+            },
+            error: function(data){
+                console.log("Error occured while adding subject! "+data);
+            }
+        });
     });
 
 </script>
