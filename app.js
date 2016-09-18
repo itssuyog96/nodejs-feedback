@@ -13,7 +13,7 @@ var ajax = require('./routes/ajax');
 var survey = require('./routes/survey');
 var subadd = require('./routes/subadd');
 var tablesurvey = require('./routes/tablesurvey');
-var profentry = require('./routes/projentry');
+var profentry = require('./routes/profentry');
 var settings = require('./routes/settings');
 
 var app = express();

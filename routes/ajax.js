@@ -218,6 +218,13 @@ router.post('/update_dept', function (req, res, next) {
     res.end();
 });
 
+router.post('/login', function(req, res){
+
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('Authentication module in development...');
+    res.end();
+});
+
 router.post('/add_dept', function (req, res, next) {
 
     try{
