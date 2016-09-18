@@ -362,7 +362,7 @@
                 }},
                 <% profs.column_data.forEach(function(item){ %>
                 {data: '<%= item %>'},
-                <% }) %>
+                <% }); %>
                 {
                     data: function (data) {
                         var del_btn = '<a class="btn red btn-outline" href="javascript:del_profs(' + data.<%= profs.column_data[0] %>+ ', '+id+ ')" target="_blank">DELETE</a>';

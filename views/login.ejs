@@ -18,7 +18,8 @@
 <!-- BEGIN LOGO -->
 <div class="logo">
     <a href="index.html">
-        <img src="http://www.bharatividyapeeth.edu/SiteData/SiteThemes/1/Images/BharatiLogowithtext.png" style="height: 100px;" alt=""/> </a>
+        <img src="http://www.bharatividyapeeth.edu/SiteData/SiteThemes/1/Images/BharatiLogowithtext.png"
+             style="height: 100px;" alt=""/> </a>
 </div>
 <!-- END LOGO -->
 <!-- BEGIN LOGIN -->
@@ -32,6 +33,14 @@
         <div class="alert alert-danger display-hide">
             <button class="close" data-close="alert"></button>
             <span> Enter username and password. </span>
+        </div>
+        <div class="alert alert-warning display-hide">
+            <button class="close" data-close="alert"></button>
+            <span id="login-error-message"> Wrong username or password. </span>
+        </div>
+        <div class="alert alert-success display-hide">
+            <button class="close" data-close="alert"></button>
+            <span id="login-success-message"> Login OK </span>
         </div>
         <div class="form-group">
             <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
@@ -140,16 +149,21 @@
                             e.insertAfter(r.closest(".input-icon"))
                         },
                         submitHandler: function (e) {
-                            e.preventDefault();
+                            //e.preventDefault();
+                            console.log("Executing login ajax...!");
                             $.ajax({
-                               url : 'ajax/login',
-                                data: this.serialize(),
+                                url: 'ajax/login',
+                                data: $('.login-form').serialize(),
                                 method: 'POST',
-                                error: function(){
-                                    $(".alert-danger", $(".login-form")).show();
+                                error: function (error) {
+                                    $("#login-error-message").text("Login error ("+error.status+") : "+ error.responseText);
+                                    $(".alert-warning", $(".login-form")).show();
                                 },
-                                success: function(){
-                                    e.closest(".form-group").removeClass("has-error");
+                                success: function () {
+                                    $(".form-group").removeClass("has-error");
+                                    $("#login-success-message").text("Login OK.. Redirecting...");
+                                    $(".alert-success", $(".login-form")).show();
+                                    window.location.href = '/admin';
                                 }
                             });
                         }
