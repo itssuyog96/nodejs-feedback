@@ -10,6 +10,7 @@ var mdata = require('../modalmeta.json');
 /* GET home page. */
 router.get('/', function (req, res, next) {
 
+        console.log("College data"+tdata.college);
     res.render('admin', {col: tdata.college, dept: tdata.department, profs: tdata.professor, subj: tdata.subject, mdata: mdata.topics});
 
 });

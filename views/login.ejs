@@ -25,10 +25,14 @@
 <!-- BEGIN LOGIN -->
 <div class="content">
     <!-- BEGIN LOGIN FORM -->
-    <form class="login-form">
+    <form class="login-form" action="/login" method="post">
         <div class="form-title">
             <span class="form-title">Welcome.</span>
             <span class="form-subtitle">Please login.</span>
+            <% if (message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+            <% } %>
+
         </div>
         <div class="alert alert-danger display-hide">
             <button class="close" data-close="alert"></button>
@@ -110,7 +114,7 @@
 <!-- END THEME LAYOUT SCRIPTS -->
 
 <script>
-    var Login = function () {
+    /*var Login = function () {
         var e = function () {
                     $(".login-form").validate({
                         errorElement: "span",
@@ -230,7 +234,7 @@
     jQuery(document).ready(function () {
         Login.init()
     });
-
+*/
 </script>
 
 </body>

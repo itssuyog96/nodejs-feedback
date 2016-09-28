@@ -2,6 +2,10 @@
  * Created by adikr on 18-09-2016.
  */
 
+
+var tdata = require('../tablemeta.json').admin;
+var mdata = require('../modalmeta.json');
+
 module.exports=function (app,passport) {
 
     app.get('/',function (req,res) {
@@ -10,18 +14,18 @@ module.exports=function (app,passport) {
 
     app.get('/login',function (req,res) {
 
-        res.render('login');
+        res.render('login',{message:req.flash('loginMessage')});
 
     });
     app.post('/login',
-        passport.authenticate('local-login', { successRedirect: '/blank',
+        passport.authenticate('local-login', { successRedirect: '/admin',
             failureRedirect: '/login'
         })
     );
 
     app.get('/admin',isLoggedIn, function(req, res) {
 
-        res.render('admin');
+        res.render('admin', {col: tdata.college, dept: tdata.department, profs: tdata.professor, subj: tdata.subject, mdata: mdata.topics});
     });
 
     app.get('/profile', isLoggedIn, function(req, res) {

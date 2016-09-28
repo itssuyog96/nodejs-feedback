@@ -18,7 +18,7 @@ var Department=function (info) {
 
         }
         console.log(this.data);
-        db.query('INSERT INTO department SET ?',this.data, function(err, result) {
+        db.query('INSERT INTO department SET'+this.data, function(err, result) {
 
             if (err) throw err;
             else{

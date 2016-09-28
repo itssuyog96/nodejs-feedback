@@ -26,23 +26,23 @@ module.exports = function(passport) {
     //login//
     passport.use('local-login', new LocalStrategy({
 
-            usernameField : 'email',
+            usernameField : 'username',
             passwordField : 'password',
             passReqToCallback : true
         },
-        function(req, email, password, done) {
+        function(req, username, password, done) {
             //console.log(email);
             //console.log(password);
-            db.query("SELECT * FROM `login` WHERE `username` = ?",[email],function(err,result){
+            db.query("SELECT * FROM `login` WHERE `username` = ?",[username],function(err,result){
                 if (err)
                     return done(err);
                 if (!result.length) {
-                    return done(null, false /*req.flash('loginMessage', 'No user found.')*/);
+                    return done(null, false,req.flash('loginMessage', 'No user found.'));
                 }
 
 
                 if (!( result[0].password == password))
-                    return done(null, false /*req.flash('loginMessage', 'Oops! Wrong password.')*/);
+                    return done(null, false ,req.flash('loginMessage', 'Oops! Wrong password.'));
 
                 // all is well, return successful user
                 return done(null, result[0]);
