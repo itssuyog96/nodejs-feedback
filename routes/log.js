@@ -25,7 +25,7 @@ module.exports=function (app,passport) {
 
     app.get('/admin',isLoggedIn, function(req, res) {
 
-        res.render('admin', {col: tdata.college, dept: tdata.department, profs: tdata.professor, subj: tdata.subject, mdata: mdata.topics});
+        res.render('admin', {col: tdata.college, dept: tdata.department, profs: tdata.professor, subj: tdata.subject, mdata: mdata.topics,name:req.user.username});
     });
 
     app.get('/profile', isLoggedIn, function(req, res) {
