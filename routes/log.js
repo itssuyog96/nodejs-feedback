@@ -12,7 +12,7 @@ module.exports=function (app,passport) {
         res.send("hello world");
     });
 
-    app.get('/login',function (req,res) {
+    app.get('/login',notFirst,function (req,res) {
 
         res.render('login',{message:req.flash('loginMessage')});
 
@@ -74,6 +74,13 @@ module.exports=function (app,passport) {
         }
         // if they aren't redirect them to the home page
         res.redirect('/login');
+    }
+
+    function notFirst(req,res,next) {
+        if(req.isAuthenticated()){
+            res.redirect('/admin');
+        }
+        return next();
     }
 
 
