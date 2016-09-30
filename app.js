@@ -37,7 +37,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser());
 app.use(cookieParser());
-app.use(session({ secret: 'mynameadi' }));
+app.use(session({secret: 'mynameadi', cookie:{maxAge : 1800000}}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
