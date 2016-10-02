@@ -7,7 +7,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('feed_analyzer',{name:req.user.username, pass:req.user.password});
+    res.render('feed_analyzer');
 
 });
 
