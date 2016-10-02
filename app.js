@@ -20,6 +20,8 @@ var subadd = require('./routes/subadd');
 var tablesurvey = require('./routes/tablesurvey');
 var profentry = require('./routes/profentry');
 var settings = require('./routes/settings');
+var graphsurvey = require('./routes/graphsurvey');
+var feed_analyzer = require('./routes/feed_analyzer');
 
 
 
@@ -55,6 +57,8 @@ app.use('/subadd', subadd);
 app.use('/tablesurvey',tablesurvey);
 app.use('/profentry',profentry);
 app.use('/settings',settings);
+app.use('/graphsurvey',graphsurvey);
+app.use('/feed_analyzer',feed_analyzer);
 
 
 // catch 404 and forward to error handler
