@@ -6,7 +6,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('settings',{name:req.user.username, pass:req.user.password});
+    res.render('settings');
 
 });
 
