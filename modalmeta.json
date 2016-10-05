@@ -41,5 +41,15 @@
       },
       "name": "modal_subj"
     }
+  },
+  "survey": {
+    "title": "GENERATE NEW SURVEY",
+    "class": "m_survey",
+    "form": {
+      "Survey ID": "survey_id",
+      "Sem": "sem",
+      "Year": "year"
+    },
+    "name": "modal_survey"
   }
 }

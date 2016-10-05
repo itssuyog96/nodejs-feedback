@@ -53,7 +53,21 @@
         "sub_name",
         "sem"
       ]
+    },
+    "Survey": {
+      "columns": [
+        "SURVEY_ID",
+        "SEM",
+        "YEAR"
+      ],
+      "name": "table_surv",
+      "column_data": [
+        "survey_id",
+        "sem",
+        "year"
+      ]
     }
+
   },
   "other": {
     "college": {
