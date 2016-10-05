@@ -18,9 +18,13 @@ module.exports=function (app,passport) {
 
     });
     app.post('/login',
-        passport.authenticate('local-login', { successRedirect: '/admin',
+        passport.authenticate('local-login', {
             failureRedirect: '/login'
-        })
+        }),function (req,res) {
+            var redirectTo = req.session.redirectTo ? req.session.redirectTo : '/survey';
+            delete req.session.redirectTo;
+            res.redirect(redirectTo);
+        }
     );
 
     app.get('/admin',isLoggedIn, function(req, res) {
@@ -72,6 +76,7 @@ module.exports=function (app,passport) {
 
 
         }
+        req.session.redirectTo=req.path;
         // if they aren't redirect them to the home page
         res.redirect('/login');
     }
