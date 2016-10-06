@@ -108,7 +108,76 @@
                                     <label type="text" class="form-control form-filter"> Prof. Shweta Barse</label>
                                 </td>
                                 <td>
-                                    <label type="text" class="form-control form-filter"> 5</label>
+                                    <label type="text" class="form-control form-filter"> 5,&nbsp;1</label>
+                                </td>
+                                <td>
+                                    <select name="order_status" class="form-control form-filter input-sm">
+                                        <option value="">Select...</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="closed">Closed</option>
+                                        <option value="hold">On Hold</option>
+                                    </select>
+                                </td>
+                                <td>
+
+                                    <div class="margin-bottom-5">
+                                        <button type="button" class="btn btn-sm green btn-outline filter-submit margin-bottom" data-toggle="modal" data-target="#myModal"> Graph </button>
+
+                                        <div class="modal fade" id="myModal"  role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title"> Graph </h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div id="myDiv" style="width: 300px; height: 400px;"></div>
+                                                        <script>
+
+                                                            var trace1 = {
+                                                                x: [0],
+                                                                y: [4],
+                                                                name: 'SPA',
+                                                                type: 'bar'
+                                                            };
+
+                                                            var trace2 = {
+                                                                x: [0],
+                                                                y: [3],
+                                                                name: 'SOOAD',
+                                                                type: 'bar'
+                                                            };
+
+                                                            var data = [trace1, trace2];
+
+                                                            var layout = {
+                                                                barmode: 'stack',
+                                                                xaxis: {autorange: 'reversed'}
+                                                            };
+
+                                                            Plotly.newPlot('myDiv', data, layout);
+
+                                                        </script>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr role="row" class="filter">
+                                <td> </td>
+                                <td>
+                                    <label type="text" class="form-control form-filter"> Prof. Vaishali Bodade</label>
+                                </td>
+                                <td>
+                                    <label type="text" class="form-control form-filter"> 5,&nbsp;3</label>
                                 </td>
                                 <td>
                                     <select name="order_status" class="form-control form-filter input-sm">
@@ -120,8 +189,53 @@
                                 </td>
                                 <td>
                                     <div class="margin-bottom-5">
-                                        <button class="btn btn-sm green btn-outline filter-submit margin-bottom" onclick="a">
-                                            <i class="fa fa-hand-right"></i> Graph </button>
+                                        <button type="button" class="btn btn-sm green btn-outline filter-submit margin-bottom" data-toggle="modal" data-target="#myModal"> Graph </button>
+
+                                        <div class="modal fade " id="myModal"  role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title"> Graph </h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div id="myDiv" style="width: 300px; height: 400px;"></div>
+                                                            <script>
+
+                                                                var trace1 = {
+                                                                    x: [0],
+                                                                    y: [4],
+                                                                    name: 'Web Technologies',
+                                                                    type: 'bar'
+                                                                };
+
+                                                                var trace2 = {
+                                                                    x: [0],
+                                                                    y: [3],
+                                                                    name: 'Discrete Structures',
+                                                                    type: 'bar'
+                                                                };
+
+                                                                var data = [trace1, trace2];
+
+                                                                var layout = {
+                                                                    barmode: 'stack',
+                                                                    xaxis: {autorange: 'reversed'}
+                                                                };
+
+                                                                Plotly.newPlot('myDiv', data, layout);
+
+                                                            </script>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -132,59 +246,6 @@
                 </div>
             </div>
             <!-- End: life time stats -->
-
-            <!-- BEGIN ROW -->
-            <div class="row" id="graph">
-                <div class="col-md-12">
-                    <!-- BEGIN CHART PORTLET-->
-                    <div class="portlet light ">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                <i class="icon-bar-chart font-green-haze"></i>
-                                <span class="caption-subject bold uppercase font-green-haze"> Ratings Chart</span>
-                            </div>
-                            <div class="tools">
-                                <a href="javascript:;" class="collapse"> </a>
-                                <a href="#portlet-config" data-toggle="modal" class="config"> </a>
-                                <a href="javascript:;" class="reload"> </a>
-                                <a href="javascript:;" class="fullscreen"> </a>
-                                <a href="javascript:;" class="remove"> </a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <div id="myDiv" style="width: 300px; height: 400px;"></div>
-                            <script>
-
-                                    var trace1 = {
-                                        x: [0],
-                                        y: [4],
-                                        name: 'SPA',
-                                        type: 'bar'
-                                    };
-
-                                    var trace2 = {
-                                        x: [0],
-                                        y: [3],
-                                        name: 'SOOAD',
-                                        type: 'bar'
-                                    };
-
-                                    var data = [trace1, trace2];
-
-                                    var layout = {
-                                        barmode: 'stack',
-                                        xaxis: {autorange: 'reversed'}
-                                    };
-
-                                    Plotly.newPlot('myDiv', data, layout);
-
-                            </script>
-
-                        </div>
-                    </div>
-                    <!-- END CHART PORTLET-->
-                </div>
-            </div>
 
 
             <!--STOP EDITING HERE-->
