@@ -13,6 +13,7 @@
     "ejs": "~2.4.1",
     "express": "^4.13.4",
     "express-session": "^1.14.1",
+    "mongodb": "^2.2.10",
     "morgan": "~1.7.0",
     "node-mysql": "^0.4.2",
     "passport": "^0.3.2",
