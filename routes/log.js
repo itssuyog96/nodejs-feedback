@@ -22,7 +22,25 @@ module.exports=function (app,passport) {
         passport.authenticate('local-login', {
             failureRedirect: '/login'
         }),function (req,res) {
-            var redirectTo = req.session.redirectTo ? req.session.redirectTo : '/survey';
+
+            switch(req.user.role)
+            {
+                case 'admin':       choice ='/admin';
+                                    break;
+
+                case 'feedbackA':   choice ='/feed_analyzer';
+                                    break;
+
+                case 'principal':   choice ='/principal';
+                                    break;
+
+                case 'student':     choice ='/student';
+                                    break;
+
+                default:break;
+            }
+
+            var redirectTo = req.session.redirectTo ? req.session.redirectTo : choice;
             delete req.session.redirectTo;
             res.redirect(redirectTo);
         }
@@ -38,19 +56,6 @@ module.exports=function (app,passport) {
         res.render('admin', {col: tdata.college, dept: tdata.department, profs: tdata.professor, subj: tdata.subject, mdata: mdata.topics});
     });
 
-
-
-    app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile', {
-            user : req.user
-        });
-    });
-
-    app.get('/about',isadmIn,function(req, res) {
-        console.log(req.user.username);
-
-        res.render('about');
-    });
 
     app.get('/logout', function(req, res) {
         req.logout();

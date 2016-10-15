@@ -24,6 +24,9 @@ var graphsurvey = require('./routes/graphsurvey');
 var feed_analyzer = require('./routes/feed_analyzer');
 var survey1 = require('./routes/survey1');
 var dashboard = require('./routes/dashboard');
+var student = require('./routes/student');
+var principal = require('./routes/principal');
+
 
 
 // view engine setup
@@ -62,6 +65,8 @@ app.use('/graphsurvey',graphsurvey);
 app.use('/feed_analyzer',feed_analyzer);
 app.use('/survey1',survey1);
 app.use('/dashboard', dashboard);
+app.use('/student', student);
+app.use('/principal', principal);
 
 
 // catch 404 and forward to error handler
