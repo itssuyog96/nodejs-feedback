@@ -1,0 +1,15 @@
+/**
+ * Created by itssu on 06-Oct-16.
+ */
+
+var express = require('express');
+var router = express.Router();
+
+/* GET home page. */
+router.get('/', function (req, res, next) {
+
+    res.render('dashboard');
+
+});
+
+module.exports = router;

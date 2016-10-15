@@ -4,6 +4,7 @@
 
 
 var tdata = require('../tablemeta.json').admin;
+var tiles = require('../dashmeta.json').admin;
 var mdata = require('../modalmeta.json');
 
 module.exports=function (app,passport) {
@@ -29,8 +30,15 @@ module.exports=function (app,passport) {
 
     app.get('/admin',isLoggedIn, function(req, res) {
 
+        res.render('dashboard', {dash : tiles});
+    });
+
+    app.get('/admin/manage',isLoggedIn, function(req, res) {
+
         res.render('admin', {col: tdata.college, dept: tdata.department, profs: tdata.professor, subj: tdata.subject, mdata: mdata.topics});
     });
+
+
 
     app.get('/profile', isLoggedIn, function(req, res) {
         res.render('profile', {

@@ -1,0 +1,11 @@
+{
+  "admin":{
+    "tiles" : ["COLLEGES", "DEPARTMENTS", "PROFESSORS", "SUBJECTS", "SURVEY", "REPORTS", "SETTINGS"],
+    "fa_icons" : ["fa-institution", "fa-users", "fa-user", "fa-book", "fa-check-square-o", "fa-line-chart", "fa-cogs"]
+  },
+
+  "feeder":{
+    "tiles" : ["PROFESSORS", "SUBJECTS", "SURVEY", "REPORTS", "SETTINGS"],
+    "fa_icons" : ["fa-user", "fa-book", "fa-check-square-o", "fa-line-chart", "fa-cogs"]
+  }
+}
