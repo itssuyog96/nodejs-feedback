@@ -5,13 +5,23 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   //res.render('index', { title: 'Express' });
 
-
+var omkar={
+  "col_id":"1",
+  "dep_id":"1001",
+  "prof_id":"2003",
+  "prof_name":"Torna Kamble"
+};
   var db = req.db;
-  var collection = db.get('users');
-  collection.find({},{},function(e,docs){
+  var collection = db.get('college');
+  collection.find({"col_id":'1'},function(e,docs){
     var d = JSON.stringify(docs);
-    res.render('index', { "userlist" : d , "title" : "FEEDBACK SYSTEM"});
+
+    console.log(d);
+
+
   });
+
+  res.render('index', {"title" : "FEEDBACK SYSTEM"});
 
 });
 

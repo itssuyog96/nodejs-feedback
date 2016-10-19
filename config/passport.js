@@ -33,22 +33,24 @@ module.exports = function(passport) {
         function(req, username, password, done) {
             //console.log(email);
             //console.log(password);
-            db.query("SELECT * FROM `login` WHERE `username` = ?",[username],function(err,result){
-                if (err)
-                    return done(err);
-                if (!result.length) {
+
+            var data= req.db;
+            var collection = data.get('users');
+            collection.find({"name":username},function(e,docs){
+                //var d = JSON.stringify(docs);
+                if(e){
+                    return done(e);
+                }
+                if(docs==0){
                     return done(null, false,req.flash('loginMessage', 'No user found.'));
                 }
-
-
-                if (!( result[0].password == password))
+                if(!(docs[0].password == password)){
                     return done(null, false ,req.flash('loginMessage', 'Oops! Wrong password.'));
-
-                // all is well, return successful user
-                return done(null, result[0]);
-
-
+                }
+                return done(null, docs[0]);
             });
+
+
 
 
 

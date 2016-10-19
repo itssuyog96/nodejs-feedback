@@ -1,8 +1,10 @@
 /**
  * Created by arun on 16/09/2016.
  */
+var monk = require('monk');
+var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
 
-var db=require('../db-config');
+//var db=require('../db-config');
 var Subject=function (info) {
 
     this.data = {
@@ -20,9 +22,13 @@ var Subject=function (info) {
 
         }
         console.log(this.data);
-        db.query('INSERT INTO subject SET ?',this.data, function(err, result) {
+        var dat=JSON.stringify(this.data);
 
-            if (err) throw err;
+        var collection = db.get('subject');
+        collection.insert(dat,function(e,docs){
+
+            console.log(docs);
+            if (e) throw e;
             else{
                 console.log('data added');
             }
@@ -31,9 +37,11 @@ var Subject=function (info) {
     };
 
     this.update = function (id, name) {
-        db.query('UPDATE subject SET name=? WHERE id=?', [id, name], function (err, result) {
+        var collection = db.get('subject');
+        collection.update({"prof_id":id},{$set:{"prof_name":name}},function(e,docs){
 
-            if (err) throw err;
+            console.log(docs);
+            if (e) throw e;
             else{
                 console.log('data updated');
             }
@@ -41,10 +49,13 @@ var Subject=function (info) {
     };
 
     this.delete = function (id) {
-        db.query('DELETE FROM `subject` WHERE `sub_id`=?',[id],function (err,result) {
-            if (err) throw err;
-            else {
-                console.log("Subject ID: "+id+" deleted.");
+        var collection = db.get('subject');
+        collection.remove({"sub_id":id},function(e,docs){
+
+            console.log(docs);
+            if (e) throw e;
+            else{
+                console.log('data deleted');
             }
         });
 

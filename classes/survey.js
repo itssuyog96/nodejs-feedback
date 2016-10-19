@@ -1,6 +1,8 @@
+var monk = require('monk');
+var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
 
 
-var db = require("../db-config");
+//var db = require("../db-config");
 var Survey =  function (info) {
 
     this.data = {
@@ -18,9 +20,13 @@ var Survey =  function (info) {
 
     };
     console.log(this.data);
-    db.query('INSERT INTO Survey SET ?',this.data, function(err, result) {
+    var dat=JSON.stringify(this.data);
 
-        if (err) throw err;
+    var collection = db.get('survey');
+    collection.insert(dat,function(e,docs){
+
+        console.log(docs);
+        if (e) throw e;
         else{
             console.log('data added');
         }
@@ -28,9 +34,11 @@ var Survey =  function (info) {
 
 
     this.update = function (id) {
-        db.query('UPDATE Survey SET name=? WHERE id=?', [id], function (err, result) {
+        var collection = db.get('survey');
+        collection.update({"survey_id":id},function(e,docs){
 
-            if (err) throw err;
+            console.log(docs);
+            if (e) throw e;
             else{
                 console.log('data updated');
             }
@@ -38,10 +46,13 @@ var Survey =  function (info) {
     };
 
     this.delete = function (id) {
-        db.query('DELETE FROM `Survey` WHERE `survey_id`=?',[id],function (err,result) {
-            if (err) throw err;
-            else {
-                console.log("Survey ID: "+id+" deleted.");
+        var collection = db.get('survey');
+        collection.remove({"col_id":id},function(e,docs){
+
+            console.log(docs);
+            if (e) throw e;
+            else{
+                console.log('data deleted');
             }
         });
 

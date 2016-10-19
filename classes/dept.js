@@ -1,6 +1,8 @@
 /**
  * Created by arun on 16/09/2016.
  */
+var monk = require('monk');
+var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
 
 var db=require('../db-config');
 var Department=function (info) {
@@ -18,9 +20,13 @@ var Department=function (info) {
 
         }
         console.log(this.data);
-        db.query('INSERT INTO department SET'+this.data, function(err, result) {
+        var dat=JSON.stringify(this.data);
 
-            if (err) throw err;
+        var collection = db.get('department');
+        collection.insert(dat,function(e,docs){
+
+            console.log(docs);
+            if (e) throw e;
             else{
                 console.log('data added');
             }
@@ -29,9 +35,11 @@ var Department=function (info) {
     };
 
     this.update = function (id, name) {
-        db.query('UPDATE department SET name=? WHERE id=?', [id, name], function (err, result) {
+        var collection = db.get('department');
+        collection.update({"dep_id":id},{$set:{"dep_name":name}},function(e,docs){
 
-            if (err) throw err;
+            console.log(docs);
+            if (e) throw e;
             else{
                 console.log('data updated');
             }
@@ -39,10 +47,13 @@ var Department=function (info) {
     };
 
     this.delete = function (id) {
-        db.query('DELETE FROM `department` WHERE `dept_id`=?',[id],function (err,result) {
-            if (err) throw err;
-            else {
-                console.log("Department ID: "+id+" deleted.");
+        var collection = db.get('department');
+        collection.remove({"col_id":id},function(e,docs){
+
+            console.log(docs);
+            if (e) throw e;
+            else{
+                console.log('data deleted');
             }
         });
 

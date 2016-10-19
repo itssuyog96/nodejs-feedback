@@ -15,64 +15,69 @@ var info = require('../tablemeta.json');
 /* GET home page. */
 router.get('/load_colg', function (req, res, next) {
 
-    db.query('SELECT * FROM `college`', function (err, result) {
-
-        console.log(result);
-        if (err) throw err;
+    var db = req.db;
+    var collection = db.get('college');
+    collection.find({},function(e,docs){
+        var d = JSON.stringify(docs);
+        if (e) throw e;
         else {
             res.writeHead(200, {'Content-Type': 'application/json'});
-            res.write('{"data":' + JSON.stringify(result) + '}');
+            res.write('{"data":' + d + '}');
             res.end();
         }
+
     });
 });
 
 
 router.post('/load_dept', function (req, res, next) {
 
-
-    db.query('SELECT * FROM `department` WHERE `col_id` = ?', req.body.id, function (err, result) {
-
-        console.log(result);
-        if (err) throw err;
+    var db = req.db;
+    var collection = db.get('department');
+    collection.find({},function(e,docs){
+        var d = JSON.stringify(docs);
+        if (e) throw e;
         else {
             res.writeHead(200, {'Content-Type': 'application/json'});
-            res.write('{"data":' + JSON.stringify(result) + '}');
+            res.write('{"data":' + d + '}');
             res.end();
         }
+
     });
 });
+
 
 
 router.post('/load_prof', function (req, res, next) {
 
-    db.query('SELECT * FROM `professor` WHERE `dept_id` = ?', req.body.id, function (err, result) {
-
-        console.log(result);
-        if (err) throw err;
+    var db = req.db;
+    var collection = db.get('professor');
+    collection.find({},function(e,docs){
+        var d = JSON.stringify(docs);
+        if (e) throw e;
         else {
             res.writeHead(200, {'Content-Type': 'application/json'});
-            res.write('{"data":' + JSON.stringify(result) + '}');
+            res.write('{"data":' + d + '}');
             res.end();
         }
+
     });
-
 });
-
 
 router.post('/load_sub', function (req, res, next) {
 
-    db.query('SELECT * FROM `subject` WHERE `dept_id` = ?', req.body.id, function (err, result) {
-
-        console.log(result);
-        if (err) throw err;
+    var db = req.db;
+    var collection = db.get('subject');
+    collection.find({},function(e,docs){
+        var d = JSON.stringify(docs);
+        if (e) throw e;
         else {
             res.writeHead(200, {'Content-Type': 'application/json'});
-            res.write('{"data":' + JSON.stringify(result) + '}');
+            res.write('{"data":' + d + '}');
             res.end();
         }
-    });
 
+    });
 });
 
 router.post('/del_prof', function (req, res, next) {

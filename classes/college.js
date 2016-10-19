@@ -1,8 +1,10 @@
 /**
  * Created by arun on 16/09/2016.
  */
+var monk = require('monk');
+var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
 
-var db=require('../db-config');
+//var db=require('../db-config');
 var College=function (info) {
 
     this.data = {
@@ -17,31 +19,41 @@ var College=function (info) {
 
         }
         console.log(this.data);
-        db.query('INSERT INTO college SET ?',this.data, function(err, result) {
+        var dat=JSON.stringify(this.data);
 
-            if (err) throw err;
+        var collection = db.get('college');
+        collection.insert(dat,function(e,docs){
+
+            console.log(docs);
+            if (e) throw e;
             else{
                 console.log('data added');
             }
         });
-
     };
 
-    this.update = function (id, name) {
-        db.query('UPDATE college SET name=? WHERE id=?', [id, name], function (err, result) {
 
-            if (err) throw err;
+    this.updateit = function (id, name) {
+        var collection = db.get('college');
+        collection.update({"col_id":id},{$set:{"col_name":name}},function(e,docs){
+
+            console.log(docs);
+            if (e) throw e;
             else{
                 console.log('data updated');
             }
         });
+
     };
 
     this.delete = function (id) {
-        db.query('DELETE FROM `college` WHERE `col_id`=?',[id],function (err,result) {
-            if (err) throw err;
-            else {
-                console.log("College ID: "+id+" deleted.");
+        var collection = db.get('college');
+        collection.remove({"col_id":id},function(e,docs){
+
+            console.log(docs);
+            if (e) throw e;
+            else{
+                console.log('data deleted');
             }
         });
 
