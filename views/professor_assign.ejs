@@ -46,15 +46,22 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <table data-toggle="table" data-height="299">
-                        <thead>
+                    <form id="assign_prof" method="POST">
+                        <table data-toggle="table" data-height="299" class="assign_table table table-responsive table-hover">
+                            <thead>
                             <tr>
                                 <th data-field="id">Subject ID</th>
                                 <th data-field="name">Subject Name</th>
                                 <th data-field="price">Select Professor</th>
                             </tr>
-                        </thead>
-                    </table>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+
+                        <input type="submit" value="SUBMIT" name="submit" class="btn btn-primary" />
+                    </form>
                 </div>
             </div>
 
@@ -72,5 +79,61 @@
 
 <% include tpl/footer.ejs %>
 </body>
+
+<script id="user_details" type="application/json">
+    { "data" : <%- JSON.stringify(user) %>}
+</script>
+
+<script id="professor_list" type="application/json">
+    <%- JSON.stringify(professors) %>
+</script>
+
+<script>
+
+        var a = JSON.parse($('#user_details').text());
+        a = a.data;
+        console.log("Data captured : "+JSON.stringify(a));
+        alert("Welcome "+a.name);
+
+
+</script>
+
+<script>
+
+    var a = JSON.parse($('#user_details').text());
+    var user = a.data;
+
+    $.ajax({
+        url: 'ajax/getSubjects',
+        data : user,
+        success : function(data){
+            if(!data){
+                var i = 0;
+                data.forEach(function (item) {
+                    $('.assign_table tbody').append(
+                            '<tr>'+ item.sub_name +'</tr>' +
+                            '<tr>' +
+                                '<input class="form-control" type="hidden" name="sub_id_'+(++i)+'" value="'+ item.sub_id +'"/>' +
+                                '<select class="form-control" name="prof_id'+(i)+'" required>' +
+                                        professors.forEach(function(professor){
+                                           var options = '<option value = '+ professor.prof_id +'>'+professor.prof_name+'</option>';
+                                            return options;
+                                        })+
+                                '</select>' +
+                            '</tr>'
+                    );
+                });
+
+                $('.assign_table tbody').append('<input type="hidden" name="tcount" value="'+ i +'" />');
+
+            }else{
+                $('.assign_table tbody').append('<tr colspan = "0" style="align: center;">Please enter Subjects first to assign Professors.</tr>')
+            }
+        },
+        error: function(error){
+
+        }
+    });
+</script>
 
 </html>

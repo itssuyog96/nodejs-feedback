@@ -22,7 +22,7 @@
       ],
       "name": "table_dept",
       "column_data": [
-        "dept_id",
+        "dep_id",
         "dept_name"
       ]
     },
@@ -92,7 +92,7 @@
       ],
       "name": "table_dept",
       "column_data": [
-        "dept_id",
+        "dep_id",
         "dept_name"
       ]
     },

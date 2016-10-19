@@ -41,7 +41,7 @@ module.exports = function(passport) {
                 if(e){
                     return done(e);
                 }
-                if(docs==0){
+                if(docs == 0){
                     return done(null, false,req.flash('loginMessage', 'No user found.'));
                 }
                 if(!(docs[0].password == password)){
