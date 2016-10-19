@@ -27,7 +27,15 @@ var dashboard = require('./routes/dashboard');
 var student = require('./routes/student');
 var principal = require('./routes/principal');
 
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
 
+//db connector
+app.use(function(req,res,next){
+  req.db = db;
+  next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

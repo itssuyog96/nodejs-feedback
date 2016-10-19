@@ -9,7 +9,7 @@ var mdata = require('../modalmeta.json');
 
 module.exports=function (app,passport) {
 
-    app.get('/',function (req,res) {
+    app.get('/new',function (req,res) {
         res.send("hello world");
     });
 
@@ -55,7 +55,6 @@ module.exports=function (app,passport) {
 
         res.render('admin', {col: tdata.college, dept: tdata.department, profs: tdata.professor, subj: tdata.subject, mdata: mdata.topics});
     });
-
 
     app.get('/logout', function(req, res) {
         req.logout();
