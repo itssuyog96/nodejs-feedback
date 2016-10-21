@@ -21,8 +21,13 @@ var omkar={
 
   });
 
-  res.render('index', {"title" : "FEEDBACK SYSTEM"});
-
+  if(req.session.login) {
+    res.render('index', {"title": "FEEDBACK SYSTEM"});
+  }
+  else {
+    req.session.redirectTo = '/';
+    res.redirect('/login');
+  }
 });
 
 module.exports = router;

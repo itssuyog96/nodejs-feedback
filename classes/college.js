@@ -20,9 +20,9 @@ var College=function (info) {
         }
         console.log(this.data);
         var dat=JSON.stringify(this.data);
-
+        var data=this.data;
         var collection = db.get('college');
-        collection.insert(dat,function(e,docs){
+        collection.insert(data,function(e,docs){
 
             console.log(docs);
             if (e) throw e;

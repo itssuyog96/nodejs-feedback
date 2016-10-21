@@ -22,9 +22,10 @@ var Professor=function (info) {
         }
         console.log(this.data);
         var dat=JSON.stringify(this.data);
+        var data=this.data;
 
         var collection = db.get('professor');
-        collection.insert(dat,function(e,docs){
+        collection.insert(data,function(e,docs){
 
             console.log(docs);
             if (e) throw e;
@@ -47,9 +48,9 @@ var Professor=function (info) {
         });
     };
 
-    this.delete = function (id) {
+    this.delete = function (col_id,dep_id,prof_id) {
         var collection = db.get('professor');
-        collection.remove({"dep_id":id},function(e,docs){
+        collection.remove({"dep_id":dep_id, "col_id":col_id, "prof_id":prof_id},function(e,docs){
 
             console.log(docs);
             if (e) throw e;

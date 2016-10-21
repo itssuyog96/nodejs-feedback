@@ -22,7 +22,7 @@ module.exports = function(app, passport) {
         passport.authenticate('local-login', {
             failureRedirect: '/login'
         }),function (req,res) {
-
+            req.session.login= 1;
             switch(req.user.role)
             {
                 case 'admin':       choice ='/admin';
@@ -58,7 +58,9 @@ module.exports = function(app, passport) {
 
     app.get('/logout', function(req, res) {
         req.logout();
+        delete req.session.login
         res.redirect('/login');
+
     });
 
     function isadmIn(req, res, next) {

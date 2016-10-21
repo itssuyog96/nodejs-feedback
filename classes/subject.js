@@ -23,9 +23,9 @@ var Subject=function (info) {
         }
         console.log(this.data);
         var dat=JSON.stringify(this.data);
-
+        var data=this.data;
         var collection = db.get('subject');
-        collection.insert(dat,function(e,docs){
+        collection.insert(data,function(e,docs){
 
             console.log(docs);
             if (e) throw e;
@@ -48,9 +48,9 @@ var Subject=function (info) {
         });
     };
 
-    this.delete = function (id) {
+    this.delete = function (col_id,dep_id,sub_id) {
         var collection = db.get('subject');
-        collection.remove({"sub_id":id},function(e,docs){
+        collection.remove({"sub_id":sub_id, "col_id":col_id, "dep_id":dep_id},function(e,docs){
 
             console.log(docs);
             if (e) throw e;
