@@ -1,10 +1,10 @@
 /**
  * Created by arun on 16/09/2016.
  */
+var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
 
-var db=require('../db-config');
 var Department=function (info) {
 
     this.data = {
@@ -20,11 +20,11 @@ var Department=function (info) {
 
         }
         console.log(this.data);
-        var dat=JSON.stringify(this.data);
+        //var dat = JSON.stringify(this.data);
 
-        var collection = db.get('department');
-        collection.insert(dat,function(e,docs){
-
+        const collection = db.get('department');
+        collection.insert(this.data, function(e,docs){
+        db.close();
             console.log(docs);
             if (e) throw e;
             else{
@@ -46,16 +46,18 @@ var Department=function (info) {
         });
     };
 
-    this.delete = function (id) {
-        var collection = db.get('department');
-        collection.remove({"col_id":id},function(e,docs){
+    this.delete = function (col_id, dept_id) {
 
-            console.log(docs);
+        const collection = db.get('department');
+        collection.remove({"col_id": col_id, "dept_id" : dept_id},function(e){
+
             if (e) throw e;
             else{
-                console.log('data deleted');
+                console.log('data deleted : ' + col_id +"|"+ dept_id);
             }
         });
+
+        db.close();
 
     };
 

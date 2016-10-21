@@ -7,9 +7,9 @@ var tdata = require('../tablemeta.json').admin;
 var tiles = require('../dashmeta.json').admin;
 var mdata = require('../modalmeta.json');
 
-module.exports=function (app,passport) {
+module.exports = function(app, passport) {
 
-    app.get('/new',function (req,res) {
+    app.get('/new',function (req, res) {
         res.send("hello world");
     });
 
@@ -89,6 +89,7 @@ module.exports=function (app,passport) {
 
         }
         req.session.redirectTo=req.path;
+
         // if they aren't redirect them to the home page
         res.redirect('/login');
     }

@@ -191,9 +191,10 @@ router.post('/add_subject', function (req, res, next) {
 router.post('/del_dept', function (req, res, next) {
 
     try {
-        dept = new Department();
+        var dept = new Department();
 
-        dept.delete(req.body.id);
+        console.log(JSON.stringify(req.body));
+        dept.delete(req.body.col_id, req.body.dept_id);
     }catch (e){
         res.writeHead(500, {'Content-Type': 'text/html'});
         res.write('Error in database!' + e);

@@ -8,12 +8,12 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
+    var datax = req.session.user;
+    console.log(datax);
+    console.log(JSON.stringify(datax));
     var db = req.db;
     var collection = db.get('users');
     collection.find({},{},function(e,docs) {
-
-
-        var datax = docs[0];
 
         var datay = {
             "data": [{

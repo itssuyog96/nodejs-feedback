@@ -241,7 +241,7 @@
         var i = 1;
         $("#<%= col.name %>").DataTable().destroy();
         $("#<%= col.name %>").DataTable({
-            ajax: 'ajax/load_colg',
+            ajax: '../ajax/load_colg',
             columns: [
                 {data: function(){
                     return i++;
@@ -280,7 +280,7 @@
         $("#<%= dept.name %>").DataTable().destroy();
         $("#<%= dept.name %>").DataTable({
             ajax: {
-                url: 'ajax/load_dept',
+                url: '../ajax/load_dept',
                 data: {'id': id},
                 method: 'POST'
             },
@@ -317,7 +317,7 @@
         $("#<%= subj.name %>").DataTable().destroy();
         $("#<%= subj.name %>").DataTable({
             ajax: {
-                url: 'ajax/load_sub',
+                url: '../ajax/load_sub',
                 data: {'id': id},
                 method: 'POST'
             },
@@ -352,7 +352,7 @@
         $("#<%= profs.name %>").DataTable().destroy();
         $("#<%= profs.name %>").DataTable({
             ajax: {
-                url: 'ajax/load_prof',
+                url: '../ajax/load_prof',
                 data: {'id': id},
                 method: 'POST'
             },
@@ -381,7 +381,7 @@
 
     function del_colg(id) {
         $.ajax({
-            url: 'ajax/del_col',
+            url: '../ajax/del_col',
             data: {'id': id},
             method: 'POST',
             success: function (data) {
@@ -396,11 +396,11 @@
 
     function del_dept(id, colg_id) {
         $.ajax({
-            url: 'ajax/del_dept',
-            data: {id: id},
+            url: '../ajax/del_dept',
+            data: {col_id: colg_id, dept_id: id},
             method: 'POST',
             success: function (data) {
-                load_<%= col.name %>(colg_id);
+                load_<%= dept.name %>(colg_id);
                 //toast the success message
             },
             error: function (data) {
@@ -411,7 +411,7 @@
 
     function del_subj(id, dept_id) {
         $.ajax({
-            url: 'ajax/del_subj',
+            url: '../ajax/del_subj',
             data: {id: id},
             method: 'POST',
             success: function (data) {
@@ -426,7 +426,7 @@
 
     function del_profs(id, dept_id) {
         $.ajax({
-            url: 'ajax/del_prof',
+            url: '../ajax/del_prof',
             data: {'id': id},
             method: 'POST',
             success: function (data) {
@@ -435,7 +435,7 @@
                 //toast the success message
             },
             error: function (data) {
-                console.log('Professor not deleted. '+data);
+                console.log('Professor not deleted. '+data.responseText);
                 //toast the error out
             }
         });
@@ -443,7 +443,7 @@
 
     function del_dept(id, colg_id) {
         $.ajax({
-            url: 'ajax/del_dept',
+            url: '../ajax/del_dept',
             data: {id: id},
             method: 'POST',
             success: function (data) {
@@ -460,7 +460,7 @@
         e.preventDefault();
 
         $.ajax({
-            url: 'ajax/add_col',
+            url: '../ajax/add_col',
             data: $('#form-m_col').serialize(),
             method: 'POST',
             success: function(data){
@@ -468,7 +468,7 @@
                 load_<%= col.name %>();
             },
             error: function(data){
-                console.log("Error occured while adding college! "+data);
+                console.log("Error occured while adding college! "+data.responseText);
             }
         });
     });
@@ -477,7 +477,7 @@
         e.preventDefault();
 
         $.ajax({
-            url: 'ajax/add_dept',
+            url: '../ajax/add_dept',
             data: $('#form-m_dept').serialize(),
             method: 'POST',
             success: function(data){
@@ -485,7 +485,7 @@
                 load_<%= dept.name %>();
             },
             error: function(data){
-                console.log("Error occured while adding department! "+data);
+                console.log("Error occured while adding department! "+ data.responseText);
             }
         });
 
@@ -495,7 +495,7 @@
         e.preventDefault();
 
         $.ajax({
-            url: 'ajax/add_prof',
+            url: '../ajax/add_prof',
             data: $('#form-m_prof').serialize(),
             method: 'POST',
             success: function(data){
@@ -503,7 +503,7 @@
                 load_<%= profs.name %>();
             },
             error: function(data){
-                console.log("Error occured while adding professor! "+data);
+                console.log("Error occured while adding professor! "+data.responseText);
             }
         });
     });
@@ -512,7 +512,7 @@
         e.preventDefault();
 
         $.ajax({
-            url: 'ajax/add_subject',
+            url: '../ajax/add_subject',
             data: $('#form-m_subj').serialize(),
             method: 'POST',
             success: function(data){
@@ -520,7 +520,7 @@
                 load_<%= subj.name %>();
             },
             error: function(data){
-                console.log("Error occured while adding subject! "+data);
+                console.log("Error occured while adding subject! "+data.responseText);
             }
         });
     });
