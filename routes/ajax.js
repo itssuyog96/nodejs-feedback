@@ -33,8 +33,9 @@ router.get('/load_colg', function (req, res, next) {
 router.post('/load_dept', function (req, res, next) {
 
     var db = req.db;
+    console.log(JSON.stringify(req.body));
     var collection = db.get('department');
-    collection.find({},function(e,docs){
+    collection.find(req.body,function(e,docs){
         var d = JSON.stringify(docs);
         if (e) throw e;
         else {
@@ -52,7 +53,7 @@ router.post('/load_prof', function (req, res, next) {
 
     var db = req.db;
     var collection = db.get('professor');
-    collection.find({},function(e,docs){
+    collection.find(req.body,function(e,docs){
         var d = JSON.stringify(docs);
         if (e) throw e;
         else {
@@ -68,7 +69,7 @@ router.post('/load_sub', function (req, res, next) {
 
     var db = req.db;
     var collection = db.get('subject');
-    collection.find({},function(e,docs){
+    collection.find(req.body,function(e,docs){
         var d = JSON.stringify(docs);
         if (e) throw e;
         else {
@@ -86,7 +87,7 @@ router.post('/del_prof', function (req, res, next) {
 
         prof = new Professor();
 
-        prof.delete(req.body.id);
+        prof.delete(req.body);
 
     } catch (e) {
         res.writeHead(500, {'Content-Type': 'text/html'});

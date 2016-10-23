@@ -7,8 +7,8 @@
 <!-- BEGIN HEAD -->
 
 <% include tpl/header.ejs %>
-<link href="stylesheets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css"/>
-<link href="stylesheets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet"
+<link href="../../stylesheets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css"/>
+<link href="../../stylesheets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet"
       type="text/css"/>
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
@@ -41,30 +41,18 @@
 
             <!--START EDITING FROM HERE-->
 
-            <div class="note note-info">
-                <p> A black page template with a minimal dependency assets to use as a base for any custom page you create </p>
-            </div>
-
             <div class="portlet light portlet-fit ">
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="icon-settings font-red"></i>
-                        <span class="caption-subject font-red sbold uppercase">Professor Entry</span>
-                    </div>
-                    <div class="actions">
-                        <div class="btn-group btn-group-devided" data-toggle="buttons">
-                            <label class="btn btn-transparent red btn-outline btn-circle btn-sm active">
-                                <input type="radio" name="options" class="toggle" id="option1">Actions</label>
-                            <label class="btn btn-transparent red btn-outline btn-circle btn-sm">
-                                <input type="radio" name="options" class="toggle" id="option2">Settings</label>
-                        </div>
+                        <span class="caption-subject font-red bold uppercase">Professor Entry</span>
                     </div>
                 </div>
 
                 <div class="portlet light  div-<%= profs.name %>">
                     <div class="portlet-title">
                         <div class="caption font-dark">
-                            <i class="icon-settings font-dark"></i>
+                            <i class="icon-list font-dark"></i>
                             <span class="caption-subject bold uppercase">Professor Table</span>
                         </div>
                     </div>
@@ -148,12 +136,15 @@
 
 <% include tpl/footer.ejs %>
 
-<script src="javascripts/global/scripts/datatable.js" type="text/javascript"></script>
-<script src="javascripts/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-<script src="javascripts/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+<script src="../../javascripts/global/scripts/datatable.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
 
 <script>
 
+    $('.col_id').val(<%= user.col_id %>);
+    $('.dept_id').val(<%= user.dep_id %>);
+    $('.col_id').prop("readonly", true);
 
     function load_<%= profs.name %>(id) {
         var i = 1;
@@ -164,7 +155,7 @@
         $("#<%= profs.name %>").DataTable().destroy();
         $("#<%= profs.name %>").DataTable({
             ajax: {
-                url: 'ajax/load_prof',
+                url: '../../ajax/load_prof',
                 data: {'id': id},
                 method: 'POST'
             },
@@ -177,7 +168,7 @@
                 <% }) %>
                 {
                     data: function (data) {
-                        var del_btn = '<a class="btn red btn-outline" href="javascript:del_profs(' + data.<%= profs.column_data[0] %> + ',<%= user.dept_id %>)" target="_blank">DELETE</a>';
+                        var del_btn = '<a class="btn red btn-outline" href="javascript:del_profs(' + data.<%= profs.column_data[0] %> + ',<%= user.dep_id %>)" target="_blank">DELETE</a>';
 
                         var btns = del_btn;
 
@@ -190,11 +181,11 @@
 
     }
 
-    load_<%= profs.name %>(<%= user.dept_id %>);
+    load_<%= profs.name %>(<%= user.dep_id %>);
 
     function del_profs(id, dept_id) {
         $.ajax({
-            url: 'ajax/del_prof',
+            url: '../../ajax/del_prof',
             data: {'id': id},
             method: 'POST',
             success: function (data) {
@@ -213,7 +204,7 @@
         e.preventDefault();
 
         $.ajax({
-            url: 'ajax/add_prof',
+            url: '../../ajax/add_prof',
             data: $('#form-m_prof').serialize(),
             method: 'POST',
             success: function(data){

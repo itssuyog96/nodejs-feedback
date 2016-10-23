@@ -12,35 +12,38 @@
         <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
         <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
         <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+            <% menu.parent.forEach(function(par_menu_item){ %>
             <li class="nav-item start ">
-                <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="icon-home"></i>
-                    <span class="title">Dashboard</span>
+                <a href="<%= par_menu_item.url %>" class="nav-link nav-toggle">
+                    <i class="<%= par_menu_item.icon %>"></i>
+                    <span class="title"><%= par_menu_item.name %></span>
                     <span class="arrow"></span>
                 </a>
-                <ul class="sub-menu">
+
+                <% var i = 0;
+
+                menu.child.forEach(function (child_menu_item) {
+                 if(child_menu_item.parent_id == par_menu_item.id){
+                    if(i == 0){%>
+                        <ul class="sub-menu">
+                    <% i++; }%>
                     <li class="nav-item start ">
-                        <a href="index.html" class="nav-link ">
-                            <i class="icon-bar-chart"></i>
-                            <span class="title">Dashboard 1</span>
+                        <a href="<%= child_menu_item.url %>" class="nav-link ">
+                            <i class="<%= child_menu_item.icon %>"></i>
+                            <span class="title"><%= child_menu_item.name %></span>
                         </a>
                     </li>
-                    <li class="nav-item start ">
-                        <a href="dashboard_2.html" class="nav-link ">
-                            <i class="icon-bulb"></i>
-                            <span class="title">Dashboard 2</span>
-                            <span class="badge badge-success">1</span>
-                        </a>
-                    </li>
-                    <li class="nav-item start ">
-                        <a href="dashboard_3.html" class="nav-link ">
-                            <i class="icon-graph"></i>
-                            <span class="title">Dashboard 3</span>
-                            <span class="badge badge-danger">5</span>
-                        </a>
-                    </li>
+
+                <% }
+                }); %>
+            <% if(i > 0){%>
                 </ul>
+            <%}%>
+
+
             </li>
+            <% }); %>
+
         </ul>
         <!-- END SIDEBAR MENU -->
     </div>

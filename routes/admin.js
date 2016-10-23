@@ -7,17 +7,43 @@ var router = express.Router();
 var tdata = require('../tablemeta.json').admin;
 var tiles = require('../dashmeta.json').admin;
 var mdata = require('../modalmeta.json');
+var menu = require('../menu.json').feed_analyzer;
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
 
-    res.render('dashboard', {dash : tiles});
+    if(req.session.login) {
+        if(req.session.passport.user.role == 'admin'){
+            res.render('dashboard', {dash : tiles, menu : menu, user : req.session.passport.user});
+        }
+        else{
+            delete req.session.redirectTo;
+            res.redirect('/login');
+        }
+
+    }
+    else {
+        req.session.redirectTo = '/admin/';
+        res.redirect('/login');
+    }
 });
 
 router.get('/manage', function(req, res, next){
 
-    console.log("College data"+tdata.college);
-    res.render('admin', {col: tdata.college, dept: tdata.department, profs: tdata.professor, subj: tdata.subject, mdata: mdata.topics});
+    if(req.session.login) {
+        if(req.session.passport.user.role == 'admin'){
+            res.render('admin', {menu : menu, user : req.session.passport.user, col: tdata.college, dept: tdata.department, profs: tdata.professor, subj: tdata.subject, mdata: mdata.topics});
+        }
+        else{
+            delete req.session.redirectTo;
+            res.redirect('/login');
+        }
+
+    }
+    else {
+        req.session.redirectTo = '/admin/manage';
+        res.redirect('/login');
+    }
 
 });
 

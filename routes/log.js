@@ -23,12 +23,13 @@ module.exports = function(app, passport) {
             failureRedirect: '/login'
         }),function (req,res) {
             req.session.login= 1;
+
             switch(req.user.role)
             {
                 case 'admin':       choice ='/admin';
                                     break;
 
-                case 'feedbackA':   choice ='/feed_analyzer';
+                case 'feed_analyzer':   choice ='/feed_analyzer';
                                     break;
 
                 case 'principal':   choice ='/principal';
@@ -42,19 +43,10 @@ module.exports = function(app, passport) {
 
             var redirectTo = req.session.redirectTo ? req.session.redirectTo : choice;
             delete req.session.redirectTo;
+
             res.redirect(redirectTo);
         }
     );
-
-    app.get('/admin',isLoggedIn, function(req, res) {
-
-        res.render('dashboard', {dash : tiles});
-    });
-
-    app.get('/admin/manage',isLoggedIn, function(req, res) {
-
-        res.render('admin', {col: tdata.college, dept: tdata.department, profs: tdata.professor, subj: tdata.subject, mdata: mdata.topics});
-    });
 
     app.get('/logout', function(req, res) {
         req.logout();

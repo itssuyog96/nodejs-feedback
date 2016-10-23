@@ -8,7 +8,7 @@
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
 
-<% include tpl/manage_header.ejs %>
+<% include tpl/header.ejs %>
 <link href="../stylesheets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css"/>
 <link href="../stylesheets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet"
       type="text/css"/>
@@ -224,7 +224,7 @@
 
 <!-- END MODALS -->
 
-<% include tpl/manage_footer.ejs %>
+<% include tpl/footer.ejs %>
 <script src="../javascripts/global/scripts/datatable.js" type="text/javascript"></script>
 <script src="../javascripts/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="../javascripts/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
@@ -281,7 +281,7 @@
         $("#<%= dept.name %>").DataTable({
             ajax: {
                 url: '../ajax/load_dept',
-                data: {'id': id},
+                data: {col_id: id},
                 method: 'POST'
             },
             columns: [
@@ -293,8 +293,8 @@
                 <% }) %>
                 {
                     data: function (data) {
-                        var profs_btn = '<a class="btn blue btn-outline" href="javascript:load_<%= profs.name %>(' + data.<%= dept.column_data[0] %>+ ')" target="_blank">PROFESSORS</a>';
-                        var subj_btn = '<a class="btn blue btn-outline" href="javascript:load_<%= subj.name %>(' + data.<%= dept.column_data[0] %>+ ')" target="_blank">SUBJECTS</a>';
+                        var profs_btn = '<a class="btn blue btn-outline" href="javascript:load_<%= profs.name %>(' + data.<%= dept.column_data[0] %>+ ','+id+')" target="_blank">PROFESSORS</a>';
+                        var subj_btn = '<a class="btn blue btn-outline" href="javascript:load_<%= subj.name %>(' + data.<%= dept.column_data[0] %>+ ','+id+')" target="_blank">SUBJECTS</a>';
                         var del_btn = '<a class="btn red btn-outline" href="javascript:del_dept(' + data.<%= dept.column_data[0] %>+ ', '+id+')" target="_blank">DELETE</a>';
 
                         var btns = profs_btn + subj_btn + del_btn;
@@ -309,7 +309,7 @@
         $('.div-<%= dept.name %>').css("display", "block");
     }
 
-    function load_<%= subj.name %>(id) {
+    function load_<%= subj.name %>(id, colg_id) {
         var i = 1;
         $('.dept_id').val(id);
         $('.dept_id').prop("readonly", true);
@@ -318,7 +318,7 @@
         $("#<%= subj.name %>").DataTable({
             ajax: {
                 url: '../ajax/load_sub',
-                data: {'id': id},
+                data: {dept_id: id, col_id: colg_id},
                 method: 'POST'
             },
             columns: [
@@ -330,7 +330,7 @@
                 <% }) %>
                 {
                     data: function (data) {
-                        var del_btn = '<a class="btn red btn-outline" href="javascript:del_subj(' + data.<%= subj.column_data[0] %>+ ', '+id+ ')" target="_blank">DELETE</a>';
+                        var del_btn = '<a class="btn red btn-outline" href="javascript:del_subj(' + data.<%= subj.column_data[0] %>+ ', '+id+ ', '+colg_id+ ')" target="_blank">DELETE</a>';
 
                         var btns = del_btn;
 
@@ -343,7 +343,7 @@
         $('.div-<%= subj.name %>').css("display", "block");
     }
 
-    function load_<%= profs.name %>(id) {
+    function load_<%= profs.name %>(id, colg_id) {
         var i = 1;
 
         $('.dept_id').val(id);
@@ -353,7 +353,7 @@
         $("#<%= profs.name %>").DataTable({
             ajax: {
                 url: '../ajax/load_prof',
-                data: {'id': id},
+                data: {dept_id: id, col_id: colg_id},
                 method: 'POST'
             },
             columns: [
@@ -365,7 +365,7 @@
                 <% }); %>
                 {
                     data: function (data) {
-                        var del_btn = '<a class="btn red btn-outline" href="javascript:del_profs(' + data.<%= profs.column_data[0] %>+ ', '+id+ ')" target="_blank">DELETE</a>';
+                        var del_btn = '<a class="btn red btn-outline" href="javascript:del_profs(' + data.<%= profs.column_data[0] %>+ ', '+id+ ', '+colg_id+ ')" target="_blank">DELETE</a>';
 
                         var btns = del_btn;
 
@@ -382,7 +382,7 @@
     function del_colg(id) {
         $.ajax({
             url: '../ajax/del_col',
-            data: {'id': id},
+            data: {col_id: id},
             method: 'POST',
             success: function (data) {
                 load_<%= col.name %>();
@@ -409,13 +409,13 @@
         });
     }
 
-    function del_subj(id, dept_id) {
+    function del_subj(id, dept_id, colg_id) {
         $.ajax({
             url: '../ajax/del_subj',
-            data: {id: id},
+            data: {sub_id: id, dept_id : dept_id, col_id: colg_id},
             method: 'POST',
             success: function (data) {
-                load_<%= subj.name %>(dept_id);
+                load_<%= subj.name %>(dept_id, colg_id);
                 //toast the success message
             },
             error: function (data) {
@@ -424,13 +424,13 @@
         });
     }
 
-    function del_profs(id, dept_id) {
+    function del_profs(id, dept_id, colg_id) {
         $.ajax({
             url: '../ajax/del_prof',
-            data: {'id': id},
+            data: {prof_id: id, dept_id: dept_id, col_id: colg_id},
             method: 'POST',
             success: function (data) {
-                load_<%= profs.name %>(dept_id);
+                load_<%= profs.name %>(dept_id, colg_id);
                 console.log('Professor deleted : ' + data);
                 //toast the success message
             },
@@ -444,10 +444,10 @@
     function del_dept(id, colg_id) {
         $.ajax({
             url: '../ajax/del_dept',
-            data: {id: id},
+            data: {dept_id: id, col_id: colg_id},
             method: 'POST',
             success: function (data) {
-                load_<%= col.name %>(colg_id);
+                load_<%= dept.name %>(colg_id);
                 //toast the success message
             },
             error: function (data) {
@@ -482,7 +482,7 @@
             method: 'POST',
             success: function(data){
                 $('.close-m_dept').click();
-                load_<%= dept.name %>();
+                load_<%= dept.name %>($('.col_id').val());
             },
             error: function(data){
                 console.log("Error occured while adding department! "+ data.responseText);
@@ -500,7 +500,7 @@
             method: 'POST',
             success: function(data){
                 $('.close-m_prof').click();
-                load_<%= profs.name %>();
+                load_<%= profs.name %>($('.dept_id').val(), $('.col_id').val());
             },
             error: function(data){
                 console.log("Error occured while adding professor! "+data.responseText);
@@ -517,7 +517,7 @@
             method: 'POST',
             success: function(data){
                 $('.close-m_subj').click();
-                load_<%= subj.name %>();
+                load_<%= subj.name %>($('.dept_id').val(), $('.col_id').val());
             },
             error: function(data){
                 console.log("Error occured while adding subject! "+data.responseText);

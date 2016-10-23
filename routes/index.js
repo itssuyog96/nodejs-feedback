@@ -22,7 +22,24 @@ var omkar={
   });
 
   if(req.session.login) {
-    res.render('index', {"title": "FEEDBACK SYSTEM"});
+    //res.render('index', {"title": "FEEDBACK SYSTEM"});
+    switch(req.user.role)
+    {
+      case 'admin':       choice ='/admin';
+        break;
+
+      case 'feed_analyzer':   choice ='/feed_analyzer';
+        break;
+
+      case 'principal':   choice ='/principal';
+        break;
+
+      case 'student':     choice ='/student';
+        break;
+
+      default:break;
+    }
+    res.redirect(choice);
   }
   else {
     req.session.redirectTo = '/';
