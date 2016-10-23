@@ -30,7 +30,7 @@ router.get('/load_colg', function (req, res, next) {
 });
 
 
-router.post('/load_dept', function (req, res, next) {
+router.get('/load_dept', function (req, res, next) {
 
     var db = req.db;
     console.log(JSON.stringify(req.body));
@@ -49,7 +49,7 @@ router.post('/load_dept', function (req, res, next) {
 
 
 
-router.post('/load_prof', function (req, res, next) {
+router.get('/load_prof', function (req, res, next) {
 
     var db = req.db;
     var collection = db.get('professor');
@@ -65,7 +65,7 @@ router.post('/load_prof', function (req, res, next) {
     });
 });
 
-router.post('/load_sub', function (req, res, next) {
+router.get('/load_sub', function (req, res, next) {
 
     var db = req.db;
     var collection = db.get('subject');
@@ -194,8 +194,8 @@ router.post('/del_dept', function (req, res, next) {
     try {
         var dept = new Department();
 
-        console.log(JSON.stringify(req.body));
-        dept.delete(req.body.col_id, req.body.dept_id);
+        console.log("Data delete request : " + JSON.stringify(req.body));
+        dept.delete(req.body);
     }catch (e){
         res.writeHead(500, {'Content-Type': 'text/html'});
         res.write('Error in database!' + e);
@@ -255,7 +255,7 @@ router.post('/del_col', function (req, res, next) {
     try {
         col = new College();
 
-        col.delete(req.body.id);
+        col.delete(req.body);
     }catch (e){
         res.writeHead(500, {'Content-Type': 'text/html'});
         res.write('Error in database!' + e);

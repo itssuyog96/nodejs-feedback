@@ -48,12 +48,12 @@ var College=function (info) {
 
     this.delete = function (id) {
         var collection = db.get('college');
-        collection.remove({"col_id":id},function(e,docs){
+        collection.remove(id,function(e,docs){
 
-            console.log(docs);
+            console.log("Docs:" + docs);
             if (e) throw e;
             else{
-                console.log('data deleted');
+                console.log('data deleted :' + id);
             }
         });
 

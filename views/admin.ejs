@@ -74,7 +74,7 @@
                             </table>
                         </div>
                         <div class="col-md-2 col-sm-2 col-xs-12">
-                            <a class="btn green btn-outline" data-toggle="modal" data-target="#modal_colg">ADD COLLEGE</a>
+                            <a id="col_modal_btn" class="btn green btn-outline" data-toggle="modal" data-target="#modal_colg">ADD COLLEGE</a>
                         </div>
                     </div>
                 </div>
@@ -281,8 +281,7 @@
         $("#<%= dept.name %>").DataTable({
             ajax: {
                 url: '../ajax/load_dept',
-                data: {col_id: id},
-                method: 'POST'
+                data: {col_id: id}
             },
             columns: [
                 {data: function(){
@@ -318,8 +317,7 @@
         $("#<%= subj.name %>").DataTable({
             ajax: {
                 url: '../ajax/load_sub',
-                data: {dept_id: id, col_id: colg_id},
-                method: 'POST'
+                data: {dept_id: id, col_id: colg_id}
             },
             columns: [
                 {data: function(){
@@ -353,8 +351,7 @@
         $("#<%= profs.name %>").DataTable({
             ajax: {
                 url: '../ajax/load_prof',
-                data: {dept_id: id, col_id: colg_id},
-                method: 'POST'
+                data: {dept_id: id, col_id: colg_id}
             },
             columns: [
                 {data: function(){
@@ -523,6 +520,15 @@
                 console.log("Error occured while adding subject! "+data.responseText);
             }
         });
+    });
+
+    $('#col_modal_btn').on('click', function(){
+
+        $('.div-<%= dept.name %>').css("display", "none");
+        $('.div-<%= subj.name %>').css("display", "none");
+        $('.div-<%= profs.name %>').css("display", "none");
+        $('.col_id').val('');
+       $('.col_id').prop("readonly", false);
     });
 
 </script>

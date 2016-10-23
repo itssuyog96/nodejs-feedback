@@ -46,12 +46,15 @@ var Department=function (info) {
         });
     };
 
-    this.delete = function (col_id, dept_id) {
+    this.delete = function (req) {
 
         const collection = db.get('department');
-        collection.remove({"col_id": col_id, "dept_id" : dept_id},function(e){
+        collection.remove(req,function(e){
 
-            if (e) throw e;
+            if (e){
+                console.log('Error occured while deleting data' + JSON.stringify(req));
+                throw e;
+            }
             else{
                 console.log('data deleted : ' + col_id +"|"+ dept_id);
             }
