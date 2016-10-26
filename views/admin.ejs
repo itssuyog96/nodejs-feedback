@@ -397,7 +397,8 @@
             data: {col_id: colg_id, dept_id: id},
             method: 'POST',
             success: function (data) {
-                load_<%= dept.name %>(colg_id);
+                setTimeout(function(){load_<%= dept.name %>(colg_id);}, 150);
+
                 //toast the success message
             },
             error: function (data) {

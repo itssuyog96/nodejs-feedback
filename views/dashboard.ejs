@@ -51,6 +51,7 @@
                             <div class="tiles">
                                 <% dash.tiles.forEach(function(item, index){ %>
 
+                                <a href="<%= dash.url[index] %>">
                                 <div class="tile <%= dash.bg_style[index] %>">
                                     <div class="tile-body">
                                         <i class="fa <%= dash.fa_icons[index] %>"></i>
@@ -60,6 +61,7 @@
                                         <div class="number"> # </div>
                                     </div>
                                 </div>
+                                </a>
 
                                 <% }); %>
                             </div>

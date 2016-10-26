@@ -2,7 +2,6 @@
  * Created by adikr on 18-09-2016.
  */
 
-var db=require('../db-config');
 var LocalStrategy   = require('passport-local').Strategy;
 
 
@@ -35,6 +34,9 @@ module.exports = function(passport) {
             //console.log(password);
 
             var data= req.db;
+
+
+
             var collection = data.get('users');
             collection.find({"name":username},function(e,docs){
                 //var d = JSON.stringify(docs);

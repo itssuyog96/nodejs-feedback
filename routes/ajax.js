@@ -33,9 +33,12 @@ router.get('/load_colg', function (req, res, next) {
 router.get('/load_dept', function (req, res, next) {
 
     var db = req.db;
-    console.log(JSON.stringify(req.body));
+    var q = JSON.stringify(req.query);
+    console.log(req.query.col_id);
+    console.log(q);
     var collection = db.get('department');
-    collection.find(req.body,function(e,docs){
+
+    collection.find({"col_id" : req.query.col_id},function(e,docs){
         var d = JSON.stringify(docs);
         if (e) throw e;
         else {

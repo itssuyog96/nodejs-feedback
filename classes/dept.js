@@ -3,7 +3,7 @@
  */
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
+var db = monk('mongodb://localhost:27017/feed-db');
 
 var Department=function (info) {
 
@@ -20,11 +20,9 @@ var Department=function (info) {
 
         }
         console.log(this.data);
-        //var dat = JSON.stringify(this.data);
 
         const collection = db.get('department');
         collection.insert(this.data, function(e,docs){
-        db.close();
             console.log(docs);
             if (e) throw e;
             else{
@@ -47,20 +45,19 @@ var Department=function (info) {
     };
 
     this.delete = function (req) {
-
         const collection = db.get('department');
-        collection.remove(req,function(e){
 
-            if (e){
-                console.log('Error occured while deleting data' + JSON.stringify(req));
-                throw e;
+        collection.remove(req,function(err, result){
+
+            if (err){
+                console.log('Error occured while deleting data' + JSON.stringify(req)+"|"+JSON.stringify(result));
+                throw err;
             }
             else{
-                console.log('data deleted : ' + col_id +"|"+ dept_id);
+                console.log('data deleted : ' + col_id +"|"+ dept_id+"|"+JSON.stringify(result));
             }
         });
 
-        db.close();
 
     };
 
