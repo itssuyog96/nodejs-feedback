@@ -30,7 +30,7 @@ var professor_assign = require('./routes/professor_assign');
 
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('mongodb://localhost:27017/feed-db');
+var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
 
 //db connector
 app.use(function(req,res,next){
@@ -44,7 +44,7 @@ app.set('view engine', 'ejs');
 
 //set local vars
 app.locals.appname = 'Feedback System';
-app.locals.dbconnect = 'mongodb://localhost:27017/feed-db';
+app.locals.dbconnect = 'mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db';
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

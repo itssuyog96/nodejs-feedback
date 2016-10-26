@@ -50,7 +50,7 @@ module.exports = function(app, passport) {
 
     app.get('/logout', function(req, res) {
         req.logout();
-        delete req.session.login
+        delete req.session.login;
         res.redirect('/login');
 
     });
