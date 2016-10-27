@@ -306,4 +306,22 @@ router.post('/add_col', function (req, res, next) {
 
 });
 
+
+router.post('/getQuestions', function (req, res, next) {
+
+    var db = req.db;
+    var collection = db.get('question');
+    collection.find(req.body,function(e,docs){
+        var d = JSON.stringify(docs);
+        if (e) throw e;
+        else {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(d);
+            res.end();
+        }
+
+    });
+});
+
+
 module.exports = router;
