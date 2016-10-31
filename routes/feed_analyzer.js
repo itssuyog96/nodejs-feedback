@@ -28,6 +28,23 @@ router.get('/', function(req, res, next) {
     }
 });
 
+router.get('/questions', function(req, res, next) {
+
+    if(req.session.login) {
+        if(req.session.passport.user.role == 'feed_analyzer'){
+            res.render('questions', {dash : tiles, menu : menu, user: req.session.passport.user});
+        }
+        else{
+            delete req.session.redirectTo;
+            res.redirect('/login');
+        }
+    }
+    else {
+        req.session.redirectTo = '/feed_analyzer/questions';
+        res.redirect('/login');
+    }
+});
+
 router.get('/professor', function(req, res, next){
 
 

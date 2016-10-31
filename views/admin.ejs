@@ -241,7 +241,10 @@
         var i = 1;
         $("#<%= col.name %>").DataTable().destroy();
         $("#<%= col.name %>").DataTable({
-            ajax: '../ajax/load_colg',
+            ajax: {
+                url : '../ajax/load_colg',
+                method : 'POST'
+            },
             columns: [
                 {data: function(){
                     return i++;
@@ -281,7 +284,8 @@
         $("#<%= dept.name %>").DataTable({
             ajax: {
                 url: '../ajax/load_dept',
-                data: {col_id: id}
+                data: {col_id: id},
+                metohd: 'POST'
             },
             columns: [
                 {data: function(){
@@ -317,7 +321,8 @@
         $("#<%= subj.name %>").DataTable({
             ajax: {
                 url: '../ajax/load_sub',
-                data: {dept_id: id, col_id: colg_id}
+                data: {dept_id: id, col_id: colg_id},
+                method: 'POST'
             },
             columns: [
                 {data: function(){
@@ -351,7 +356,8 @@
         $("#<%= profs.name %>").DataTable({
             ajax: {
                 url: '../ajax/load_prof',
-                data: {dept_id: id, col_id: colg_id}
+                data: {dept_id: id, col_id: colg_id},
+                method: 'POST'
             },
             columns: [
                 {data: function(){

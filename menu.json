@@ -4,13 +4,14 @@
       {"id" : 1, "name" : "Dashboard", "url" : "../../../feed_analyzer", "icon" : "icon-home"},
       {"id" : 2, "name" : "Professor", "url" : "../../../feed_analyzer/professor", "icon" : "icon-graduation"},
       {"id" : 3, "name" : "Subjects", "url" : "../../../feed_analyzer/subjects", "icon" : "icon-notebook"},
-      {"id" : 4, "name" : "Survey", "url" : "../../../feed_analyzer/survey", "icon" : "icon-feed"},
-      {"id" : 5, "name" : "Reports", "url" : "../../../feed_analyzer/survey", "icon" : "icon-bar-chart"},
-      {"id" : 6, "name" : "Settings", "url" : "../../../feed_analyzer/settings", "icon" : "icon-settings"}
+      {"id" : 4, "name" : "Questions", "url" : "../../../feed_analyzer/questions", "icon" : "icon-question"},
+      {"id" : 5, "name" : "Survey", "url" : "../../../feed_analyzer/survey", "icon" : "icon-feed"},
+      {"id" : 6, "name" : "Reports", "url" : "../../../feed_analyzer/survey", "icon" : "icon-bar-chart"},
+      {"id" : 7, "name" : "Settings", "url" : "../../../feed_analyzer/settings", "icon" : "icon-settings"}
     ],
     "child" : [
-      {"id" : 1, "name" : "Create Survey", "url" : "../../../feed_analyzer/create_survey", "parent_id" : 4, "icon" : "icon-pencil"},
-      {"id" : 1, "name" : "View All Surveys", "url" : "../../../feed_analyzer/view_survey", "parent_id" : 4, "icon" : "icon-layers"}
+      {"id" : 1, "name" : "Create Survey", "url" : "../../../feed_analyzer/create_survey", "parent_id" : 5, "icon" : "icon-pencil"},
+      {"id" : 1, "name" : "View All Surveys", "url" : "../../../feed_analyzer/view_survey", "parent_id" : 5, "icon" : "icon-layers"}
     ]
   }
 }

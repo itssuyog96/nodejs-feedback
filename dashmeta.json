@@ -7,9 +7,9 @@
   },
 
   "feeder":{
-    "tiles" : ["PROFESSORS", "SUBJECTS", "SURVEY", "REPORTS", "SETTINGS"],
-    "fa_icons" : ["fa-user", "fa-book", "fa-check-square-o", "fa-line-chart", "fa-cogs"],
-    "bg_style" : ["bg-blue", "bg-red", "bg-yellow", "bg-green", "bg-dark"],
-    "url" : ["../../../feed_analyzer/professor", "../../../feed_analyzer/subjects", "../../../feed_analyzer/survey", "../../../feed_analyzer/reports", "../../../feed_analyzer/settings"]
+    "tiles" : ["PROFESSORS", "SUBJECTS", "QUESTIONS", "SURVEY", "REPORTS", "SETTINGS"],
+    "fa_icons" : ["fa-user", "fa-book", "fa-question", "fa-check-square-o", "fa-line-chart", "fa-cogs"],
+    "bg_style" : ["bg-blue", "bg-red", "bg-green-sharp", "bg-yellow", "bg-green", "bg-dark"],
+    "url" : ["../../../feed_analyzer/professor", "../../../feed_analyzer/subjects", "../../../feed_analyzer/questions", "../../../feed_analyzer/survey", "../../../feed_analyzer/reports", "../../../feed_analyzer/settings"]
   }
 }

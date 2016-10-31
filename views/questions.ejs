@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<% include tpl/header.ejs %>
+<link href="../../stylesheets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css"/>
+<link href="../../stylesheets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet"
+      type="text/css"/>
+
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
+<!-- BEGIN HEADER -->
+
+<% include tpl/menu.ejs %>
+
+<!-- END HEADER -->
+
+
+<!-- BEGIN HEADER & CONTENT DIVIDER -->
+<div class="clearfix"> </div>
+<!-- END HEADER & CONTENT DIVIDER -->
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <% include tpl/sidebar.ejs %>
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+
+            <!--h3 class="page-title"> Blank Page Layout
+                <small>blank page layout</small>        To be resolved
+            </h3-->
+
+            <!-- END PAGE HEADER-->
+
+
+            <!--START EDITING FROM HERE-->
+
+            <div class="portlet light portlet-fit ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-settings font-red"></i>
+                        <span class="caption-subject font-red bold uppercase">Professor Entry</span>
+                    </div>
+                </div>
+
+                <div class="portlet light  div-questions">
+                    <div class="portlet-title">
+                        <div class="caption font-dark">
+                            <i class="icon-list font-dark"></i>
+                            <span class="caption-subject bold uppercase">Question Table</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="questions-table"
+                                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                                    <thead>
+                                    <tr>
+                                        <th>QUESTION ID</th>
+                                        <th>QUESTION</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                <a class="btn green btn-outline" data-toggle="modal" data-target="#modal_prof">ADD QUESTION</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- MODALS -->
+
+            <!-- Add question modal -->
+            <div class="modal fade div_questions" id="questions" tabindex="-1" role="basic" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <h4 class="modal-title">ADD QUESTION</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="form-questions">
+
+                                <div class="form-group col-md-12">
+                                    <div class="form-group col-md-4">
+                                        <label for="qid" class="form-control">Question ID</label>
+                                    </div>
+                                    <div class="form-group col-md-7">
+                                        <input type="text" name="qid" class="form-control" required/>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn dark btn-outline close-questions" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn green questions">Save changes</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+            <!--STOP EDITING HERE-->
+
+        </div>
+        <!-- END CONTENT BODY -->
+    </div>
+    <!-- END CONTENT -->
+    <% include tpl/quicksidebar.ejs %>
+</div>
+
+<!-- END CONTAINER -->
+
+<% include tpl/footer.ejs %>
+
+<script src="../../javascripts/global/scripts/datatable.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+
+<script>
+
+</script>
+
+</body>
+
+</html>

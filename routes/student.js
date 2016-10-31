@@ -3,6 +3,8 @@
  */
 var express = require('express');
 var router = express.Router();
+var Rating = require('rating');
+
 
 
 /* GET home page. */
@@ -26,7 +28,8 @@ router.get('/', function(req, res, next) {
             console.log("Final User info : "+JSON.stringify(user_info));
 
             const collection_c = db.get('subject');
-            collection_c.find({col_id : user_info.col_id, dep_id: user_info.dep_id, sem : "5"}, function(err, docs_c){
+            collection_c.find(
+                {col_id : user_info.col_id, dep_id: user_info.dep_id, sem : "5"}, function(err, docs_c){
 
                     console.log("Fetched Subjects : "+JSON.stringify(docs_c));
                     res.render('student', {user : user_info, subject : docs_c});
@@ -34,13 +37,6 @@ router.get('/', function(req, res, next) {
             });
         });
     });
-
-
-
-
-
 });
-
-
 
 module.exports = router;
