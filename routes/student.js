@@ -3,9 +3,6 @@
  */
 var express = require('express');
 var router = express.Router();
-var Rating = require('rating');
-
-
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
