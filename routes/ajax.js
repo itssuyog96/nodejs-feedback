@@ -323,5 +323,24 @@ router.post('/getQuestions', function (req, res, next) {
     });
 });
 
+router.post('/getSubject', function (req, res, next) {
+
+    var db = req.db;
+    var collection = db.get('subject');
+    collection.find(req.body,function(e,docs){
+        var d = JSON.stringify(docs);
+        if (e) throw e;
+        else {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(d);
+            res.end();
+        }
+
+    });
+});
+
+
+
+
 
 module.exports = router;
