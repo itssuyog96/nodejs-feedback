@@ -367,7 +367,7 @@ router.post('/submit', function (req, res, next) {
                     {
                         const collectionb = db.get('rating');
                         console.log(req.body.rate[k]);
-                        collectionb.insert({"col_id":col_id,"dep_id":dep_id,"sem":sem,"sub_id":sub_id,"q_id":docs_a[j].q_id,"rating":req.body.rate[k],"year":req.year},
+                        collectionb.insert({"col_id":col_id,"dep_id":dep_id,"sem":sem,"sub_id":sub_id,"q_id":docs_a[j].q_id,"v_rating":req.body.rate[k],"year":req.year},
                         function (er2,result) {
                             if (er2) throw er2;
                             else {
@@ -384,6 +384,22 @@ router.post('/submit', function (req, res, next) {
 
 
 });
+
+router.post('/updateSub', function (req, res, next) {
+
+    var db = req.db;
+    var collection = db.get('subject');
+    collection.update({"col_id":req.body.col_id,"dept_id":req.body.dep_id,"sub_id":req.body.sub_id},{"$set":{"prof_id":req.body.prof_id}},function(e,docs){
+        var d = JSON.stringify(docs);
+        if (e) throw e;
+        else {
+            console.log('subject updated');
+            res.end();
+        }
+
+    });
+});
+
 
 
 

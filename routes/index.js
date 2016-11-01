@@ -12,8 +12,8 @@ var omkar={
   "prof_name":"Torna Kamble"
 };
   var db = req.db;
-  var collection = db.get('college');
-  collection.find({"col_id":'1'},function(e,docs){
+  var collection = db.get('survey');
+  collection.update({"prof_id":"111"},{"$set":{"survey":"123"}},function(e,docs){
     var d = JSON.stringify(docs);
 
     console.log(d);
