@@ -107,7 +107,7 @@
                 <div class="page-content-row">
                     <div class="page-content-col">
                         <!-- BEGIN PAGE BASE CONTENT -->
-                        <form id="feedback_form" method="POST" action="../../../logout">
+                        <form id="feedback_form">
                             <input type="hidden" name="col_id" value = "<%= user.col_id %>" />
                             <input type="hidden" name="dept_id" value = "<%= user.dep_id %>" />
                             <input type="hidden" name="sem" value = "<%= user.sem %>" />
@@ -291,6 +291,7 @@
         success : function(data){
             var i = 0;
             data.forEach(function(sub) {
+                var k=1;
                 if(sub.sub_id == <%= item.sub_id %>) {
                     $('#sub_quesn_qty_<%= j %>').val(parseInt($('#sub_quesn_qty_<%= j %>').val()) + 1);
                     $('#quesns-<%= item.sub_name %>').append(
@@ -302,7 +303,7 @@
                                     '<div class="col-md-5 row margin-bottom text-align-center">' +
                                         '<div class="col-md-12">' +
 
-                                            '<input id="rate-<%= item.sub_id %>-'+ sub.q_id +'" name="rate-<%= item.sub_id %>-'+ sub.q_id +'" class="rating rating-loading star-rating-input" required>'+
+                                            '<input id="rate" name="rate" class="rating rating-loading star-rating-input" required>'+
 
                                         '</div>' +
                                     '</div>' +
@@ -310,6 +311,7 @@
                             '</div>'
                     );
                 }
+                k++;
                 });
 
             $('#quesns-<%= item.sub_name %>').append(
@@ -359,8 +361,17 @@
 
 <script>
     $('.feedback-panel').on('click', '.submit-feedback', function(e){
-       e.preventDefault();
-        console.log(JSON.stringify($('#feedback_form').serialize()));
+
+        $.ajax({
+            url : '../../ajax/submit',
+            data : $('#feedback_form').serialize(),
+            method : 'POST',
+            success:function () {
+                console.log("done");
+            }
+        });
+        //console.log(JSON.stringify($('#feedback_form').serialize()));
+        e.preventDefault();
     });
 </script>
 

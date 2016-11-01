@@ -1,3 +1,4 @@
+var async = require('async');
 var express = require('express');
 var app = express();
 var path = require('path');
@@ -35,6 +36,12 @@ var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db
 //db connector
 app.use(function(req,res,next){
   req.db = db;
+  next();
+});
+
+app.use(function(req,res,next) {
+  var date= new Date();
+  req.year=date.getFullYear();
   next();
 });
 

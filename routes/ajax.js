@@ -339,7 +339,51 @@ router.post('/getSubject', function (req, res, next) {
     });
 });
 
+router.post('/submit', function (req, res, next) {
 
+    var col_id=req.body.col_id;
+    var dep_id=req.body.dept_id;
+    var sem=req.body.sem;
+    console.log(req.year);
+    console.log(req.body);
+    var db = req.db;
+    const collection = db.get('subject');
+
+    collection.find({"col_id":col_id,"dep_id":dep_id,"sem":sem},function(e,docs){
+        var d = JSON.stringify(docs[0].sub_name);
+        console.log(req.body.rate[1]);
+
+        console.log(d);
+        var count=docs.length;
+        if (e) throw e;
+        else {
+            const collectiona = db.get('question');
+            var k=0;
+            for(var i=0;i<count;i++) {
+                collectiona.find({"col_id":col_id,"dep_id":dep_id,"sem":sem,"sub_id": docs[i].sub_id}, function (er, docs_a) {
+                    var sub_id=docs_a[0].sub_id;
+                    var count2 = docs_a.length;
+                    for (var j=0;j<count2;j++,k++)
+                    {
+                        const collectionb = db.get('rating');
+                        console.log(req.body.rate[k]);
+                        collectionb.insert({"col_id":col_id,"dep_id":dep_id,"sem":sem,"sub_id":sub_id,"q_id":docs_a[j].q_id,"rating":req.body.rate[k],"year":req.year},
+                        function (er2,result) {
+                            if (er2) throw er2;
+                            else {
+                                console.log('rating added');
+                            }
+                        })
+                    }
+                    });
+            }
+        }
+        });
+
+
+
+
+});
 
 
 
