@@ -123,6 +123,21 @@
         "sub_name",
         "sem"
       ]
-    }}
+    },
+    "rating": {
+      "columns": [
+        "PROFESSOR NAME",
+        "YEAR",
+        "SEMESTER",
+        "OPTIONS"
+      ],
+      "name": "table_subj",
+      "column_data": [
+        "prof_name",
+        "year",
+        "sem"
+      ]
+    }
+  }
 }
 
