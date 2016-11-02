@@ -13,7 +13,7 @@ var info = require('../tablemeta.json');
 
 
 /* GET home page. */
-router.get('/load_colg', function (req, res, next) {
+router.post('/load_colg', function (req, res, next) {
 
     var db = req.db;
     var collection = db.get('college');
@@ -30,7 +30,7 @@ router.get('/load_colg', function (req, res, next) {
 });
 
 
-router.get('/load_dept', function (req, res, next) {
+router.post('/load_dept', function (req, res, next) {
 
     var db = req.db;
     var q = JSON.stringify(req.query);
@@ -52,7 +52,7 @@ router.get('/load_dept', function (req, res, next) {
 
 
 
-router.get('/load_prof', function (req, res, next) {
+router.post('/load_prof', function (req, res, next) {
 
     var db = req.db;
     var collection = db.get('professor');
@@ -68,7 +68,7 @@ router.get('/load_prof', function (req, res, next) {
     });
 });
 
-router.get('/load_sub', function (req, res, next) {
+router.post('/load_sub', function (req, res, next) {
 
     var db = req.db;
     var collection = db.get('subject');
@@ -329,6 +329,7 @@ router.post('/getSubject', function (req, res, next) {
     var collection = db.get('subject');
     collection.find(req.body,function(e,docs){
         var d = JSON.stringify(docs);
+        console.log(d);
         if (e) throw e;
         else {
             res.writeHead(200, {'Content-Type': 'application/json'});
@@ -349,7 +350,7 @@ router.post('/submit', function (req, res, next) {
     var db = req.db;
     const collection = db.get('subject');
 
-    collection.find({"col_id":col_id,"dep_id":dep_id,"sem":sem},function(e,docs){
+    collection.find({"col_id":col_id,"dept_id":dep_id,"sem":sem},function(e,docs){
         var d = JSON.stringify(docs[0].sub_name);
         console.log(req.body.rate[1]);
 
@@ -367,7 +368,7 @@ router.post('/submit', function (req, res, next) {
                     {
                         const collectionb = db.get('rating');
                         console.log(req.body.rate[k]);
-                        collectionb.insert({"col_id":col_id,"dep_id":dep_id,"sem":sem,"sub_id":sub_id,"q_id":docs_a[j].q_id,"v_rating":req.body.rate[k],"year":req.year},
+                        collectionb.insert({"col_id":col_id,"dept_id":dep_id,"sem":sem,"sub_id":sub_id,"q_id":docs_a[j].q_id, "quesn" : docs_a[j].question,"v_rating":req.body.rate[k],"year":req.year},
                         function (er2,result) {
                             if (er2) throw er2;
                             else {
@@ -389,7 +390,7 @@ router.post('/updateSub', function (req, res, next) {
 
     var db = req.db;
     var collection = db.get('subject');
-    collection.update({"col_id":req.body.col_id,"dept_id":req.body.dep_id,"sub_id":req.body.sub_id},{"$set":{"prof_id":req.body.prof_id}},function(e,docs){
+    collection.update({"col_id":req.body.col_id,"dept_id":req.body.dept_id,"sub_id":req.body.sub_id},{"$set":{"prof_id":req.body.prof_id}},function(e,docs){
         var d = JSON.stringify(docs);
         if (e) throw e;
         else {
@@ -401,6 +402,22 @@ router.post('/updateSub', function (req, res, next) {
 });
 
 
+router.post('/getRating', function (req, res, next) {
+
+    var db = req.db;
+    var collection = db.get('rating');
+    collection.find(req.body,function(e,docs){
+        var d = JSON.stringify(docs);
+        console.log(d);
+        if (e) throw e;
+        else {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(d);
+            res.end();
+        }
+
+    });
+});
 
 
 module.exports = router;

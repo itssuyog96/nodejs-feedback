@@ -6,7 +6,7 @@
       {"id" : 3, "name" : "Subjects", "url" : "../../../feed_analyzer/subjects", "icon" : "icon-notebook"},
       {"id" : 4, "name" : "Questions", "url" : "../../../feed_analyzer/questions", "icon" : "icon-question"},
       {"id" : 5, "name" : "Survey", "url" : "../../../feed_analyzer/survey", "icon" : "icon-feed"},
-      {"id" : 6, "name" : "Reports", "url" : "../../../feed_analyzer/survey", "icon" : "icon-bar-chart"},
+      {"id" : 6, "name" : "Reports", "url" : "../../../feed_analyzer/reports", "icon" : "icon-bar-chart"},
       {"id" : 7, "name" : "Settings", "url" : "../../../feed_analyzer/settings", "icon" : "icon-settings"}
     ],
     "child" : [

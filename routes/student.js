@@ -26,7 +26,7 @@ router.get('/', function(req, res, next) {
 
             const collection_c = db.get('subject');
             collection_c.find(
-                {col_id : user_info.col_id, dep_id: user_info.dep_id, sem : "5"}, function(err, docs_c){
+                {col_id : user_info.col_id, dept_id: user_info.dep_id, sem : "5"}, function(err, docs_c){
 
                     console.log("Fetched Subjects : "+JSON.stringify(docs_c));
                     res.render('student', {user : user_info, subject : docs_c});

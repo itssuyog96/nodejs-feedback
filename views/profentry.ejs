@@ -93,10 +93,8 @@
                         </div>
                         <div class="modal-body">
                             <form id="form-<%= mdata[a].class %>">
-
                                 <% var y = mdata[a].form %>
                                 <% for(key in y){ %>
-
                                 <div class="form-group col-md-12">
                                     <div class="form-group col-md-4">
                                         <label for="<%= y[key] %>" class="form-control"><%= key %></label>
@@ -105,10 +103,7 @@
                                         <input type="text" name="<%= y[key] %>" class="form-control <%= y[key] %>" required/>
                                     </div>
                                 </div>
-
                                 <% } %>
-
-
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -121,7 +116,6 @@
                 <!-- /.modal-dialog -->
             </div>
             <!-- /.modal -->
-
             <% }} %>
             <!--STOP EDITING HERE-->
 
@@ -141,17 +135,13 @@
 <script src="../../javascripts/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
 
 <script>
-
     $('.col_id').val(<%= user.col_id %>);
     $('.dept_id').val(<%= user.dep_id %>);
     $('.col_id').prop("readonly", true);
-
     function load_<%= profs.name %>(id) {
         var i = 1;
-
         $('.dept_id').val(id);
         $('.dept_id').prop("readonly", true);
-
         $("#<%= profs.name %>").DataTable().destroy();
         $("#<%= profs.name %>").DataTable({
             ajax: {
@@ -169,20 +159,14 @@
                 {
                     data: function (data) {
                         var del_btn = '<a class="btn red btn-outline" href="javascript:del_profs(' + data.<%= profs.column_data[0] %> + ',<%= user.dep_id %>)" target="_blank">DELETE</a>';
-
                         var btns = del_btn;
-
                         return btns;
                     }
                 }
             ]
-
         });
-
     }
-
     load_<%= profs.name %>(<%= user.dep_id %>);
-
     function del_profs(id, dept_id) {
         $.ajax({
             url: '../../ajax/del_prof',
@@ -199,24 +183,21 @@
             }
         });
     }
-
     $('.div_m_prof').on('click', '.m_prof', function(e){
         e.preventDefault();
-
         $.ajax({
             url: '../../ajax/add_prof',
             data: $('#form-m_prof').serialize(),
             method: 'POST',
             success: function(data){
                 $('.close-m_prof').click();
-                load_<%= profs.name %>();
+                load_<%= profs.name %>(<%= user.dep_id %>);
             },
             error: function(data){
                 console.log("Error occured while adding professor! "+data);
             }
         });
     });
-
 </script>
 
 </body>
