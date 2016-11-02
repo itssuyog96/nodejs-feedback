@@ -340,6 +340,23 @@ router.post('/getSubject', function (req, res, next) {
     });
 });
 
+router.post('/getrating', function (req, res, next) {
+
+    var db = req.db;
+    var collection = db.get('rating');
+    collection.find(req.body,function(e,docs){
+        var d = JSON.stringify(docs);
+        if (e) throw e;
+        else {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(d);
+            res.end();
+        }
+
+    });
+});
+
+
 router.post('/submit', function (req, res, next) {
 
     var col_id=req.body.col_id;

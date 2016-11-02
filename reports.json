@@ -1,0 +1,61 @@
+{
+  "topics": {
+    "college": {
+      "title": "ADD NEW COLLEGE",
+      "class": "m_col",
+      "form": {
+        "College ID": "col_id",
+        "College Name": "col_name"
+      },
+      "name": "modal_colg"
+    },
+    "department": {
+      "title": "ADD NEW DEPARTMENT",
+      "class": "m_dept",
+      "form": {
+        "College ID": "col_id",
+        "Department ID": "dept_id",
+        "Department Name": "dept_name"
+      },
+      "name": "modal_dept"
+    },
+    "professor": {
+      "title": "ADD NEW PROFESSOR",
+      "class": "m_prof",
+      "form": {
+        "College ID": "col_id",
+        "Department ID": "dept_id",
+        "Professor ID": "prof_id",
+        "Professor Name": "prof_name"
+      },
+      "name": "modal_prof"
+    },
+    "subject": {
+      "title": "ADD NEW SUBJECT",
+      "class": "m_subj",
+      "form": {
+        "College ID": "col_id",
+        "Department ID": "dept_id",
+        "Subject ID": "sub_id",
+        "Subject Name": "sub_name"
+      },
+      "name": "modal_subj"
+    },
+    "rating": {
+      "title": "SURVEY ANALYSIS",
+      "year" : "2016",
+      "sem" : "5",
+      "form": {
+        "College ID": "col_id",
+        "Department ID": "dept_id",
+        "Subject ID": "sub_id",
+        "Semester": "sem",
+        "Question ID": "q_id",
+        "Rating": "v_rating",
+        "Year": "year"
+
+      },
+      "name": "modal_rating"
+    }
+  }
+  }
