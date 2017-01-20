@@ -155,7 +155,7 @@
                                         <tbody>
                                         <% particulars.faculty.questions.forEach(function(ques){ %>
                                             <tr>
-                                                <td><%= ques.question %></td>
+                                                <td><div class="col-md-12 col-sm-4 col-xs-3"><%= ques.question %></div></td>
                                                 <% subject.forEach(function(item){ %>
                                                 <td>
                                                     <div class="col-md-6 row margin-bottom text-align-center">
@@ -269,6 +269,17 @@
                                 <div clas="well">
                                 <span class="center">
                                     <center><button id="finishFeed" type="button" class="btn btn-lg btn-default">FINISH</button></center>
+                                </span>
+                                </div>
+                            </div>
+
+                            <div class="portlet-body thankyou">
+                                <div clas="well">
+                                <span class="center">
+                                    <center>
+                                        <h3>Thank You! Your feedback has been submitted.</h3><br />
+                                        <span style="font-size: small">Redirecting...</span>
+                                    </center>
                                 </span>
                                 </div>
                             </div>
@@ -521,30 +532,38 @@
     $('.submitFeed1').hide();
     $('.submitFeed2').hide();
     $('.finishFeed').hide();
+    $('.thankyou').hide();
 
     $('#startFeed').on('click', function(e){
-        $('#startFeed').hide();
-        $('.feed1').show();
+        $('#startFeed').fadeOut('fast');
+        $('.feed1').fadeIn('slow');
         $('.submitFeed1').show();
     });
 
     $('#submitFeed1').on('click', function(e){
         $('.submitFeed1').hide();
-        $('.feed1').hide();
-        $('.feed2').show();
+        $('.feed1').fadeOut('fast');
+        $('.feed2').fadeIn('slow');
         $('.submitFeed2').show();
     });
 
     $('#submitFeed2').on('click', function(e){
         $('.submitFeed2').hide();
-        $('.feed2').hide();
-        $('.feed3').show();
+        $('.feed2').fadeOut('fast');
+        $('.feed3').fadeIn('Slow');
         $('.finishFeed').show();
     });
 
     $('#finishFeed').on('click', function(e){
         $('.finishFeed').hide();
-        $('.feed3').hide();
+        $('.feed3').fadeOut('fast');
+        $('.thankyou').fadeIn('slow');
+
+        function redirectMe(){
+            window.location.replace('../logout');
+        }
+
+        window.setTimeout(redirectMe, 5000);
     });
 
 </script>
