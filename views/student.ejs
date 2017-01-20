@@ -33,6 +33,24 @@
     <link rel="shortcut icon" href="favicon.ico" /> </head>
 <!-- END HEAD -->
 
+<style>
+    .table-fixed thead {
+        width: 97%;
+    }
+    .table-fixed tbody {
+        height: 230px;
+        overflow-y: auto;
+        width: 100%;
+    }
+    .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+        display: block;
+    }
+    .table-fixed tbody td, .table-fixed thead > tr> th {
+        float: left;
+        border-bottom-width: 0;
+    }
+</style>
+
 <body class="page-header-fixed page-sidebar-closed-hide-logo">
 <!-- BEGIN CONTAINER -->
 <div class="wrapper">
@@ -107,6 +125,15 @@
                 <div class="page-content-row">
                     <div class="page-content-col">
                         <!-- BEGIN PAGE BASE CONTENT -->
+
+                        <div class="portlet-body startFeed">
+                            <div clas="well">
+                                <span class="center">
+                                    <center><button id="startFeed" type="button" class="btn btn-lg btn-default">START FEEDBACK</button></center>
+                                </span>
+                            </div>
+                        </div>
+
                         <form id="feedback_form">
                             <input type="hidden" name="col_id" value = "<%= user.col_id %>" />
                             <input type="hidden" name="dept_id" value = "<%= user.dep_id %>" />
@@ -114,52 +141,137 @@
 
                             <input type="hidden" name="sub_qty" value="<%= ObjectLength(subject) %>" />
 
-                            <div class="portlet-body">
+                            <div class="feed1 portlet-body">
+                                <h3>FACULTY FEEDBACK</h3>
+                                <div class="feedForm col-md-8 col-xs-3 col-sm-6 col-lg-12 table-responsive">
+                                    <table class="table table-striped table-hover header-fixed">
+                                        <thead>
+                                            <th>PARTICULARS</th>
+                                            <% subject.forEach(function(item){%>
+                                            <th><%= item.sub_name %></th>
 
-                            <div class="tabbable-custom nav-justified">
-                                <ul class="nav nav-tabs nav-justified">
-                                    <% var i = 0;
-                                    subject.forEach(function(item){ %>
-                                    <li <% if(i == 0) { %>
-                                            class = "active"
-                                            <% } %> ><a href="#tab-<%= item.sub_id %>" data-toggle="tab"><%= item.sub_name %></a></li>
-                                    <% i++ %>
-                                    <% }) %>
+                                            <%}); %>
+                                        </thead>
+                                        <tbody>
+                                        <% particulars.faculty.questions.forEach(function(ques){ %>
+                                            <tr>
+                                                <td><%= ques.question %></td>
+                                                <% subject.forEach(function(item){ %>
+                                                <td>
+                                                    <div class="col-md-6 row margin-bottom text-align-center">
+                                                        <div class="col-md-12">
+                                                            <input id="rate<%= item.sub_id %>_<%= ques.qid %>" name="rate" data-show-clear="false" class="rating rating-loading star-rating-input" data-size="xs" required>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <% }); %>
 
-                                </ul>
-                                <div class="panel-body tab-content feedback-panel">
-                                    <% var i = 0;
-                                    subject.forEach(function(item){ %>
-                                    <div class="tab-pane <% if(i == 0){ %>
-                                    active
-                                <% }%>" id="tab-<%= item.sub_id %>">
+                                            </tr>
+                                        <%}); %>
 
+                                        </tbody>
+                                    </table>
+                                </div>
 
+                            </div>
 
-                                        <div class="panel-body">
-
-                                            <div class="row">
-                                                <input name="sub_id_<%= i %>" value = "<%= item.sub_id %>" type="hidden">
-                                                <input id = "sub_quesn_qty_<%= i %>" name="sub_quesn_qty_<%= i %>" value="0" type="hidden">
-
-                                                <div class="col-md-12" id="quesns-<%= item.sub_id %>">
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <% i++; }); %>
-
-
-                                    <div class="panel-footer">
-                                        <input class="btn btn-primary pull-right submit-feedback" name="submit" type="submit" value="Submit Feedback"/>
-                                    </div>
-
+                            <div class="portlet-body submitFeed1">
+                                <div clas="well">
+                                <span class="center">
+                                    <center><button id="submitFeed1" type="button" class="btn btn-lg btn-default">NEXT ></button></center>
+                                </span>
                                 </div>
                             </div>
-                        </div>
 
+                            <div class="feed2 portlet-body">
+                                <h3>LABORATORY FEEDBACK</h3>
+                                <div class="feedForm col-md-8 col-xs-3 col-sm-6 col-lg-12 table-responsive">
+                                    <table class="table table-striped table-hover header-fixed">
+                                        <thead>
+                                        <th>PARTICULARS</th>
+                                        <% subject.forEach(function(item){%>
+                                        <th><%= item.sub_name %></th>
+                                        <%}); %>
+
+                                        </thead>
+                                        <tbody>
+                                        <% particulars.laboratory.questions.forEach(function(ques){ %>
+                                        <tr>
+                                            <td><%= ques.question %></td>
+                                            <% subject.forEach(function(item){ %>
+                                            <td>
+                                                <div class="col-md-6 row margin-bottom text-align-center">
+                                                    <div class="col-md-12">
+                                                        <input id="rate<%= item.sub_id %>_<%= ques.qid %>" name="rate" data-show-clear="false" class="rating rating-loading star-rating-input" data-size="xs" required>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <% }); %>
+
+                                        </tr>
+                                        <%}); %>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                            <div class="portlet-body submitFeed2">
+                                <div clas="well">
+                                <span class="center">
+                                    <center><button id="submitFeed2" type="button" class="btn btn-lg btn-default">NEXT ></button></center>
+                                </span>
+                                </div>
+                            </div>
+
+                            <div class="feed3 portlet-body">
+                                <h3>OVERALL FEEDBACK</h3>
+                                <div class="feedForm col-md-8 col-xs-3 col-sm-6 col-lg-12 table-responsive">
+                                    <table class="table table-striped table-hover header-fixed">
+                                        <thead>
+                                        <th>PARTICULARS</th>
+                                        <th>RATE</th>
+                                        <th>REMARK (If any)</th>
+
+                                        </thead>
+                                        <tbody>
+                                        <% particulars.laboratory.questions.forEach(function(ques){ %>
+                                        <tr>
+                                            <td><%= ques.question %></td>
+                                            <td>
+                                                <div class="col-md-12 row margin-bottom text-align-center">
+                                                    <div class="col-md-12">
+                                                        <div style="position=fixed;">
+                                                            <input id="rate_<%= ques.qid %>" name="rate" data-show-clear="false" class="rating rating-loading star-rating-input" data-size="xs" required>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-md-12 row margin-bottom text-align-center">
+                                                    <div class="col-md-12">
+                                                        <textarea id="remark_<%= ques.qid %>" class="form-control" placeholder="Enter related remarks (if any)"></textarea>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <%}); %>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                            <div class="portlet-body finishFeed">
+                                <div clas="well">
+                                <span class="center">
+                                    <center><button id="finishFeed" type="button" class="btn btn-lg btn-default">FINISH</button></center>
+                                </span>
+                                </div>
+                            </div>
                         </form>
 
                         <!-- END PAGE BASE CONTENT -->
@@ -327,15 +439,15 @@
 
             $('.star-rating-input').rating({min:0, max:5, step:0.5, size:'xs',starCaptions : {
                 0.5: '0.5 : Very Poor',
-                        1: '1 : Poor',
-                        1.5: '1.5 : Poor',
-                        2: '2 : Below Average',
-                        2.5: '2.5 : Average',
-                        3: '3 : Can do better',
-                        3.5: '3.5 : Good',
-                        4: '4 : Very Good',
-                        4.5: '4.5 : Excellent',
-                        5: '5 : Perfect'
+                1: '1 : Poor',
+                1.5: '1.5 : Poor',
+                2: '2 : Below Average',
+                2.5: '2.5 : Average',
+                3: '3 : Can do better',
+                3.5: '3.5 : Good',
+                4: '4 : Very Good',
+                4.5: '4.5 : Excellent',
+                5: '5 : Perfect'
             }, starCaptionClasses: {
                 0.5: 'label label-danger',
                 1: 'label label-danger',
@@ -360,6 +472,32 @@
 </script>
 
 <script>
+    $('.star-rating-input').rating({min:0, max:5, step:0.5, size:'xs',starCaptions : {
+        0.5: '0.5 : Very Poor',
+        1: '1 : Poor',
+        1.5: '1.5 : Poor',
+        2: '2 : Below Average',
+        2.5: '2.5 : Average',
+        3: '3 : Can do better',
+        3.5: '3.5 : Good',
+        4: '4 : Very Good',
+        4.5: '4.5 : Excellent',
+        5: '5 : Perfect'
+    }, starCaptionClasses: {
+        0.5: 'label label-danger',
+        1: 'label label-danger',
+        1.5: 'label label-warning',
+        2: 'label label-warning',
+        2.5: 'label label-info',
+        3: 'label label-info',
+        3.5: 'label label-primary',
+        4: 'label label-primary',
+        4.5: 'label label-success',
+        5: 'label label-success'
+    }});
+</script>
+
+<script>
     $('.feedback-panel').on('click', '.submit-feedback', function(e){
 
         $.ajax({
@@ -375,6 +513,41 @@
     });
 </script>
 
+<script>
+
+    $('.feed1').hide();
+    $('.feed2').hide();
+    $('.feed3').hide();
+    $('.submitFeed1').hide();
+    $('.submitFeed2').hide();
+    $('.finishFeed').hide();
+
+    $('#startFeed').on('click', function(e){
+        $('#startFeed').hide();
+        $('.feed1').show();
+        $('.submitFeed1').show();
+    });
+
+    $('#submitFeed1').on('click', function(e){
+        $('.submitFeed1').hide();
+        $('.feed1').hide();
+        $('.feed2').show();
+        $('.submitFeed2').show();
+    });
+
+    $('#submitFeed2').on('click', function(e){
+        $('.submitFeed2').hide();
+        $('.feed2').hide();
+        $('.feed3').show();
+        $('.finishFeed').show();
+    });
+
+    $('#finishFeed').on('click', function(e){
+        $('.finishFeed').hide();
+        $('.feed3').hide();
+    });
+
+</script>
 
 </body>
 

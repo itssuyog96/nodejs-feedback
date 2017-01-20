@@ -3,6 +3,7 @@
  */
 var express = require('express');
 var router = express.Router();
+var particulars = require('../particulars.json');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -29,7 +30,7 @@ router.get('/', function(req, res, next) {
                 {col_id : user_info.col_id, dept_id: user_info.dep_id, sem : "5"}, function(err, docs_c){
 
                     console.log("Fetched Subjects : "+JSON.stringify(docs_c));
-                    res.render('student', {user : user_info, subject : docs_c});
+                    res.render('student', {user : user_info, subject : docs_c, particulars : particulars});
 
             });
         });

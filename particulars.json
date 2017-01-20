@@ -1,0 +1,44 @@
+{
+  "faculty" : {
+    "count" : 11,
+    "questions" : [
+      {"qid" : "101", "question" : "Passion & enthusiasm"},
+      {"qid" : "102", "question" : "Subject Knowledge"},
+      {"qid" : "103", "question" : "Clarity & emphasis on concept"},
+      {"qid" : "104", "question" : "Motivating & inspiring the students"},
+      {"qid" : "105", "question" : "Creating interest in subjects"},
+      {"qid" : "106", "question" : "Quality on illustrative visuals, examples and application"},
+      {"qid" : "107", "question" : "Regularity, punctuality and uniform coverage of syllabus"},
+      {"qid" : "108", "question" : "Discipline & control over the class"},
+      {"qid" : "109", "question" : "Promoting student thinking"},
+      {"qid" : "110", "question" : "Encouraging student effort and inviting student interaction"},
+      {"qid" : "111", "question" : "Use of modern teaching aids (internet / computers / videos / NPTEL lectures / working models)"}
+    ]
+  },
+  "laboratory" : {
+    "count" : 4,
+    "questions" : [
+      {"qid" : "201", "question" : "Availability of equipments / computers"},
+      {"qid" : "202", "question" : "Availability of lab manuals"},
+      {"qid" : "203", "question" : "Availability of user manuals"},
+      {"qid" : "204", "question" : "Functioning and mainatainence of equipments / computers"}
+    ]
+  },
+  "overall" : {
+    "count" : 12,
+    "questions" : [
+      {"qid" : "301", "question" : "Infrastructure & lab facilities of the Campus"},
+      {"qid" : "302", "question" : "Career guidance activities"},
+      {"qid" : "303", "question" : "Placements & Pre Placement Activities"},
+      {"qid" : "304", "question" : "Industry institute interaction"},
+      {"qid" : "305", "question" : "Sports & extra-curricular activities"},
+      {"qid" : "306", "question" : "Co-curricular activities"},
+      {"qid" : "307", "question" : "Library facilities (Reading room and resources"},
+      {"qid" : "308", "question" : "Exam Cell"},
+      {"qid" : "309", "question" : "Canteen"},
+      {"qid" : "310", "question" : "Self learning facilities (Internet, Digital Library, etc."},
+      {"qid" : "311", "question" : "Safety & security system"},
+      {"qid" : "312", "question" : "Anti ragging policy"}
+    ]
+  }
+}
