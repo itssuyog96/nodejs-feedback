@@ -33,12 +33,12 @@ router.post('/load_colg', function (req, res, next) {
 router.post('/load_dept', function (req, res, next) {
 
     var db = req.db;
-    var q = JSON.stringify(req.query);
-    console.log(req.query.col_id);
+    var q = JSON.stringify(req.body);
+    console.log(req.body.col_id);
     console.log(q);
     var collection = db.get('department');
 
-    collection.find({"col_id" : req.query.col_id},function(e,docs){
+    collection.find({"col_id" : req.body.col_id},function(e,docs){
         var d = JSON.stringify(docs);
         if (e) throw e;
         else {
@@ -365,6 +365,7 @@ router.post('/submit', function (req, res, next) {
     console.log(req.year);
     console.log(req.body);
     var db = req.db;
+
     const collection = db.get('subject');
 
     collection.find({"col_id":col_id,"dept_id":dep_id,"sem":sem},function(e,docs){
@@ -397,7 +398,6 @@ router.post('/submit', function (req, res, next) {
             }
         }
         });
-
 
 
 

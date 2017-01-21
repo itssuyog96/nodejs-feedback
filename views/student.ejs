@@ -123,7 +123,7 @@
             <!-- BEGIN SIDEBAR CONTENT LAYOUT -->
             <div class="page-content-container">
                 <div class="page-content-row">
-                    <div class="page-content-col">
+                    <div class="page-content-col feedback-panel">
                         <!-- BEGIN PAGE BASE CONTENT -->
 
                         <div class="portlet-body startFeed">
@@ -160,7 +160,7 @@
                                                 <td>
                                                     <div class="col-md-6 row margin-bottom text-align-center">
                                                         <div class="col-md-12">
-                                                            <input id="rate<%= item.sub_id %>_<%= ques.qid %>" name="rate" data-show-clear="false" class="rating rating-loading star-rating-input" data-size="xs" required>
+                                                            <input id="rate_<%= item.sub_id %>_<%= ques.qid %>" name="rate_<%= item.sub_id %>_<%= ques.qid %>" data-show-clear="false" class="rating rating-loading star-rating-input" data-size="xs" required>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -202,7 +202,7 @@
                                             <td>
                                                 <div class="col-md-6 row margin-bottom text-align-center">
                                                     <div class="col-md-12">
-                                                        <input id="rate<%= item.sub_id %>_<%= ques.qid %>" name="rate" data-show-clear="false" class="rating rating-loading star-rating-input" data-size="xs" required>
+                                                        <input id="rate_<%= item.sub_id %>_<%= ques.qid %>" name="rate_<%= item.sub_id %>_<%= ques.qid %>" data-show-clear="false" class="rating rating-loading star-rating-input" data-size="xs" required>
                                                     </div>
                                                 </div>
                                             </td>
@@ -236,14 +236,14 @@
 
                                         </thead>
                                         <tbody>
-                                        <% particulars.laboratory.questions.forEach(function(ques){ %>
+                                        <% particulars.overall.questions.forEach(function(ques){ %>
                                         <tr>
                                             <td><%= ques.question %></td>
                                             <td>
                                                 <div class="col-md-12 row margin-bottom text-align-center">
                                                     <div class="col-md-12">
                                                         <div style="position=fixed;">
-                                                            <input id="rate_<%= ques.qid %>" name="rate" data-show-clear="false" class="rating rating-loading star-rating-input" data-size="xs" required>
+                                                            <input id="rate_<%= ques.qid %>" name="rate_<%= ques.qid %>" data-show-clear="false" class="rating rating-loading star-rating-input" data-size="xs" required>
                                                         </div>
 
                                                     </div>
@@ -252,7 +252,7 @@
                                             <td>
                                                 <div class="col-md-12 row margin-bottom text-align-center">
                                                     <div class="col-md-12">
-                                                        <textarea id="remark_<%= ques.qid %>" class="form-control" placeholder="Enter related remarks (if any)"></textarea>
+                                                        <textarea id="remark_<%= ques.qid %>" name = "remark_<%= ques.qid %>" class="form-control" placeholder="Enter related remarks (if any)"></textarea>
                                                     </div>
                                                 </div>
                                             </td>
@@ -400,87 +400,7 @@
 
 <script src="../../bower_components/bootstrap-star-rating/js/star-rating.js" type="text/javascript"></script>
 
-<script>
-    //Load Questions
-    <% var j = -1; %>
-    <% subject.forEach(function(item){
-        j++;
-    %>
-    //Subject Name : <%= item.sub_name %>
-    $.ajax({
-        url : '../../ajax/getQuestions',
-        data : {col_id : "<%= user.col_id %>", dep_id: "<%= user.dep_id %>", sub_id : "<%= item.sub_id %>", sem : "<%= user.sem %>" },
-        method : 'POST',
-        success : function(data){
-            var i = 0;
-            data.forEach(function(sub) {
-                var k=1;
-                if(sub.sub_id == <%= item.sub_id %>) {
-                    $('#sub_quesn_qty_<%= j %>').val(parseInt($('#sub_quesn_qty_<%= j %>').val()) + 1);
-                    $('#quesns-<%= item.sub_id %>').append(
-
-                            '<div class="form-group col-md-12">' +
-                                '<div class="well well-sm col-md-12 center">' +
-                                    '<label class="control-label col-md-7 center"><strong>Q. ' + parseInt(++i) + '. ' + sub.question + '</strong></label>' +
-
-                                    '<div class="col-md-5 row margin-bottom text-align-center">' +
-                                        '<div class="col-md-12">' +
-
-                                            '<input id="rate" name="rate" class="rating rating-loading star-rating-input" required>'+
-
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                            '</div>'
-                    );
-                }
-                k++;
-                });
-
-            $('#quesns-<%= item.sub_id %>').append(
-                    '<div class="form-group">'+
-                    '<label class="col-md-3 control-label">Comments</label>'+
-                    '<div class="col-md-9">'+
-                    '<div class="col-md-9 col-xs-12">'+
-                    '<textarea class="form-control" rows="5"></textarea>'+
-                    '<span class="help-block">Please provide proper feedback</span>'+
-            '</div>'+
-            '</div>'+
-            '</div>');
-
-            $('.star-rating-input').rating({min:0, max:5, step:0.5, size:'xs',starCaptions : {
-                0.5: '0.5 : Very Poor',
-                1: '1 : Poor',
-                1.5: '1.5 : Poor',
-                2: '2 : Below Average',
-                2.5: '2.5 : Average',
-                3: '3 : Can do better',
-                3.5: '3.5 : Good',
-                4: '4 : Very Good',
-                4.5: '4.5 : Excellent',
-                5: '5 : Perfect'
-            }, starCaptionClasses: {
-                0.5: 'label label-danger',
-                1: 'label label-danger',
-                1.5: 'label label-warning',
-                2: 'label label-warning',
-                2.5: 'label label-info',
-                3: 'label label-info',
-                3.5: 'label label-primary',
-                4: 'label label-primary',
-                4.5: 'label label-success',
-                5: 'label label-success'
-            }});
-
-        },
-        error : function(error){
-            console.log("<%= item.sub_name %> : "+error.responseText);
-        }
-    });
-
-    <% }); %>
-
-</script>
+<
 
 <script>
     $('.star-rating-input').rating({min:0, max:5, step:0.5, size:'xs',starCaptions : {
@@ -509,8 +429,10 @@
 </script>
 
 <script>
-    $('.feedback-panel').on('click', '.submit-feedback', function(e){
+    $('.feedback-panel').on('click', '#finishFeed', function(e){
 
+        e.preventDefault();
+        /*
         $.ajax({
             url : '../../ajax/submit',
             data : $('#feedback_form').serialize(),
@@ -518,9 +440,9 @@
             success:function () {
                 console.log("done");
             }
-        });
-        //console.log(JSON.stringify($('#feedback_form').serialize()));
-        e.preventDefault();
+        });*/
+        console.log(JSON.stringify($('#feedback_form').serializeArray()));
+
     });
 </script>
 
