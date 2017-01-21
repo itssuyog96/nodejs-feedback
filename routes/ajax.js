@@ -10,7 +10,7 @@ var Subject = require('../classes/subject');
 var Department = require('../classes/dept');
 var College = require('../classes/college');
 var info = require('../tablemeta.json');
-
+var Regex = require('regex');
 
 /* GET home page. */
 router.post('/load_colg', function (req, res, next) {
@@ -359,6 +359,52 @@ router.post('/getrating', function (req, res, next) {
 
 router.post('/submit', function (req, res, next) {
 
+    console.log(req.body);
+    var col_id=req.body.col_id;
+    var dep_id=req.body.dept_id;
+    var sem=req.body.sem;
+    var db = req.db;
+    var regex = new Regex(/rate_\d\d\d\d_\d\d\d/);
+    var regexO = new Regex(/rate_\d\d\d/);
+    /* Testing
+    for (var key in req.body){
+        if(key.length == 8){
+            var a = key.split('_');
+            var str = "remark_" + a[1];
+            console.log(req.body[str]);
+
+        }
+    }*/
+    for (var key in req.body) {
+        if (key.length == 13) {
+            //console.log(key);
+            var a = key.split('_');
+
+            const collection = db.get('rating');
+            collection.insert({"col_id":col_id,"dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":req.body[key],"year":req.year},
+                function (er2,result) {
+                    if (er2) throw er2;
+                    else {
+                        console.log('rating added');
+                    }
+                })
+
+        }
+        else if(key.length == 8) {
+            //console.log(key);
+            var b = key.split('_');
+            var str = "remark_"+ b[1];
+            const collectionb = db.get('rating');
+            collectionb.insert({"col_id":col_id,"dept_id":dep_id,"sem":sem,"sub_id": null ,"q_id":b[1],"v_rating":req.body[key],"remark":req.body[str],"year":req.year},
+                function (er,result) {
+                    if (er) throw er;
+                    else {
+                        console.log('rating added');
+                    }
+                })
+        }
+    }
+    /*
     var col_id=req.body.col_id;
     var dep_id=req.body.dept_id;
     var sem=req.body.sem;
@@ -398,7 +444,7 @@ router.post('/submit', function (req, res, next) {
             }
         }
         });
-
+        */
 
 
 });

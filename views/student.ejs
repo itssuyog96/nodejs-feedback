@@ -432,7 +432,8 @@
     $('.feedback-panel').on('click', '#finishFeed', function(e){
 
         e.preventDefault();
-        /*
+
+
         $.ajax({
             url : '../../ajax/submit',
             data : $('#feedback_form').serialize(),
@@ -440,8 +441,8 @@
             success:function () {
                 console.log("done");
             }
-        });*/
-        console.log(JSON.stringify($('#feedback_form').serializeArray()));
+        });
+       // console.log(JSON.stringify($('#feedback_form').serializeArray()));
 
     });
 </script>
