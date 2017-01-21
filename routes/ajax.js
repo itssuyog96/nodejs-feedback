@@ -464,6 +464,42 @@ router.post('/updateSub', function (req, res, next) {
     });
 });
 
+router.post('/fetchprof', function (req, res, next) {
+
+    var db = req.db;
+    const collection = db.get('subject');
+    collection.find({"col_id":req.body.col_id,"dept_id":req.body.dept_id,"sub_id":req.body.sub_id},function(e,docs){
+        //var d = JSON.stringify(docs);
+        if (e) throw e;
+        else {
+            if(docs[0].prof_id) {
+                const collectionb = db.get('professor');
+                collectionb.find({"prof_id":docs[0].prof_id},function (er,doc1) {
+                    if (er) throw er;
+                    else {
+                        var pass = {
+                            id  : docs[0].prof_id,
+                            name: doc1[0].prof_name
+                        };
+                        res.writeHead(200, {'Content-Type': 'application/json'});
+                        res.write(JSON.stringify(pass));
+                        //res.writeHead(doc1[0].prof_name); just for name
+                        res.end();
+                    }
+
+                });
+            }
+            else {
+                res.write("NA");
+                res.end();
+            }
+        }
+
+    });
+});
+
+
+
 
 router.post('/getRating', function (req, res, next) {
 
