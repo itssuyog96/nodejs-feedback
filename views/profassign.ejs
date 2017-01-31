@@ -137,6 +137,19 @@
 
     $(document).ready(function(){
 
+        function preassigned(sub){
+            $.ajax({
+                url: '../../ajax/fetchprof',
+                data : {'col_id' : '<%= user.col_id %>', 'dept_id': '<%= user.dep_id %>', 'sub_id' : sub.sub_id },
+                method : 'POST',
+                success : function(data){
+                    $('.subject'+sub.sub_id).val(data.id);
+                    console.log("Subject : "+sub.sub_id+" set to "+data.id);
+                },
+                error : function(error){}
+            });
+        }
+
         $('.div-sem_select').on('click', '.btn-default', function(e){
             e.preventDefault();
 console.log($('#selectSem').serialize());
@@ -149,6 +162,7 @@ console.log($('#selectSem').serialize());
                     $('#form-counter').text(0);
                     $('#prof_assign_entry tbody').text('');
                     data.forEach(function(sub){
+
                         $('#form-counter').text(parseInt($('#form-counter').text()) + 1);
                         $('#prof_assign_entry tbody').append(
 
@@ -162,8 +176,8 @@ console.log($('#selectSem').serialize());
                                 '<input name = "sem" type="hidden" value="'+sub.sem+'"/>'+
                                 '<input name="sub_id" type="hidden" value="'+sub.sub_id+'" />'+
                                 '       <div class="form-group">' +
-                                '           <select name="prof_id" class="form-control">' +
-                                '<option value="NA">Not Assigned</option>' +
+                                '           <select name="prof_id" class="subject'+sub.sub_id+' form-control">' +
+                                '<option value="NA" selected = "true">Not Assigned</option>' +
                                 <% prof.forEach(function(item){ %>
                                 '<option value="<%= item.prof_id %>"><%= item.prof_name %></option>' +
                                 <% }); %>
@@ -175,6 +189,15 @@ console.log($('#selectSem').serialize());
 
                         );
                     });
+
+                    function preassign() {
+                        data.forEach(function (sub) {
+                            preassigned(sub);
+                        });
+                    }
+
+                    preassign();
+                    //setTimeOut(preassign, 2000);
 
                 }
                 ,

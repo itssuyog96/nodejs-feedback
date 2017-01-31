@@ -30,8 +30,8 @@ module.exports = function(passport) {
             passReqToCallback : true
         },
         function(req, username, password, done) {
-            //console.log(email);
-            //console.log(password);
+            // console.log(username);
+            // console.log(password);
 
             var data= req.db;
 

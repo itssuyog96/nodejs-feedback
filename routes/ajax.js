@@ -10,7 +10,7 @@ var Subject = require('../classes/subject');
 var Department = require('../classes/dept');
 var College = require('../classes/college');
 var info = require('../tablemeta.json');
-var Regex = require('regex');
+//var Regex = require('regex');
 
 /* GET home page. */
 router.post('/load_colg', function (req, res, next) {
@@ -356,7 +356,6 @@ router.post('/getrating', function (req, res, next) {
     });
 });
 
-
 router.post('/submit', function (req, res, next) {
 
     console.log(req.body);
@@ -364,8 +363,8 @@ router.post('/submit', function (req, res, next) {
     var dep_id=req.body.dept_id;
     var sem=req.body.sem;
     var db = req.db;
-    var regex = new Regex(/rate_\d\d\d\d_\d\d\d/);
-    var regexO = new Regex(/rate_\d\d\d/);
+    //var regex = new Regex(/rate_\d\d\d\d_\d\d\d/);
+    //var regexO = new Regex(/rate_\d\d\d/);
     /* Testing
     for (var key in req.body){
         if(key.length == 8){
@@ -385,7 +384,7 @@ router.post('/submit', function (req, res, next) {
                 function (er2,result) {
                     if (er2) throw er2;
                     else {
-                        console.log('rating added');
+                        console.log('rating added : '+col_id+' '+dep_id+' '+sem+' '+a[1]+' '+a[2]+' '+req.body[key]+' '+req.year);
                     }
                 })
 
@@ -399,7 +398,7 @@ router.post('/submit', function (req, res, next) {
                 function (er,result) {
                     if (er) throw er;
                     else {
-                        console.log('rating added');
+                        console.log('rating added : '+col_id+' '+dep_id+' '+sem+' '+b[1]+' '+req.body[key]+' '+req.body[str]+' '+req.year);
                     }
                 })
         }

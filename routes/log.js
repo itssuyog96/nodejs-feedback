@@ -18,6 +18,7 @@ module.exports = function(app, passport) {
         res.render('login',{message:req.flash('loginMessage')});
 
     });
+
     app.post('/login',
         passport.authenticate('local-login', {
             failureRedirect: '/login'
@@ -37,6 +38,36 @@ module.exports = function(app, passport) {
 
                 case 'student':     choice ='/student';
                                     break;
+
+                default:break;
+            }
+
+            var redirectTo = req.session.redirectTo ? req.session.redirectTo : choice;
+            delete req.session.redirectTo;
+
+            res.redirect(redirectTo);
+        }
+    );
+
+    app.get('/api/login',
+        passport.authenticate('local-login', {
+            failureRedirect: '/login'
+        }),function (req,res) {
+            req.session.login= 1;
+
+            switch(req.user.role)
+            {
+                case 'admin':       choice ='/admin';
+                    break;
+
+                case 'feed_analyzer':   choice ='/feed_analyzer';
+                    break;
+
+                case 'principal':   choice ='/principal';
+                    break;
+
+                case 'student':     choice ='/student';
+                    break;
 
                 default:break;
             }
