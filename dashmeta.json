@@ -15,8 +15,8 @@
 
   "principal":{
     "tiles" : ["DEPARTMENT REPORTS", "PROFESSOR REPORTS", "SUBJECT REPORTS", "SETTINGS"],
-    "fa_icons" : ["fa-user", "fa-book", "fa-question", "fa-check-square-o", "fa-line-chart", "fa-cogs"],
-    "bg_style" : ["bg-blue", "bg-red", "bg-green-sharp", "bg-yellow", "bg-green", "bg-dark"],
-    "url" : ["../../../principal/professor", "../../../principal/subjects", "../../../principal/questions", "../../../feed_analyzer/survey", "../../../feed_analyzer/reports", "../../../feed_analyzer/settings"]
+    "fa_icons" : ["fa-user", "fa-book", "fa-question", "fa-check-square-o"],
+    "bg_style" : ["bg-blue", "bg-red", "bg-green-sharp", "bg-yellow"],
+    "url" : ["../../../principal/departmentreports", "../../../principal/professorreports", "../../../principal/subjectreports", "../../../principal/settings"]
   }
 }

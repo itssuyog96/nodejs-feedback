@@ -19,9 +19,9 @@
                     <span class="title"><%= par_menu_item.name %></span>
                     <span class="arrow"></span>
                 </a>
-
                 <% var i = 0;
 
+if(menu.child.length > 0){
                 menu.child.forEach(function (child_menu_item) {
                  if(child_menu_item.parent_id == par_menu_item.id){
                     if(i == 0){%>
@@ -42,7 +42,7 @@
 
 
             </li>
-            <% }); %>
+            <% }}); %>
 
         </ul>
         <!-- END SIDEBAR MENU -->

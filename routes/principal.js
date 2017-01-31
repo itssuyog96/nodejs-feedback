@@ -3,14 +3,47 @@
  */
 var express = require('express');
 var router = express.Router();
-var tiles = require('../dashmeta.json').feeder;
+var tiles = require('../dashmeta.json').principal;
+ var menu = require('../menu.json').principal;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-    res.render('dashboard', {dash : tiles});
+    if(req.session.login) {
+        if(req.session.passport.user.role == 'principal'){
+            res.render('dashboard', {dash : tiles, menu : menu, user : req.session.passport.user});
+        }
+        else{
+            delete req.session.redirectTo;
+            res.redirect('/login');
+        }
+
+    }
+    else {
+        req.session.redirectTo = '/principal/';
+        res.redirect('/login');
+    }
 
 });
+
+ router.get('/settings', function(req, res, next) {
+
+     if(req.session.login) {
+         if(req.session.passport.user.role == 'principal'){
+             res.render('settings', {dash : tiles, menu : menu, user : req.session.passport.user});
+         }
+         else{
+             delete req.session.redirectTo;
+             res.redirect('/login');
+         }
+
+     }
+     else {
+         req.session.redirectTo = '/principal/';
+         res.redirect('/login');
+     }
+
+ });
 
 router.get('/manage', function(req, res, next){
 
