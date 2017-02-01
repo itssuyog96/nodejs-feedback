@@ -11,7 +11,7 @@
     ],
     "child" : [
       {"id" : 1, "name" : "Create Survey", "url" : "../../../feed_analyzer/create_survey", "parent_id" : 5, "icon" : "icon-pencil"},
-      {"id" : 1, "name" : "View All Surveys", "url" : "../../../feed_analyzer/view_survey", "parent_id" : 5, "icon" : "icon-layers"}
+      {"id" : 2, "name" : "View All Surveys", "url" : "../../../feed_analyzer/view_survey", "parent_id" : 5, "icon" : "icon-layers"}
     ]
   },
 
@@ -22,5 +22,18 @@
       {"id" : 3, "name" : "Settings", "url" : "../../../principal/settings", "icon" : "icon-settings"}
     ],
     "child":[]
+  },
+
+  "hod": {
+    "parent" : [
+      {"id" : 1, "name" : "Dashboard", "url" : "../../../headofdepartment", "icon" : "icon-home"},
+      {"id" : 2, "name" : "Upload", "url" : "../../../headofdepartment/upload", "icon" : "icon-upload"},
+      {"id" : 3, "name" : "Reports", "url" : "../../../headofdepartment/reports", "icon" : "icon-bar-chart"},
+      {"id" : 4, "name" : "Settings", "url" : "../../../headofdepartment/settings", "icon" : "icon-settings"}
+    ],
+    "child":[
+      {"id" : 1, "name" : "Department", "url" : "../../../headofdepartment/reports/department", "parent_id" : 3, "icon" : "icon-pencil"},
+      {"id" : 2, "name" : "Professor", "url" : "../../../headofdepartment/reports/professor", "parent_id" : 3, "icon" : "icon-layers"}
+    ]
   }
 }

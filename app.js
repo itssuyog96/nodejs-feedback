@@ -27,6 +27,7 @@ var dashboard = require('./routes/dashboard');
 var student = require('./routes/student');
 var principal = require('./routes/principal');
 var professor_assign = require('./routes/professor_assign');
+var hod = require('./routes/hod');
 
 var mongo = require('mongodb');
 var monk = require('monk');
@@ -83,6 +84,7 @@ app.use('/dashboard', dashboard);
 app.use('/student', student);
 app.use('/principal', principal);
 app.use('/professor_assign', professor_assign);
+app.use('/headofdepartment', hod);
 
 
 // catch 404 and forward to error handler
