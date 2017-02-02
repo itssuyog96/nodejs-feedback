@@ -29,6 +29,8 @@ var principal = require('./routes/principal');
 var professor_assign = require('./routes/professor_assign');
 var hod = require('./routes/hod');
 var sheet = require('./routes/workbook');
+var mail = require('./routes/py_mail');
+var sms = require('./routes/py_sms');
 
 var mongo = require('mongodb');
 var monk = require('monk');
@@ -87,6 +89,8 @@ app.use('/principal', principal);
 app.use('/professor_assign', professor_assign);
 app.use('/headofdepartment', hod);
 app.use('/addsheet', sheet);
+app.use('/py_mail', mail);
+app.use('/py_sms', sms);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
