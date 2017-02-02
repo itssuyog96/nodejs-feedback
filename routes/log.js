@@ -52,7 +52,7 @@ module.exports = function(app, passport) {
     );
 
     app.get('/api/login',
-        passport.authenticate('local-login', {
+        passport.authenticate('api-login', {
             failureRedirect: '/login'
         }),function (req,res) {
             req.session.login= 1;
