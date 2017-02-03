@@ -146,7 +146,7 @@ router.post('/del_subject', function (req, res, next) {
     try {
         sub = new Subject();
 
-        sub.delete(req.body.id);
+        sub.delete(req.body.col_id,req.body.dept_id,req.body.sub_id);
     }catch (e){
         res.writeHead(500, {'Content-Type': 'text/html'});
         res.write('Error in database!' + e);
