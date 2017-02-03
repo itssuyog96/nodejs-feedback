@@ -10,6 +10,8 @@ var Subject = require('../classes/subject');
 var Department = require('../classes/dept');
 var College = require('../classes/college');
 var info = require('../tablemeta.json');
+var generate = require('../functions/generate');
+var md5 = require('../functions/md5')
 //var Regex = require('regex');
 
 /* GET home page. */
@@ -516,6 +518,78 @@ router.post('/getRating', function (req, res, next) {
 
     });
 });
+
+
+router.post('/adminReg', function (req, res, next) {
+    var password = generate.generatePassword();
+    var passwordh1 = md5.md5(password);
+    var username = md5.md5(req.body.username);
+try {
+    var db = req.db;
+    var collection = db.get('users');
+    collection.insert({"col_id":req.body.col_id,},function (e, docs) {
+        var d = JSON.stringify(docs);
+        console.log(d);
+        if (e) throw e;
+        else {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(d);
+            res.end();
+        }
+
+    });
+}
+catch(error){
+    res.writeHead(500, {'Content-Type': 'text/html'});
+    res.write('Error !' + error);
+    res.end();
+}
+});
+
+router.post('/setPassword', function (req, res, next) {
+    try {
+        var db = req.db;
+        var collection = db.get('user');
+        collection.update(req.body, function (e, docs) {
+            var d = JSON.stringify(docs);
+            console.log(d);
+            if (e) throw e;
+            else {
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.write(d);
+                res.end();
+            }
+
+        });
+    }
+    catch(error){
+        res.writeHead(500, {'Content-Type': 'text/html'});
+        res.write('Error !' + error);
+        res.end();
+    }
+});
+
+
+router.post('/load_users', function (req, res, next) {
+
+    var db = req.db;
+    var collection = db.get('users');
+    collection.find(req.body,function(e,docs){
+        var d = JSON.stringify(docs);
+        if (e) throw e;
+        else {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(d);
+            res.end();
+        }
+
+    });
+});
+
+
+
+
+
 
 
 module.exports = router;
