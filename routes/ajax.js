@@ -527,13 +527,10 @@ router.post('/adminReg', function (req, res, next) {
 try {
     var db = req.db;
     var collection = db.get('users');
-    collection.insert({"col_id":req.body.col_id,},function (e, docs) {
-        var d = JSON.stringify(docs);
-        console.log(d);
+    collection.insert({"col_id":req.body.col_id,"dept_id":req.body.dept_id,"name":req.body.name,"usernam":username,"contact":req.body.contact,"email_id":req.body.email_id},function (e, docs) {
         if (e) throw e;
         else {
-            res.writeHead(200, {'Content-Type': 'application/json'});
-            res.write(d);
+            console.log("user added");
             res.end();
         }
 
