@@ -36,6 +36,7 @@
       "form": {
         "College ID": "col_id",
         "Department ID": "dept_id",
+        "Semester" : "sem",
         "Subject ID": "sub_id",
         "Subject Name": "sub_name"
       },

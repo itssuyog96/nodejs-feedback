@@ -1,9 +1,9 @@
 {
   "admin":{
-    "tiles" : ["COLLEGES", "DEPARTMENTS", "PROFESSORS", "SUBJECTS", "SURVEY", "REPORTS", "SETTINGS"],
-    "fa_icons" : ["fa-institution", "fa-users", "fa-user", "fa-book", "fa-check-square-o", "fa-line-chart", "fa-cogs"],
-    "bg_style" : ["bg-blue", "bg-red", "bg-yellow", "bg-green", "bg-red", "bg-purple", "bg-dark"],
-    "url" : ["../../../admin/manage", "../../../admin/manage", "../../../admin/manage", "../../../admin/manage", "../../../admin/survey", "../../../admin/reports", "../../../admin/settings"]
+    "tiles" : ["COLLEGES", "DEPARTMENTS", "PROFESSORS", "SUBJECTS", "SURVEY", "REPORTS", "MANAGE LOGIN", "SETTINGS"],
+    "fa_icons" : ["fa-institution", "fa-users", "fa-user", "fa-book", "fa-check-square-o", "fa-line-chart", "fa-lock", "fa-cogs"],
+    "bg_style" : ["bg-blue", "bg-red", "bg-yellow", "bg-green", "bg-red", "bg-purple", "bg-red", "bg-dark"],
+    "url" : ["../../../admin/manage", "../../../admin/manage", "../../../admin/manage", "../../../admin/manage", "../../../admin/survey", "../../../admin/reports", "../../../admin/manage_login", "../../../admin/settings"]
   },
 
   "feeder":{
