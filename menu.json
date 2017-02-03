@@ -1,4 +1,21 @@
 {
+  "admin" : {
+    "parent" : [
+      {"id" : 1, "name" : "Dashboard", "url" : "../../../admin", "icon" : "icon-home"},
+      {"id" : 2, "name" : "Professor", "url" : "../../../admin/manage", "icon" : "icon-graduation"},
+      {"id" : 3, "name" : "Subjects", "url" : "../../../admin/manage", "icon" : "icon-notebook"},
+      {"id" : 4, "name" : "Questions", "url" : "../../../admin/manage", "icon" : "icon-question"},
+      {"id" : 5, "name" : "Survey", "url" : "../../../admin/survey", "icon" : "icon-feed"},
+      {"id" : 6, "name" : "Reports", "url" : "../../../admin/reports", "icon" : "icon-bar-chart"},
+      {"id" : 7, "name" : "Manage Login", "url" : "../../../admin/manage_login", "icon" : "icon-lock"},
+      {"id" : 8, "name" : "Settings", "url" : "../../../admin/settings", "icon" : "icon-settings"}
+    ],
+    "child" : [
+      {"id" : 1, "name" : "Create Survey", "url" : "../../../feed_analyzer/create_survey", "parent_id" : 5, "icon" : "icon-pencil"},
+      {"id" : 2, "name" : "View All Surveys", "url" : "../../../feed_analyzer/view_survey", "parent_id" : 5, "icon" : "icon-layers"}
+    ]
+  },
+
   "feed_analyzer" : {
     "parent" : [
       {"id" : 1, "name" : "Dashboard", "url" : "../../../feed_analyzer", "icon" : "icon-home"},

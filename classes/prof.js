@@ -50,7 +50,7 @@ var Professor=function (info) {
 
     this.delete = function (col_id,dep_id,prof_id) {
         var collection = db.get('professor');
-        collection.remove({"dep_id":dep_id, "col_id":col_id, "prof_id":prof_id},function(e,docs){
+        collection.remove({"dept_id":dep_id, "col_id":col_id, "prof_id":prof_id},function(e,docs){
 
             console.log(docs);
             if (e) throw e;

@@ -414,11 +414,13 @@
     }
 
     function del_subj(id, dept_id, colg_id) {
+        console.log('Deleting subject');
         $.ajax({
-            url: '../ajax/del_subj',
+            url: '../ajax/del_subject',
             data: {sub_id: id, dept_id : dept_id, col_id: colg_id},
             method: 'POST',
             success: function (data) {
+                console.log(data);
                 load_<%= subj.name %>(dept_id, colg_id);
                 //toast the success message
             },
@@ -435,7 +437,7 @@
             method: 'POST',
             success: function (data) {
                 load_<%= profs.name %>(dept_id, colg_id);
-                console.log('Professor deleted : ' + data);
+                console.log('Status : ' + data);
                 //toast the success message
             },
             error: function (data) {

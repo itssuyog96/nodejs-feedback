@@ -50,9 +50,7 @@ var Subject=function (info) {
 
     this.delete = function (col_id,dep_id,sub_id) {
         var collection = db.get('subject');
-        collection.remove({"sub_id":sub_id, "col_id":col_id, "dep_id":dep_id},function(e,docs){
-
-            console.log(docs);
+        collection.remove({"sub_id":sub_id, "col_id":col_id, "dept_id":dep_id},function(e,docs){
             if (e) throw e;
             else{
                 console.log('data deleted');
