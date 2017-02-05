@@ -7,6 +7,103 @@
 <!-- BEGIN HEAD -->
 
 <% include tpl/header.ejs %>
+<head>
+    <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <style>
+        .btn-file {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+
+        .btn_inline{
+            display: inline;
+        }
+    </style>
+
+    <script type="text/javascript">
+        ! function(e) {
+            var t = function(t, n) {
+                this.$element = e(t), this.type = this.$element.data("uploadtype") || (this.$element.find(".thumbnail").length > 0 ? "image" : "file"), this.$input = this.$element.find(":file");
+                if (this.$input.length === 0) return;
+                this.name = this.$input.attr("name") || n.name, this.$hidden = this.$element.find('input[type=hidden][name="' + this.name + '"]'), this.$hidden.length === 0 && (this.$hidden = e('<input type="hidden" />'), this.$element.prepend(this.$hidden)), this.$preview = this.$element.find(".fileupload-preview");
+                var r = this.$preview.css("height");
+                this.$preview.css("display") != "inline" && r != "0px" && r != "none" && this.$preview.css("line-height", r), this.original = {
+                    exists: this.$element.hasClass("fileupload-exists"),
+                    preview: this.$preview.html(),
+                    hiddenVal: this.$hidden.val()
+                }, this.$remove = this.$element.find('[data-dismiss="fileupload"]'), this.$element.find('[data-trigger="fileupload"]').on("click.fileupload", e.proxy(this.trigger, this)), this.listen()
+            };
+            t.prototype = {
+                listen: function() {
+                    this.$input.on("change.fileupload", e.proxy(this.change, this)), e(this.$input[0].form).on("reset.fileupload", e.proxy(this.reset, this)), this.$remove && this.$remove.on("click.fileupload", e.proxy(this.clear, this))
+                },
+                change: function(e, t) {
+                    if (t === "clear") return;
+                    var n = e.target.files !== undefined ? e.target.files[0] : e.target.value ? {
+                                name: e.target.value.replace(/^.+\\/, "")
+                            } : null;
+                    if (!n) {
+                        this.clear();
+                        return
+                    }
+                    this.$hidden.val(""), this.$hidden.attr("name", ""), this.$input.attr("name", this.name);
+                    if (this.type === "image" && this.$preview.length > 0 && (typeof n.type != "undefined" ? n.type.match("image.*") : n.name.match(/\.(gif|png|jpe?g)$/i)) && typeof FileReader != "undefined") {
+                        var r = new FileReader,
+                            i = this.$preview,
+                            s = this.$element;
+                        r.onload = function(e) {
+                            i.html('<img src="' + e.target.result + '" ' + (i.css("max-height") != "none" ? 'style="max-height: ' + i.css("max-height") + ';"' : "") + " />"), s.addClass("fileupload-exists").removeClass("fileupload-new")
+                        }, r.readAsDataURL(n)
+                    } else this.$preview.text(n.name), this.$element.addClass("fileupload-exists").removeClass("fileupload-new")
+                },
+                clear: function(e) {
+                    this.$hidden.val(""), this.$hidden.attr("name", this.name), this.$input.attr("name", "");
+                    if (navigator.userAgent.match(/msie/i)) {
+                        var t = this.$input.clone(!0);
+                        this.$input.after(t), this.$input.remove(), this.$input = t
+                    } else this.$input.val("");
+                    this.$preview.html(""), this.$element.addClass("fileupload-new").removeClass("fileupload-exists"), e && (this.$input.trigger("change", ["clear"]), e.preventDefault())
+                },
+                reset: function(e) {
+                    this.clear(), this.$hidden.val(this.original.hiddenVal), this.$preview.html(this.original.preview), this.original.exists ? this.$element.addClass("fileupload-exists").removeClass("fileupload-new") : this.$element.addClass("fileupload-new").removeClass("fileupload-exists")
+                },
+                trigger: function(e) {
+                    this.$input.trigger("click"), e.preventDefault()
+                }
+            }, e.fn.fileupload = function(n) {
+                return this.each(function() {
+                    var r = e(this),
+                        i = r.data("fileupload");
+                    i || r.data("fileupload", i = new t(this, n)), typeof n == "string" && i[n]()
+                })
+            }, e.fn.fileupload.Constructor = t, e(document).on("click.fileupload.data-api", '[data-provides="fileupload"]', function(t) {
+                var n = e(this);
+                if (n.data("fileupload")) return;
+                n.fileupload(n.data());
+                var r = e(t.target).closest('[data-dismiss="fileupload"],[data-trigger="fileupload"]');
+                r.length > 0 && (r.trigger("click.fileupload"), t.preventDefault())
+            })
+        }(window.jQuery)
+    </script>
+</head>
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
 <!-- BEGIN HEADER -->
@@ -68,64 +165,78 @@
                             <thead>
                             <tr role="row" class="heading">
                                 <th width="5%"> SRN</th>
-                                <th width="10%"> SEMESTER </th>
+                                <th width="12%"> SEMESTER </th>
                                 <th width="20%">UPLOAD FILES</th>
                             </tr>
 
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td><div class="btn-group">
-                                            <select class="btn btn-circle red dropdown-toggle" data-toggle="dropdown">SEMESTER
-                                                <i class="fa fa-angle-down"></i>
+                                <form
+                                    ref='uploadForm'
+                                    id='uploadForm'
+                                    action='http://localhost:3000/upload_file'
+                                    method='post'
+                                    encType="multipart/form-data">
 
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a href="javascript:;"> <option value="I">SEMESTER I</option></a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;"> <option value="I">SEMESTER II</option>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <select class="btn btn-circle red dropdown-toggle" data-toggle="dropdown">SEMESTER
+                                                    <i class="fa fa-angle-down"></i>
 
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;"> <option value="I">SEMESTER III</option> </a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;"> <option value="I">SEMESTER IV</option>  </a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;"> <option value="I">SEMESTER V</option></a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;"> <option value="I">SEMESTER VI</option></a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;"> <option value="I">SEMESTER VII</option></a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;"> <option value="I">SEMESTER VIII</option></a>
-                                                </li>
-                                            </ul>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-circle green"> UPLOAD
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a href="javascript:;"> <option value="I">SEMESTER I</option></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:;"> <option value="I">SEMESTER II</option>
 
-                                        </button>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:;"> <option value="I">SEMESTER III</option> </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:;"> <option value="I">SEMESTER IV</option>  </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:;"> <option value="I">SEMESTER V</option></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:;"> <option value="I">SEMESTER VI</option></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:;"> <option value="I">SEMESTER VII</option></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="javascript:;"> <option value="I">SEMESTER VIII</option></a>
+                                                        </li>
+                                                    </ul>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <nobr>
+                                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                                <span class="btn btn-primary btn-file"><span class="fileupload-new">Select file</span>
+                                                <span class="fileupload-exists">Change</span>
+                                                    <input type="file" name="SampleFile"/></span>
+                                                    <span class="fileupload-preview"></span>
+                                                    <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
+                                                </div>
 
-                                    </td>
-                                </tr>
-
+                                                <div id="fileinfo"></div>
+                                                <button class="btn green" type="submit" name="upload_btn">
+                                                    UPLOAD
+                                                </button>
+                                            </nobr>
+                                        </td>
+                                    </tr>
+                                </form>
                             </tbody>
-
                         </table>
-
                     </div>
-
-
                 </div>
             </div>
 

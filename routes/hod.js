@@ -34,6 +34,7 @@ router.get('/upload', function(req, res, next) {
     if(req.session.login) {
         if(req.session.passport.user.role == 'hod'){
             res.render('upload', {dash : tiles, menu : menu, user : req.session.passport.user});
+
         }
         else{
             delete req.session.redirectTo;

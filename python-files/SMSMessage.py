@@ -14,8 +14,8 @@ class Messenger:
         message = self.msg
         number = self.stud_num  # recipient's number
 
-        username = "your mob number"
-        passwd = "your password"
+        username = "9820055038"
+        passwd = "e1011995mon"
 
         message = "+".join(message.split(' '))
 
@@ -55,5 +55,17 @@ class Messenger:
         sys.stdout.flush()
         # return()
 
-messenger = Messenger("9820055038", "Hello World!!")
+student_num = sys.argv[1]
+student_name = sys.argv[2]
+student_password = sys.argv[3]
+student_uid = sys.argv[4]
+student_nameH = sys.argv[5]
+student_passwordH1 = sys.argv[6]
+
+# message = "https://bvcoe-feedback.herokuapp.com/api/login?username={nameH}\&password={passwordH1}".format(nameH=student_nameH, passwordH1=student_passwordH1)
+message = "https://bvcoe-feedback.herokuapp.com/api/login?username=" + student_nameH + "%26password=" + student_passwordH1
+
+messenger = Messenger(student_num, message)
+print("Sending")
+sys.stdout.flush()
 messenger.compose()

@@ -8,10 +8,9 @@ from email import encoders
 
 
 class MailerApp:
-    def __init__(self, to_addr, from_addr, sender_pass, sub, attd_percent, stud_name, stud_roll):
+    def __init__(self, to_addr, from_addr, sender_pass, sub, stud_name, stud_roll):
         self.stud_name = stud_name
         self.stud_roll = stud_roll
-        self.attd_percent = attd_percent
         self.to_addr = to_addr
         self.from_addr = from_addr
         self.subject = sub
@@ -19,7 +18,7 @@ class MailerApp:
         self.sender_pass = sender_pass
         self.htmlbody = ''
 
-    # def values(self, to_addr, sub, attd_percent, stud_name, stud_roll):
+    # def values(self, to_addr, sub, stud_name, stud_roll):
 
     def send(self):
         print("Sending mail to {name}".format(name=self.stud_name))
@@ -76,8 +75,12 @@ class MailerApp:
             attachment.add_header("Content-Id", "<{}>".format(f))
             msg.attach(attachment)
 
-mailer = MailerApp("appuarunnair@gmail.com", "appuarunnair@gmail.com", "password", "This Works!", "79", "Arun Nair",
-                   "36")
+to_addr = sys.argv[1]
+to_name = sys.argv[2]
+to_rno = sys.argv[3]
+message = "This Works!"
+mailer = MailerApp("to_addr", "appuarunnair@gmail.com", "password", message, to_name",
+                   "to_rno")
 mailer.htmladd("Hello World!")
 mailer.send()
 
