@@ -521,6 +521,7 @@ router.post('/getRating', function (req, res, next) {
 
 
 router.post('/adminReg', function (req, res, next) {
+    console.log(req.body);
     var password = generate.generatePassword();
     var passwordh1 = md5.md5(password);
     var passwordh2 = md5.md5(passwordh1);
@@ -528,7 +529,7 @@ router.post('/adminReg', function (req, res, next) {
 try {
     var db = req.db;
     var collection = db.get('users');
-    collection.insert({"col_id":req.body.col_id,"dept_id":req.body.dept_id,"nickname" : req.body.name,"name":req.body.username,"nameH":username,"password":req.body.passwordh1,"passwordH":req.body.passwordh2,"contact":req.body.contact,"email_id":req.body.email_id,"reg":req.body.reg},function (e, docs) {
+    collection.insert({"col_id":req.body.col_id,"dep_id":req.body.dept_id,"nickname" : req.body.name,"name":req.body.username,"nameH":username,"password":req.body.passwordh1,"passwordH":req.body.passwordh2,"contact":req.body.contact,"email_id":req.body.email_id,"reg":req.body.reg},function (e, docs) {
         if (e) throw e;
         else {
             console.log("user added");
@@ -577,6 +578,7 @@ router.post('/load_users', function (req, res, next) {
         if (e) throw e;
         else {
             res.writeHead(200, {'Content-Type': 'application/json'});
+            console.log(d);
             res.write(d);
             res.end();
         }

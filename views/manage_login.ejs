@@ -10,6 +10,12 @@
 
 <% include tpl/header.ejs %>
 
+<style>
+    .modal-backdrop{
+        z-index: 10048 !important;
+    }
+</style>
+
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
 <!-- BEGIN HEADER -->
 
@@ -69,7 +75,7 @@
                         </div>
                         <div class="col-md-2 col-sm-2 col-xs-12">
                             <a id="col_modal_btn" class="btn green btn-outline" data-toggle="modal"
-                               data-target="#add_user">ADD USER</a>
+                               data-target="#add_user_modal">ADD USER</a>
                         </div>
                     </div>
                 </div>
@@ -88,7 +94,7 @@
 <!-- END CONTAINER -->
 
 <!-- Add user modal -->
-<div class="modal fade div_user_add" id="add_user" tabindex="-1" role="basic" aria-hidden="true">
+<div class="modal fade div_user_add" id="add_user_modal" tabindex="-1" role="basic" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -97,26 +103,39 @@
             </div>
             <div class="modal-body">
                 <form id="form-user_add">
-
+                    <input type="hidden" name="reg" value="1" />
                     <div class="form-group col-md-12">
                         <div class="form-group col-md-4">
-                            <label for="col_id" class="form-control">College ID</label>
+                            <label for="role" class="form-control" required>Select Role</label>
+                        </div>
+                        <div class="form-group col-md-7">
+                            <select id="role" name="role" class="form-control">
+                                <option value="principal">Principal</option>
+                                <option value="hod" selected>Head of Department</option>
+                                <option value="faculty">Faculty</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12 col_id_div">
+                        <div class="form-group col-md-4">
+                            <label for="col_id" class="form-control" required>College ID</label>
                         </div>
                         <div class="form-group col-md-7">
                             <input type="text" name="col_id" class="form-control " required/>
                         </div>
                     </div>
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12 dept_id_div">
                         <div class="form-group col-md-4">
-                            <label for="dept_id" class="form-control">Department ID</label>
+                            <label for="dep_id" class="form-control">Department ID</label>
                         </div>
                         <div class="form-group col-md-7">
-                            <input type="text" name="dept_id" class="form-control " required/>
+                            <input type="text" name="dep_id" class="form-control " required/>
                         </div>
                     </div>
                     <div class="form-group col-md-12">
                         <div class="form-group col-md-4">
-                            <label for="name" class="form-control">Name</label>
+                            <label for="name" class="form-control" required>Name</label>
                         </div>
                         <div class="form-group col-md-7">
                             <input type="text" name="name" class="form-control " required/>
@@ -124,7 +143,7 @@
                     </div>
                     <div class="form-group col-md-12">
                         <div class="form-group col-md-4">
-                            <label for="username" class="form-control">Username</label>
+                            <label for="username" class="form-control" required>Username</label>
                         </div>
                         <div class="form-group col-md-7">
                             <input type="text" name="username" class="form-control " required/>
@@ -191,7 +210,7 @@
                 },
 
                 {data: "col_id"},
-                {data: "dept_id"},
+                {data: "dep_id"},
                 {data: "name"},
                 {data: "username"},
                 {data: "contact"},
@@ -200,11 +219,13 @@
                 {
                     data: function (data) {
                         var btn = '<a class="btn blue btn-outline" href="javascript:send('+data.col_id+','+data.username+')" target="_blank">SEND</a>';
+                        return btn;
                     }
                 },
                 {
                     data: function (data) {
                         var btn = '<a class="btn blue btn-outline" href="" target="_blank">GENERATE & SEND</a>';
+                        return btn;
                     }
                 }
             ]
@@ -217,12 +238,15 @@
 
 <script>
 
-    $('.div_add_user').on('click', '.user_add', function(e){
+    $('.modal-footer').on('click', '.user_add', function(e){
         e.preventDefault();
-
+        console.log(JSON.stringify($('#form-user_add').serialize()));
+        var data = $('#form-user_add').serialize();
+        console.log(data);
+        console.log('inside');
         $.ajax({
-            url: '../ajax/add_user',
-            data: $('#form-add-user').serialize(),
+            url: '../ajax/adminReg',
+            data: data,
             method: 'POST',
             success: function(data){
                 load_users();
@@ -233,6 +257,25 @@
         });
     });
 
+</script>
+
+<script>
+    $('#role').change(function(){
+        switch($('#role').val()){
+            case 'principal':
+                $('.col_id_div').fadeIn();
+                $('.dept_id_div').fadeOut();
+                break;
+            case 'hod':
+            case 'faculty':
+                $('.col_id_div').fadeIn();
+                $('.dept_id_div').fadeIn();
+                break;
+            case 'admin':
+                $('.col_id_div').fadeOut();
+                $('.dept_id_div').fadeOut();
+        }
+    });
 </script>
 
 </body>
