@@ -15,6 +15,7 @@ app.post('/', function(req, res) {
     var sampleFile;
 
     if (!req.files) {
+        console.log(req.body);
         //res.send('No files were uploaded.');
         console.log('No files were uploaded');
         return;

@@ -102,6 +102,7 @@
                 r.length > 0 && (r.trigger("click.fileupload"), t.preventDefault())
             })
         }(window.jQuery)
+
     </script>
 </head>
 
@@ -174,7 +175,7 @@
                                 <form
                                     ref='uploadForm'
                                     id='uploadForm'
-                                    action='http://localhost:3000/upload_file'
+                                    action='/'
                                     method='post'
                                     encType="multipart/form-data">
 
@@ -227,9 +228,10 @@
                                                 </div>
 
                                                 <div id="fileinfo"></div>
-                                                <button class="btn green" type="submit" name="upload_btn">
+                                                <button class="btn green" type="button" name="upload_btn" id="upload">
                                                     UPLOAD
                                                 </button>
+                                                <span id="upl_message"></span>
                                             </nobr>
                                         </td>
                                     </tr>
@@ -253,6 +255,23 @@
 <!-- END CONTAINER -->
 
 <% include tpl/footer.ejs %>
+<script type="text/javascript">
+    $("#upload").click(function (e) {
+        window.alert("POST");
+        $.ajax({
+            type: "POST",
+            url: 'http://localhost:3000/upload_file',
+            data: new FormData(document.forms.uploadForm),
+            success: function (data) {
+                window.alert("success");
+                $("#upl_message").html("<h3>Uploaded!</h3>");
+            },
+            contentType: false,
+            cache: false,
+            processData:false
+        });
+    });
+</script>
 </body>
 
 </html>
