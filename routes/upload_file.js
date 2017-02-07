@@ -22,6 +22,7 @@ app.post('/', function(req, res) {
 
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
     sampleFile = req.files.SampleFile;
+    console.log(req.body.sem_dd);
 
     // Use the mv() method to place the file somewhere on your server
     sampleFile.mv(sampleFile.name, function(err) {
@@ -31,11 +32,14 @@ app.post('/', function(req, res) {
         else {
             //res.send('File uploaded!');
             console.log('File uploaded!');
-            fs.rename("./" + sampleFile.name, "./uploadDir/" + sampleFile.name, function (err) {
+            newfile = req.body.sem_dd + sampleFile.name;
+            fs.rename("./" + sampleFile.name, "./uploadDir/" + req.body.sem_dd + ".xlsx" , function (err) {
                 if(err){
                     console.log(err);
+                    res.status(500).send(err)
                 }
             });
+            res.end();
         }
     });
 });
