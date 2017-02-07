@@ -1,18 +1,23 @@
 var express = require('express');
 var router = express.Router();
+var crp = require('../functions/md5');
 
 /* GET home page. */
 
 
 router.get('/hash',function (req,res,next) {
-
+  var db = req.db;
   var collection = db.get('users');
-  collection.remove(function(e,docs){
-    var d = JSON.stringify(docs);
+  const passw = "omkar";
+  const password = crp.crypto(passw);
+  const passwordH = crp.crypto(password);
 
-    console.log(d);
-
-
+  collection.update({"name":"Omkar"},{"$set":{"nameH":crp.crypto(''),"password":password,"passwordH":passwordH}},function(e,docs){
+    if (e) show(e);
+    else {
+      console.log("user updated");
+      res.end();
+    }
   });
 });
 

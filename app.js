@@ -11,6 +11,7 @@ var bodyParser = require('body-parser');
 var session=require('express-session');
 require('./config/passport')(passport);
 
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var blank = require('./routes/blank');

@@ -11,7 +11,9 @@ var Department = require('../classes/dept');
 var College = require('../classes/college');
 var info = require('../tablemeta.json');
 var generate = require('../functions/generate');
-var md5 = require('../functions/md5')
+var md = require('../functions/md5');
+const crypto = require('crypto');
+const secret = 'Aditya';
 //var Regex = require('regex');
 
 /* GET home page. */
@@ -522,14 +524,18 @@ router.post('/getRating', function (req, res, next) {
 
 router.post('/adminReg', function (req, res, next) {
     console.log(req.body);
+
     var password = generate.generatePassword();
-    var passwordh1 = md5.md5(password);
-    var passwordh2 = md5.md5(passwordh1);
-    var username = md5.md5(req.body.username);
+
+    const passwordh1 = crypto.createHmac('sha256',secret).update(password).digest('hex');
+    console.log(passwordh1);
+
+    const passwordh2 = crypto.createHmac('sha256',secret).update(passwordh1).digest('hex');
+    const username = crypto.createHmac('sha256',secret).update(password).digest('hex');
 try {
     var db = req.db;
     var collection = db.get('users');
-    collection.insert({"col_id":req.body.col_id,"dep_id":req.body.dept_id,"nickname" : req.body.name,"name":req.body.username,"nameH":username,"password":req.body.passwordh1,"passwordH":req.body.passwordh2,"contact":req.body.contact,"email_id":req.body.email_id,"reg":req.body.reg},function (e, docs) {
+    collection.insert({"col_id":req.body.col_id,"dep_id":req.body.dep_id,"nickname" : req.body.name,"name":req.body.username,"nameH":username,"password":passwordh1,"passwordH":passwordh2,"contact":req.body.contact,"email_id":req.body.email_id,"reg":req.body.reg,"role":req.body.role},function (e, docs) {
         if (e) throw e;
         else {
             console.log("user added");
