@@ -31,6 +31,7 @@ var professor_assign = require('./routes/professor_assign');
 var hod = require('./routes/hod');
 var sheet = require('./routes/workbook');
 var upl_file = require('./routes/upload_file');
+var generateurl = require('./routes/generateurl');
 
 var mongo = require('mongodb');
 var monk = require('monk');
@@ -90,6 +91,7 @@ app.use('/professor_assign', professor_assign);
 app.use('/headofdepartment', hod);
 app.use('/addsheet', sheet);
 app.use('/upload_file', upl_file);
+app.use('/generateurl', generateurl);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

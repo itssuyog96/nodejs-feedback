@@ -4,11 +4,11 @@
 //var express = require('express');
 //var router = express.Router();
 
-module.exports.sendsms = function (contact, name, password, uid, nameH, passwordH1) {
+module.exports.sendsms = function (contact, name, nameH, passwordH1) {
 
     var spawn = require('child_process').spawn;
 
-    var proc = spawn('python',["python-files/SMSMessage.py", contact, name, password, uid, nameH, passwordH1]);
+    var proc = spawn('python',["python-files/SMSMessage.py", contact, name, nameH, passwordH1]);
     console.log("Spawned!!!");
 
     proc.stdout.on('data', function (chunk){

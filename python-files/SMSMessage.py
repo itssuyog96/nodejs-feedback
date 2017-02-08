@@ -57,13 +57,13 @@ class Messenger:
 
 student_num = sys.argv[1]
 student_name = sys.argv[2]
-student_password = sys.argv[3]
-student_uid = sys.argv[4]
-student_nameH = sys.argv[5]
-student_passwordH1 = sys.argv[6]
+#student_password = sys.argv[3]
+#student_uid = sys.argv[4]
+student_nameH = sys.argv[3]
+student_passwordH1 = sys.argv[4]
 
 # message = "https://bvcoe-feedback.herokuapp.com/api/login?username={nameH}\&password={passwordH1}".format(nameH=student_nameH, passwordH1=student_passwordH1)
-message = "https://bvcoe-feedback.herokuapp.com/api/login?username=" + student_nameH + "%26password=" + student_passwordH1
+message = "Hi " + student_name + ", Click on the following link to login into feedback system. Link -> https://bvcoe-feedback.herokuapp.com/api/login?username=" + student_nameH + "%26password=" + student_passwordH1
 
 messenger = Messenger(student_num, message)
 print("Sending")

@@ -61,16 +61,19 @@
                                 <thead>
                                 <tr>
                                     <th>Sr.No.</th>
+                                    <th>Role</th>
                                     <th>College Id</th>
                                     <th>Department Id</th>
                                     <th>Name</th>
                                     <th>Username</th>
                                     <th>Mobile</th>
                                     <th>Email Id</th>
-                                    <th>Send Link</th>
                                     <th>Generate &amp; Send Link</th>
                                 </tr>
                                 </thead>
+                                <tbody>
+
+                                </tbody>
                             </table>
                         </div>
                         <div class="col-md-2 col-sm-2 col-xs-12">
@@ -112,7 +115,7 @@
                             <select id="role" name="role" class="form-control">
                                 <option value="principal">Principal</option>
                                 <option value="hod" selected>Head of Department</option>
-                                <option value="faculty">Faculty</option>
+                                <option value="feed_analyzer">Feedback Analyzer</option>
                                 <option value="admin">Admin</option>
                             </select>
                         </div>
@@ -193,47 +196,54 @@
 
 <script>
 
-    function load_users() {
-        var i = 1;
-        $("#user-table").DataTable().destroy();
-        $("#user-table").DataTable({
-            ajax: {
-                data: {col_id: 1},
-                url: '../ajax/load_users',
-                method: 'POST'
+    var load_users = function(){
+        $.ajax({
+            url: '../../ajax/load_users',
+            data: {col_id: 1},
+            method: 'POST',
+            success: function(data){
+              console.log(data);
+              var i = 0;
+              data.forEach(function(item){
+                  $('#user-table').append('<tr>' +
+                      '<td>'+(i++)+'</td>' +
+                      '<td>'+item.role+'</td>' +
+                      '<td>'+item.col_id+'</td>' +
+                      '<td>'+item.dep_id+'</td>' +
+                      '<td>'+item.nickname+'</td>' +
+                      '<td>'+item.name+'</td>' +
+                      '<td>'+item.contact+'</td>' +
+                      '<td>'+item.email_id+'</td>' +
+                      '<td><button class="btn btn-default" onclick="javascript:generate_url(\''+item.nameH+'\',\''+item.passwordH+'\',\''+item.name+'\',\''+item.contact+'\',\''+item.email_id+'\')">GENERATE & SEND URL</button></td>' +
+                      '</tr>');
+              });
             },
-            columns: [
-                {
-                    data: function () {
-                        return i++;
-                    }
-                },
-
-                {data: "col_id"},
-                {data: "dep_id"},
-                {data: "name"},
-                {data: "username"},
-                {data: "contact"},
-                {data: "email_id"},
-
-                {
-                    data: function (data) {
-                        var btn = '<a class="btn blue btn-outline" href="javascript:send('+data.col_id+','+data.username+')" target="_blank">SEND</a>';
-                        return btn;
-                    }
-                },
-                {
-                    data: function (data) {
-                        var btn = '<a class="btn blue btn-outline" href="" target="_blank">GENERATE & SEND</a>';
-                        return btn;
-                    }
-                }
-            ]
+            error: function(error){
+                console.log(error.responseText);
+            }
         });
-    }
+    };
 
     load_users();
 
+</script>
+
+<script>
+
+    generate_url = function(nameH, key, username, contact, email_id){
+        console.log("Sending URL for username : " + username + "...");
+        $.ajax({
+            url: '../../generateurl',
+            data: {nameH: nameH, key: key, username: username, contact: contact, email_id: email_id},
+            method: 'GET',
+            success: function(){
+                console.log('Successfully generated & sent!');
+            },
+            error: function(error){
+                console.log('Error : '+error.responseText);
+            }
+        });
+    }
 </script>
 
 <script>
@@ -268,6 +278,7 @@
                 break;
             case 'hod':
             case 'faculty':
+            case 'feed_analyzer':
                 $('.col_id_div').fadeIn();
                 $('.dept_id_div').fadeIn();
                 break;
