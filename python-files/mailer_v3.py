@@ -81,7 +81,7 @@ username = sys.argv[3]
 password = sys.argv[4]
 
 message = "Click on the following link to login --> http://localhost:3000/api/login?username=" + username + "&password=" + password
-mailer = MailerApp("to_addr", "appuarunnair@gmail.com", "password", message, to_name")
+mailer = MailerApp("to_addr", "thewirecoy@gmail.com", "Success@2020", message, to_name")
 
 mailer.htmladd(message)
 mailer.send()
