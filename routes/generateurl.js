@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const secret = 'Aditya';
 var spawn = require('child_process').spawn;
 var sms = require('../functions/py_sms');
+var mail = require('../functions/py_mail')
 
 router.get('/', function (req, res, next){
 
@@ -19,7 +20,7 @@ router.get('/', function (req, res, next){
         console.log(contact+' '+username+' '+nameH+' '+key);
 
         //var proc = spawn('python',["python-files/SMSMessage.py", contact, username, nameH, key]);
-        var proc = spawn('python',["../python-files/mailer_v3.py", email_id, username, nameH, key]);
+        var proc = spawn('python',["python-files/mailer_v3.py", email_id, username, nameH, key]);
         console.log("Spawned!!!");
 
         proc.stdout.on('data', function (chunk){

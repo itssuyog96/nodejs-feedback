@@ -257,13 +257,13 @@
 <% include tpl/footer.ejs %>
 <script type="text/javascript">
     $("#upload").click(function (e) {
-        window.alert("POST");
+        //window.alert("POST");
         $.ajax({
             type: "POST",
             url: 'http://localhost:3000/upload_file',
             data: new FormData(document.forms.uploadForm),
             success: function (data) {
-                window.alert("success");
+                //window.alert("success");
                 $("#upl_message").html("<h3>Uploaded!</h3>");
             },
             contentType: false,

@@ -1,5 +1,6 @@
 import mimetypes
 import smtplib
+import sys
 from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 from email.mime.text import MIMEText
@@ -8,9 +9,8 @@ from email import encoders
 
 
 class MailerApp:
-    def __init__(self, to_addr, from_addr, sender_pass, sub, stud_name, stud_roll):
+    def __init__(self, to_addr, from_addr, sender_pass, sub, stud_name):
         self.stud_name = stud_name
-        self.stud_roll = stud_roll
         self.to_addr = to_addr
         self.from_addr = from_addr
         self.subject = sub
@@ -36,6 +36,7 @@ class MailerApp:
         server.login(self.from_addr, self.sender_pass)
         server.sendmail(self.from_addr, self.to_addr, msg.as_string())
         print("Email sent successfully to {name}!".format(name=self.stud_name))
+        sys.stdout.flush()
         server.quit()
 
     # For user
@@ -80,10 +81,14 @@ to_name = sys.argv[2]
 username = sys.argv[3]
 password = sys.argv[4]
 
-message = "Click on the following link to login --> http://localhost:3000/api/login?username=" + username + "&password=" + password
-mailer = MailerApp("to_addr", "thewirecoy@gmail.com", "Success@2020", message, to_name")
-
+#message = "Click on the following link to login --> http://localhost:3000/api/login?username=" + username + "&password=" + password
+#message = "hi"
+message = "Hi " + to_name + ", Click on the following link to login into feedback system. Link -> https://bvcoe-feedback.herokuapp.com/api/login?username=" + username + "&password=" + password
+print("inside mail")
+sys.stdout.flush()
+mailer = MailerApp(to_addr, "thewirecoy@gmail.com", "Success@2020", "Link for feedback", to_name)
 mailer.htmladd(message)
 mailer.send()
+
 
 

@@ -7,6 +7,9 @@ var app = express();
 var busboy = require('connect-busboy');
 var fs = require('fs');
 
+/*busboy.extend(app, {
+
+});*/
 app.use(busboy());
 // default options
 app.use(fileUpload());
