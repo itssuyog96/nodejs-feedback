@@ -77,11 +77,13 @@ class MailerApp:
 
 to_addr = sys.argv[1]
 to_name = sys.argv[2]
-to_rno = sys.argv[3]
-message = "This Works!"
-mailer = MailerApp("to_addr", "appuarunnair@gmail.com", "password", message, to_name",
-                   "to_rno")
-mailer.htmladd("Hello World!")
+username = sys.argv[3]
+password = sys.argv[4]
+
+message = "Click on the following link to login --> http://localhost:3000/api/login?username=" + username + "&password=" + password
+mailer = MailerApp("to_addr", "appuarunnair@gmail.com", "password", message, to_name")
+
+mailer.htmladd(message)
 mailer.send()
 
 

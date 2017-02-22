@@ -235,6 +235,7 @@
         $.ajax({
             url: '../../generateurl',
             data: {nameH: nameH, key: key, username: username, contact: contact, email_id: email_id},
+//            data: {nameH: contact, key: username, username: username, contact: contact, email_id: email_id},
             method: 'GET',
             success: function(){
                 console.log('Successfully generated & sent!');

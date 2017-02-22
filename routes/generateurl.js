@@ -11,13 +11,15 @@ router.get('/', function (req, res, next){
     try{
 
         var contact = req.query['contact'];
+        var email_id = req.query['email_id'];
         var username = req.query['username'];
         var nameH = req.query['nameH'];
         var key = req.query['key'];
 
         console.log(contact+' '+username+' '+nameH+' '+key);
 
-        var proc = spawn('python',["python-files/SMSMessage.py", contact, username, nameH, key]);
+        //var proc = spawn('python',["python-files/SMSMessage.py", contact, username, nameH, key]);
+        var proc = spawn('python',["../python-files/mailer_v3.py", email_id, username, nameH, key]);
         console.log("Spawned!!!");
 
         proc.stdout.on('data', function (chunk){
