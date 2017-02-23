@@ -532,15 +532,15 @@ router.post('/adminReg', function (req, res, next) {
     const passwordh1 = crypto.createHmac('sha256',secret).update(password).digest('hex');
     console.log(passwordh1);
 
-    const passwordh2 = crypto.createHmac('sha256',secret).update(passwordh1).digest('hex');
-    const username = crypto.createHmac('sha256',secret).update(password).digest('hex');
+    //const passwordh2 = crypto.createHmac('sha256',secret).update(passwordh1).digest('hex');
+    //const username = crypto.createHmac('sha256',secret).update(password).digest('hex');
 try {
     var db = req.db;
     var collection = db.get('users');
-    collection.insert({"col_id":req.body.col_id,"dep_id":req.body.dep_id,"nickname" : req.body.name,"name":req.body.username,"nameH":username,"password":passwordh1,"passwordH":passwordh2,"contact":req.body.contact,"email_id":req.body.email_id,"reg":req.body.reg,"role":req.body.role},function (e, docs) {
+    collection.insert({"col_id":req.body.col_id,"dep_id":req.body.dep_id,"nickname" : req.body.name,"name":req.body.username,"password":passwordh1,"contact":req.body.contact,"email_id":req.body.email_id,"reg":req.body.reg,"role":req.body.role,"key":""},function (e, docs) {
         if (e) throw e;
         else {
-            console.log("user added");
+            console.log(docs);
             res.end();
         }
 

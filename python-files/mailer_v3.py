@@ -78,12 +78,13 @@ class MailerApp:
 
 to_addr = sys.argv[1]
 to_name = sys.argv[2]
-username = sys.argv[3]
-password = sys.argv[4]
+#username = sys.argv[3]
+#password = sys.argv[4]
+url = sys.argv[3]
 
 #message = "Click on the following link to login --> http://localhost:3000/api/login?username=" + username + "&password=" + password
 #message = "hi"
-message = "Hi " + to_name + ", Click on the following link to login into feedback system. Link -> https://bvcoe-feedback.herokuapp.com/api/login?username=" + username + "&password=" + password
+message = "Hi " + to_name + ", Click on the following link to login into feedback system. Link -> " + url
 print("inside mail")
 sys.stdout.flush()
 mailer = MailerApp(to_addr, "thewirecoy@gmail.com", "Success@2020", "Link for feedback", to_name)

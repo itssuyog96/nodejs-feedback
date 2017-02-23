@@ -3,9 +3,12 @@
  */
 
 var LocalStrategy   = require('passport-local').Strategy;
+var BearerStrategy = require('passport-http-bearer').Strategy;
+
 
 var crp = require('../functions/md5');
-
+var monk = require('monk');
+var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
 
 module.exports = function(passport) {
 
@@ -66,7 +69,7 @@ module.exports = function(passport) {
 
 
     //loginhashkey//
-    passport.use('api-login', new LocalStrategy({
+    /*passport.use('api-login', new LocalStrategy({
 
             usernameField : 'username',
             passwordField : 'password',
@@ -102,10 +105,24 @@ module.exports = function(passport) {
 
 
 
-        }));
+        }));*/
 
 
+    passport.use(new BearerStrategy({},
+        function(token,done) {
+            console.log('In Strategy');
+            token = crp.crypto(token);
 
+            var collection = db.get('users');
+            collection.find({"key": token }, function (err, user) {
+                if (err) { return done(err); }
+                if(user == 0){
+                    return done(null, false,req.flash('loginMessage', 'No user found.'));
+                }
+                return done(null, user[0]);
+            });
+        }
+    ));
 
 
 };

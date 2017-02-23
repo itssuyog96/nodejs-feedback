@@ -1,11 +1,15 @@
-var db = require('../db-config');
+//var db = require('../db-config');
 var express = require('express');
 var router = express.Router();
-const crypto = require('crypto');
+const crp = require('../functions/md5');
 const secret = 'Aditya';
 var spawn = require('child_process').spawn;
 var sms = require('../functions/py_sms');
-var mail = require('../functions/py_mail')
+var mail = require('../functions/py_mail');
+var jwt  = require('jwt-simple');
+var GoogleURL = require('google-url');
+googleUrl = new GoogleURL({key:'AIzaSyCGV2e7uvykKEnYr68QFZQyWxC1vWFy9O4'});
+
 
 router.get('/', function (req, res, next){
 
@@ -13,22 +17,59 @@ router.get('/', function (req, res, next){
 
         var contact = req.query['contact'];
         var email_id = req.query['email_id'];
-        var username = req.query['username'];
-        var nameH = req.query['nameH'];
+        var username = req.query['nickname'];
+        //var nameH = req.query['nameH'];
         var key = req.query['key'];
+        var id = req.query['id'];
 
-        console.log(contact+' '+username+' '+nameH+' '+key);
+        var data ={
+            name: username,
+            password: key,
+            contact:contact,
+            email_id:email_id
+        };
 
-        //var proc = spawn('python',["python-files/SMSMessage.py", contact, username, nameH, key]);
-        var proc = spawn('python',["python-files/mailer_v3.py", email_id, username, nameH, key]);
-        console.log("Spawned!!!");
+        var tok = jwt.encode(data,secret);
+        console.log(token);
 
-        proc.stdout.on('data', function (chunk){
-            var textChunk = chunk.toString();
-            console.log(textChunk)
+        var token = crp.crypto(tok);
+        var HToken = crp.crypto(token);
+
+        //console.log(contact+' '+username+' '+nameH+' '+key);
+
+        var db = req.db;
+        var collection = db.get("users");
+        collection.update({"_id": id},{"$set":{"key":HToken}},function (e,docs){
+            var d = JSON.stringify(docs);
+            if (e) throw e;
+            else {
+                console.log('user Token updated');
+                res.end();
+            }
+
         });
 
-        console.log("Process finished");
+        var url = 'https://bvcoe-feedback.herokuapp.com/profile?access_token='+token;
+
+        //var proc = spawn('python',["python-files/SMSMessage.py", contact, username, nameH, key]);
+
+        googleUrl.shorten( url, function(err, shortUrl ) {
+            console.log(shortUrl);
+            var proc = spawn('python',["python-files/mailer_v3.py", email_id, username,shortUrl]);
+            console.log("Spawned!!!");
+
+            proc.stdout.on('data', function (chunk){
+                var textChunk = chunk.toString();
+                console.log(textChunk)
+            });
+
+            console.log("Process finished");
+        });
+
+
+
+
+
         // sms.sendsms(req.body.contact, req.body.username, req.body.nameH, req.body.key);
     }
     catch(e){

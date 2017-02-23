@@ -214,7 +214,7 @@
                       '<td>'+item.name+'</td>' +
                       '<td>'+item.contact+'</td>' +
                       '<td>'+item.email_id+'</td>' +
-                      '<td><button class="btn btn-default" onclick="javascript:generate_url(\''+item.nameH+'\',\''+item.passwordH+'\',\''+item.name+'\',\''+item.contact+'\',\''+item.email_id+'\')">GENERATE & SEND URL</button></td>' +
+                      '<td><button class="btn btn-default" onclick="javascript:generate_url(\''+item.password+'\',\''+item.nickname+'\',\''+item.contact+'\',\''+item.email_id+'\',\''+item._id+'\')">GENERATE & SEND URL</button></td>' +
                       '</tr>');
               });
             },
@@ -230,11 +230,11 @@
 
 <script>
 
-    generate_url = function(nameH, key, username, contact, email_id){
+    generate_url = function(key, nickname, contact, email_id,id){
         console.log("Sending URL for username : " + username + "...");
         $.ajax({
             url: '../../generateurl',
-            data: {nameH: nameH, key: key, username: username, contact: contact, email_id: email_id},
+            data: {key: key, nickname: nickname, contact: contact, email_id: email_id,id:id},
 //            data: {nameH: contact, key: username, username: username, contact: contact, email_id: email_id},
             method: 'GET',
             success: function(){
