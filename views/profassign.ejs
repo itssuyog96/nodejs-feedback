@@ -53,25 +53,44 @@
                             <form id="selectSem">
                                 <div class="form-group">
                                     <input type="hidden" name="col_id" value="<%= user.col_id %>" />
-                                    <input type="hidden" name="dept_id" value="<%= user.dep_id %>" />
-                                    <div class="form-group col-md-2 col-md-offset-2">
-                                        <label class="form-control" for="sem">Select Semester</label>
+
+                                    <div class="form-group col-md-12">
+                                        <div class="form-group col-md-2 col-md-offset-2">
+                                            <label class="form-control" for="sem">Select Department</label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <select class="form-control" name="dept_id">
+                                                <% departments.forEach(function(data){ %>
+                                                <option value="<%= data.dept_id %>"><%= data.dept_name %></option>
+                                                <% }); %>
+
+                                            </select>
+                                        </div>
+
                                     </div>
-                                    <div class="form-group col-md-4">
-                                        <select class="form-control" name="sem">
-                                            <option value="1" selected>I</option>
-                                            <option value="2">II</option>
-                                            <option value="3">III</option>
-                                            <option value="4">IV</option>
-                                            <option value="5">V</option>
-                                            <option value="6">VI</option>
-                                            <option value="7">VII</option>
-                                            <option value="8">VIII</option>
-                                        </select>
+
+                                    <div class="form-group col-md-12">
+                                        <div class="form-group col-md-2 col-md-offset-2">
+                                            <label class="form-control" for="sem">Select Semester</label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <select class="form-control" name="sem">
+                                                <option value="1" selected>I</option>
+                                                <option value="2">II</option>
+                                                <option value="3">III</option>
+                                                <option value="4">IV</option>
+                                                <option value="5">V</option>
+                                                <option value="6">VI</option>
+                                                <option value="7">VII</option>
+                                                <option value="8">VIII</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <input type="submit" class="btn btn-default" value="Submit"/>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-2">
-                                        <input type="submit" class="btn btn-default" value="Submit"/>
-                                    </div>
+
+
                                 </div>
                             </form>
                         </div>

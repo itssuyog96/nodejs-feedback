@@ -593,6 +593,13 @@ router.post('/changePassword', function (req, res, next) {
             if (e) throw e;
             else {
                 console.log('password changed');
+
+                const collectionb = db.get('users');
+                collectionb.update({"_id": req.body.id}, {'$set' : {"key" : null}}, function(e2, docs2){
+                    if(e2) throw e2;
+
+                    console.log('key deleted');
+                })
                 res.end();
             }
 

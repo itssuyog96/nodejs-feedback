@@ -49,7 +49,7 @@ router.get('/', function (req, res, next){
 
         });
 
-        var url = 'https://bvcoe-feedback.herokuapp.com/profile?access_token='+token;
+        var url = 'https://localhost:3000/profile?access_token='+token;
 
         //var proc = spawn('python',["python-files/SMSMessage.py", contact, username, nameH, key]);
 

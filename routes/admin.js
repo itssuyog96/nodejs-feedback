@@ -59,9 +59,10 @@ router.get('/manage_login', function(req, res, next){
 
     }
     else {
-        req.session.redirectTo = '/admin/manage';
+        req.session.redirectTo = '/admin/manage_login';
         res.redirect('/login');
     }
 });
+
 
 module.exports = router;

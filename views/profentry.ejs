@@ -63,9 +63,11 @@
                                        class="table table-striped table-bordered table-hover table-checkable order-column">
                                     <thead>
                                     <tr>
-                                        <% profs.columns.forEach(function (items) { %>
-                                        <th><%= items %></th>
-                                        <% }); %>
+                                        <th>SR. NO.</th>
+                                        <th>DEPARTMENT ID</th>
+                                        <th>PROFESSOR ID</th>
+                                        <th>PROFESSOR NAME</th>
+                                        <th>OPTIONS</th>
                                     </tr>
                                     </thead>
                                 </table>
@@ -136,29 +138,31 @@
 
 <script>
     $('.col_id').val(<%= user.col_id %>);
-    $('.dept_id').val(<%= user.dep_id %>);
+    //$('.dept_id').val(<%= user.dep_id %>);
     $('.col_id').prop("readonly", true);
-    function load_<%= profs.name %>(id) {
+    function load_<%= profs.name %>() {
         var i = 1;
-        $('.dept_id').val(id);
-        $('.dept_id').prop("readonly", true);
+        //$('.dept_id').val(id);
+        //$('.dept_id').prop("readonly", true);
         $("#<%= profs.name %>").DataTable().destroy();
         $("#<%= profs.name %>").DataTable({
             ajax: {
                 url: '../../ajax/load_prof',
-                data: {'id': id},
+                data: {},
                 method: 'POST'
             },
             columns: [
                 {data: function(){
                     return i++;
                 }},
+                { data: 'dept_id'},
                 <% profs.column_data.forEach(function(item){ %>
                 {data: '<%= item %>'},
                 <% }) %>
+
                 {
                     data: function (data) {
-                        var del_btn = '<a class="btn red btn-outline" href="javascript:del_profs(' + data.<%= profs.column_data[0] %> + ',<%= user.dep_id %>)" target="_blank">DELETE</a>';
+                        var del_btn = '<a class="btn red btn-outline" href="javascript:del_profs(' + data.<%= profs.column_data[0] %> + ')" target="_blank">DELETE</a>';
                         var btns = del_btn;
                         return btns;
                     }
@@ -166,14 +170,14 @@
             ]
         });
     }
-    load_<%= profs.name %>(<%= user.dep_id %>);
-    function del_profs(id, dept_id) {
+    load_<%= profs.name %>();
+    function del_profs(id) {
         $.ajax({
             url: '../../ajax/del_prof',
             data: {'id': id},
             method: 'POST',
             success: function (data) {
-                load_<%= profs.name %>(dept_id);
+                load_<%= profs.name %>();
                 console.log('Professor deleted : ' + data);
                 //toast the success message
             },
@@ -191,7 +195,7 @@
             method: 'POST',
             success: function(data){
                 $('.close-m_prof').click();
-                load_<%= profs.name %>(<%= user.dep_id %>);
+                load_<%= profs.name %>();
             },
             error: function(data){
                 console.log("Error occured while adding professor! "+data);
