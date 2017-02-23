@@ -80,12 +80,11 @@ app.use('/feed_analyzer',feed_analyzer);
 app.use('/dashboard', dashboard);
 app.use('/student', student);
 app.use('/principal', principal);
-app.use('/professor_assign', professor_assign);
 app.use('/headofdepartment', hod);
 app.use('/addsheet', sheet);
 app.use('/upload_file', upl_file);
 app.use('/generateurl', generateurl);
-app.use('/survey',survey);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
