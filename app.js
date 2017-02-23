@@ -19,11 +19,9 @@ var admin = require('./routes/admin');
 var ajax = require('./routes/ajax');
 var survey = require('./routes/survey');
 var subadd = require('./routes/subadd');
-var tablesurvey = require('./routes/tablesurvey');
 var profentry = require('./routes/profentry');
 var graphsurvey = require('./routes/graphsurvey');
 var feed_analyzer = require('./routes/feed_analyzer');
-var survey1 = require('./routes/survey1');
 var dashboard = require('./routes/dashboard');
 var student = require('./routes/student');
 var principal = require('./routes/principal');
@@ -77,13 +75,10 @@ app.use('/users', users);
 app.use('/blank', blank);
 app.use('/admin', admin);
 app.use('/ajax',ajax);
-app.use('/survey', survey);
 app.use('/subadd', subadd);
-app.use('/tablesurvey',tablesurvey);
 app.use('/profentry',profentry);
 app.use('/graphsurvey',graphsurvey);
 app.use('/feed_analyzer',feed_analyzer);
-app.use('/survey1',survey1);
 app.use('/dashboard', dashboard);
 app.use('/student', student);
 app.use('/principal', principal);
@@ -92,6 +87,7 @@ app.use('/headofdepartment', hod);
 app.use('/addsheet', sheet);
 app.use('/upload_file', upl_file);
 app.use('/generateurl', generateurl);
+app.use('/survey',survey);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
