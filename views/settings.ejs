@@ -8,6 +8,10 @@
 
 <% include tpl/header.ejs %>
 
+<style>
+    #show-error{color:red !important;}
+</style>
+
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
 <!-- BEGIN HEADER -->
 
@@ -37,52 +41,48 @@
 
             <!--START EDITING FROM HERE-->
 
-            <div class="portlet box green">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet light ">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="fa fa-gift"></i>Settings </div>
+                        <i class="icon-social-dribbble font-red"></i>
+                        <span class="caption-subject font-red bold uppercase">Settings</span>
+                        <span class="caption-helper">Change Password</span>
+                    </div>
                 </div>
-                <div class="portlet-body form change-pass-div">
-                    <div class="center"><h1>HI <%= name %> your password is reveiled </h1></div>
-                    <!-- BEGIN FORM-->
-                    <form id = "change-password" action="ajax/change_pass" class="form-horizontal">
-                        <blockquote class="note note-info"><p>Change Password</p> </blockquote>
+                <div class="portlet-body" id="change-pass-div">
+                    <form action="#" id="change-password" class="form-horizontal">
+                        <input name="id" type="hidden" value="<%= user._id %>" />
                         <div class="form-body">
                             <div class="form-group">
                                 <label class="col-md-3 control-label">New Password</label>
                                 <div class="col-md-4">
-                                    <div class="input-group">
-                                        <input type="password" class="form-control input-circle-left" placeholder="Password">
-                                        <span class="input-group-addon input-circle-right">
-                                                                        <i class="fa fa-user"></i>
-                                                                    </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Confirm New Password</label>
-                                <div class="col-md-4">
-                                    <div class="input-group">
-                                        <input type="password" name="newpass" class="form-control input-circle-left" placeholder="Password">
-                                        <span class="input-group-addon input-circle-right">
-                                                                        <i class="fa fa-user"></i>
-                                                                    </span>
-                                    </div>
-                                </div>
-                            </div>
-                        <div class="form-actions">
-                            <div class="row">
-                                <div class="col-md-offset-3 col-md-9">
-                                    <button type="submit" class="btn btn-circle green change-ass">Change Password</button>
+                                    <input id="pass1" type="password" class="form-control input-circle" placeholder="Enter Password " required>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    </form>
-                    <!-- END FORM-->
-                </div>
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Confirm New Password</label>
+                                <div class="col-md-4">
+                                    <input id="pass2" type="password" name="newpass" class="form-control input-circle" placeholder="Enter Password" required>
+                                </div>
+                                <span id="show-error" style="padding-left: 10px;" >Please type same password in both fields and submit.</span>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button type="button" class="change-pass  btn btn-circle green">Change Password</button>
+                                </div>
 
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
+            <!-- END PORTLET-->
+
             <!--STOP EDITING HERE-->
 
         </div>
@@ -98,20 +98,31 @@
 
 <script>
 
-    $('.change-pass-div').on('click', '.change-pass', function(e){
+    $('#show-error').fadeOut();
+
+    $('#change-pass-div').on('click', '.change-pass', function(e){
        e.preventDefault();
 
-        $.ajax({
-           url: 'ajax/change_pass',
-            data: $('#change-password').serialize(),
-            method: 'POST',
-            success: function(data){
-                console.log("Password changed!" + data);
-            },
-            error: function(error){
-                console.log("Error occured : "+error.responseText);
-            }
-        });
+       if($('#pass1').val() == $('#pass2').val()){
+           console.log('Setting pass');
+           $.ajax({
+               url: '../../ajax/changePassword',
+               data: $('#change-password').serialize(),
+               method: 'POST',
+               success: function(data){
+                   console.log("Password changed!" + data);
+               },
+               error: function(error){
+                   console.log("Error occured : "+error.responseText);
+               }
+           });
+       }
+       else{
+           console.log('Nothing happens');
+           $('#show-error').fadeIn();
+       }
+
+
     });
 
 </script>
