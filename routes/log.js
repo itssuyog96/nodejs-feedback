@@ -72,6 +72,9 @@ module.exports = function(app, passport) {
                 case 'student':     choice ='/student';
                     break;
 
+                case 'hod':     choice ='/headofdepartment';
+                    break;
+
                 default:break;
             }
 

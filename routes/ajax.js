@@ -12,7 +12,7 @@ var College = require('../classes/college');
 var info = require('../tablemeta.json');
 var generate = require('../functions/generate');
 var md = require('../functions/md5');
-const crypto = require('crypto');
+const crp = require('../functions/md5');
 const secret = 'Aditya';
 var spawn = require('child_process').spawn;
 var sms = require('../functions/py_sms');
@@ -504,6 +504,34 @@ router.post('/fetchprof', function (req, res, next) {
 });
 
 
+router.post('/getprof', function (req, res, next) {
+
+    try {
+        var db = req.db;
+        const collection = db.get('professor');
+        collection.find({"col_id": req.body.col_id, "dept_id": req.body.dept_id}, function (e, docs) {
+            //var d = JSON.stringify(docs);
+            if (e) throw e;
+            else {
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                console.log(docs);
+                res.write(docs);
+                res.end();
+            }
+
+        });
+    }
+
+    catch(error){
+        res.writeHead(500, {'Content-Type': 'text/html'});
+        res.write('Error !' + error);
+        res.end();
+    }
+});
+
+
+
+
 
 
 router.post('/getRating', function (req, res, next) {
@@ -529,7 +557,7 @@ router.post('/adminReg', function (req, res, next) {
 
     var password = generate.generatePassword();
 
-    const passwordh1 = crypto.createHmac('sha256',secret).update(password).digest('hex');
+    const passwordh1 = crp.crypto(password);
     console.log(passwordh1);
 
     //const passwordh2 = crypto.createHmac('sha256',secret).update(passwordh1).digest('hex');
@@ -553,17 +581,18 @@ catch(error){
 }
 });
 
-router.post('/setPassword', function (req, res, next) {
+router.post('/changePassword', function (req, res, next) {
     try {
         var db = req.db;
-        var collection = db.get('user');
-        collection.update(req.body, function (e, docs) {
+        var collection = db.get('users');
+        var password = crp.crypto(req.body.newpass);
+
+        collection.update({"_id": req.body.id},{"$set":{"password":password}}, function (e, docs) {
             var d = JSON.stringify(docs);
             console.log(d);
             if (e) throw e;
             else {
-                res.writeHead(200, {'Content-Type': 'application/json'});
-                res.write(d);
+                console.log('password changed');
                 res.end();
             }
 
