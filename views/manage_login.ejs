@@ -231,7 +231,7 @@
 <script>
 
     generate_url = function(key, nickname, contact, email_id,id){
-        console.log("Sending URL for username : " + username + "...");
+        console.log("Sending URL to : " + nickname + "...");
         $.ajax({
             url: '../../generateurl',
             data: {key: key, nickname: nickname, contact: contact, email_id: email_id,id:id},
