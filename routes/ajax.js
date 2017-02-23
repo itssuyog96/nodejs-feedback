@@ -623,6 +623,25 @@ router.post('/load_users', function (req, res, next) {
     });
 });
 
+router.post('/retrieve_stud', function (req, res, next) {
+
+    var db = req.db;
+    var collection = db.get('student');
+    collection.find({"col_id":req.user.col_id,"dept_id":req.user.dep_id,"sem":req.body.sem},function(e,docs){
+        var d = JSON.stringify(docs);
+        if (e) throw e;
+        else {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+
+            res.write(docs);
+            res.end();
+        }
+
+    });
+});
+
+
+
 router.get('/generateurl', function (req, res, next){
 
     try{
