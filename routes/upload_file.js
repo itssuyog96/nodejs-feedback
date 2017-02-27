@@ -6,6 +6,8 @@ var fileUpload = require('express-fileupload');
 var app = express();
 var busboy = require('connect-busboy');
 var fs = require('fs');
+var crp = require('../functions/md5');
+var generate = require('../functions/generate');
 
 /*busboy.extend(app, {
 
@@ -36,11 +38,76 @@ app.post('/', function(req, res) {
         else {
             //res.send('File uploaded!');
             console.log('File uploaded!');
+            console.log(req.body.sem_dd);
             newfile = req.body.sem_dd + sampleFile.name;
-            fs.rename("./" + sampleFile.name, "./uploadDir/" + req.body.sem_dd + ".xlsx" , function (err) {
+            fs.rename("./" + sampleFile.name, "./StudentExcelFiles/" + req.body.sem_dd + ".xlsx" , function (err) {
                 if(err){
                     console.log(err);
-                    res.status(500).send(err)
+                    res.status(500).send(err);
+                }
+                else {
+                    if(typeof require !== 'undefined') XLSX = require('xlsx');
+                    var request = require('request');
+                    console.log("inside addsheet");
+
+                    var name, roll_no, email_id, contact, x, role, nameH="N", password, passwordH1="M", passwordH2="T", uid;
+
+                    var workbook = XLSX.readFile("workbooks/StudentDetails.xlsx");
+                    var sheet = workbook.Sheets['details'];
+
+                    console.log("excel data");
+
+                    var db = req.db;
+                    var collection = db.get('student');
+
+                    for(x = 2; x < 4; x++){
+
+                        if(sheet['A' + x.toString()] == undefined)
+                        {
+                            console.log("Empty");
+                            break;
+                        }
+                        else {
+                            name = sheet['B' + x.toString()].v;
+
+                            password = generate.generatePassword();
+                            password = crp.crypto(password);
+
+                            //role = "student";
+                            roll_no = sheet['A' + x.toString()].v;
+                            email_id = sheet['C' + x.toString()].v;
+                            contact = sheet['D' + x.toString()].v;
+                            uid = sheet['E' + x.toString()].v;
+
+                            /*console.log("name:" + name);
+                            console.log("roll:" + roll_no);
+                            console.log("name:" + email_id);
+                            console.log("contact:" + contact);
+                            console.log("uid: " + uid);
+                            console.log("userid: " + userid);*/
+                        }
+
+                        collection.insert({"col_id":req.user.col_id,"dept_id":req.user.dep_id,"roll_no": roll_no,"name": name,"sem":req.body.sem_dd,"contact":contact,"email_id":email_id, "password":password, "status":"0"},function(e,docs){
+                            var d = JSON.stringify(docs);
+                            if (e) throw e;
+                            else {
+                                console.log('student updated');
+                                res.end();
+                            }
+
+                        });
+                        /*var proc = spawn('python',["python-files/SMSMessage.py", contact, name, password, uid, "0bfb331611cbcf420b38f73e1936f836", "057829fa5a65fc1ace408f490be486ac"]);
+                         console.log("Spawned!!!");
+
+                         proc.stdout.on('data', function (chunk){
+                         var textChunk = chunk.toString();
+                         console.log(textChunk)
+                         });
+
+                         console.log("Process finished");*/
+
+                    }
+                    //pysms.sendsms(contact, name, password, uid, "0bfb331611cbcf420b38f73e1936f836", "057829fa5a65fc1ace408f490be486ac");
                 }
             });
             res.end();

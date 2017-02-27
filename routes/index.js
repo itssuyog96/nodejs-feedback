@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var crp = require('../functions/md5');
 var GoogleURL = require('google-url');
+var tiles = require('../dashmeta.json').hod;
+var menu = require('../menu.json').hod;
 googleUrl = new GoogleURL({key:'AIzaSyCGV2e7uvykKEnYr68QFZQyWxC1vWFy9O4'});
 /* GET home page. */
 
@@ -35,6 +37,10 @@ router.get('/hash',function (req,res,next) {
   });
 });
 
+
+router.get('/hodsurvey', function (req, res) {
+    res.render('hodSurveySelection', {dash : tiles, menu : menu, user : req.session.passport.user});
+});
 
 
 router.get('/', function(req, res, next) {

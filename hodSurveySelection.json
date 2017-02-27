@@ -1,0 +1,10 @@
+{
+  "student":{
+    "columns":[
+      "Sr. No.",
+      "name",
+      "status",
+      "gen_url"
+    ]
+  }
+}

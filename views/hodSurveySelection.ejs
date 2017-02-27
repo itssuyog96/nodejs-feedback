@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<% include tpl/header.ejs %>
+
+    <body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
+        <!-- BEGIN HEADER -->
+        <% include tpl/menu.ejs %>
+        <!-- END HEADER -->
+
+        <!-- BEGIN HEADER & CONTENT DIVIDER -->
+        <div class="clearfix"> </div>
+        <!-- END HEADER & CONTENT DIVIDER -->
+
+        <!-- BEGIN CONTAINER -->
+        <div class="page-container">
+            <% include tpl/sidebar.ejs %>
+            <!-- BEGIN CONTENT -->
+            <div class="page-content-wrapper">
+                <!-- BEGIN CONTENT BODY -->
+                <div class="page-content">
+                    <!-- BEGIN PAGE HEADER-->
+
+                    <!--h3 class="page-title"> Blank Page Layout
+                        <small>blank page layout</small>        To be resolved
+                    </h3-->
+
+                    <!-- END PAGE HEADER-->
+
+
+                    <!--START EDITING FROM HERE-->
+
+                    <!--<div class="note note-info">
+
+                    </div>-->
+
+                    <!--<p> A black page template with a minimal dependency assets to use as a base for any custom page you create </p>-->
+                    <div class="col-md-6">
+                        <label for="survey_sel">Select Survey</label>
+                        <select class="btn btn-circle red dropdown-toggle" data-toggle="dropdown" name="hod_survey_dd" id="survey_sel">
+                            <i class="fa fa-angle-down"></i>
+
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="javascript:;"> <option value="some value">survey-1001-3-even</option></a>
+                                </li>
+                            </ul>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="year_sel">Select Sem</label>
+                        <select class="btn btn-circle red dropdown-toggle" data-toggle="dropdown" name="hod_sem_dd" id="sem_sel">
+                            <i class="fa fa-angle-down"></i>
+
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="javascript:;"> <option value="1">1</option></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"> <option value="2">2</option></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"> <option value="3">3</option></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"> <option value="4">4</option></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"> <option value="5">5</option></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"> <option value="6">6</option></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"> <option value="7">7</option></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"> <option value="8">8</option></a>
+                                </li>
+                            </ul>
+                        </select>
+                    </div>
+                    <br><br><br>
+                    <div class="col-md-12">
+                        <table class="table table-striped table-bordered table-hover table-checkable" id="datatable_students">
+                            <thead>
+                                <tr role="row" class="heading">
+                                    <th width="5%" style="background-color: black; color: white; text-align: center">SRN</th>
+                                    <th width="12%" style="background-color: black; color: white; text-align: center">NAME OF STUDENT</th>
+                                    <th width="20%" style="background-color: black; color: white; text-align: center">STATUS</th>
+                                    <th width="20%" style="background-color: black; color: white; text-align: center">GENERATE & SEND</th>
+                                </tr>
+                            </thead>
+                            <tbody id="datatable_students_body">
+
+                            </tbody>
+                        </table>
+                        <div class="col-md-3">
+                            <button class="btn btn-default">SEND TO ALL</button>
+                        </div>
+                    </div>
+
+
+                    <!--STOP EDITING HERE-->
+
+                </div>
+                <!-- END CONTENT BODY -->
+            </div>
+            <!-- END CONTENT -->
+            <% include tpl/quicksidebar.ejs %>
+        </div>
+
+    <!-- END CONTAINER -->
+
+    <% include tpl/footer.ejs %>
+    </body>
+    <script type="text/javascript">
+        
+        $(document).ready(function () {
+
+        })
+        
+        $("#sem_sel").change(function () {
+            $("#datatable_students_body").text('');
+            $.ajax({
+                url: '../../ajax/retrieve_stud',
+                data: {"sem":$("#sem_sel").val()},
+                method: 'POST',
+                async: false,
+                dataType: 'json',
+                success: function(data) {
+                    var i = 1;
+                    data.forEach(function (item) {
+                        if(item.status == "0"){
+                            $("#datatable_students").append(
+                                '<tr>'+
+                                '<td style="text-align: center">' + (i++) + '</td>' +
+                                '<td style="text-align: center">' + item.name + '</td>' +
+                                '<td style="background-color: red; text-align: center" >' + 'URL not sent' + '</td>' +
+                                '<td style="align-content: center"><button class="btn btn-default">' + 'GENERATE & SEND URL' + '</button></td>' +
+                                '</tr>'
+                            );
+                        }
+                        else if(item.status == "1"){
+                             $("#datatable_students").append(
+                             '<tr>'+
+                             '<td style="text-align: center">' + (i++) + '</td>' +
+                             '<td style="text-align: center">' + item.name + '</td>' +
+                             '<td style="background-color: yellow; text-align: center" >' + 'URL sent' + '</td>' +
+                             '<td style="align-content: center"><button class="btn btn-default">' + 'GENERATE & SEND URL' + '</button></td>' +
+                             '</tr>'
+                             );
+                         }
+                        else if(item.status == "2"){
+                             $("#datatable_students").append(
+                             '<tr>'+
+                             '<td style="text-align: center">' + (i++) + '</td>' +
+                             '<td style="text-align: center">' + item.name + '</td>' +
+                             '<td style="background-color: green; text-align: center" >' + 'Feedback done' + '</td>' +
+                             '<td style="align-content: center"><button class="btn btn-default">' + 'GENERATE & SEND URL' + '</button></td>' +
+                             '</tr>'
+                             );
+                        }
+                        console.log('Success');
+                    })
+                },
+                error: function(data){
+                    console.log("Error occured while displaying table! " + data.responseText);
+                }
+            });
+        })
+    </script>
+</html>
