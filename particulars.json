@@ -40,5 +40,22 @@
       {"qid" : "311", "question" : "Safety & security system"},
       {"qid" : "312", "question" : "Anti ragging policy"}
     ]
+  },
+  "student_service" : {
+    "count" : 12,
+    "questions" : [
+      {"qid" : "401", "question" : "Parking"},
+      {"qid" : "402", "question" : "Canteen"},
+      {"qid" : "403", "question" : "Photocopy"},
+      {"qid" : "404", "question" : "Sports"},
+      {"qid" : "405", "question" : "Library"},
+      {"qid" : "406", "question" : "T & P"},
+      {"qid" : "407", "question" : "Medical"},
+      {"qid" : "408", "question" : "Safety Measures"},
+      {"qid" : "409", "question" : "Railway Concession"},
+      {"qid" : "410", "question" : "Exam Cell"},
+      {"qid" : "411", "question" : "Computing Facility( WIFI / Internet )"},
+      {"qid" : "412", "question" : "Classroom facility"}
+    ]
   }
 }
