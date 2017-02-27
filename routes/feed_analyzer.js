@@ -8,6 +8,7 @@ var tiles = require('../dashmeta.json').feeder;
 var menu = require('../menu.json').feed_analyzer;
 var table = require('../tablemeta.json').other;
 var mdata = require('../modalmeta.json');
+var particulars = require('../particulars.json');
 
 
 /* GET home page. */
@@ -104,6 +105,27 @@ router.get('/reports', function(req, res){
     }
 });
 
+router.get('/survey', function(req, res){
+
+    if(req.session.login) {
+        if(req.session.passport.user.role == 'feed_analyzer'){
+
+            res.render('survey', {menu : menu, user : req.session.passport.user});
+
+        }
+        else{
+            delete req.session.redirectTo;
+            res.redirect('/login');
+        }
+
+    }
+    else {
+        req.session.redirectTo = '/feed_analyzer/survey';
+        res.redirect('/login');
+    }
+});
+
+
 router.get('/manage', function(req, res, next){
 
 
@@ -119,6 +141,25 @@ router.get('/manage', function(req, res, next){
     }
     else {
         req.session.redirectTo = '/feed_analyzer/manage';
+        res.redirect('/login');
+    }
+});
+
+router.get('/questions', function(req, res, next){
+
+
+    if(req.session.login) {
+        if(req.session.passport.user.role == 'feed_analyzer'){
+            res.render('questions', {menu : menu, user: req.session.passport.user, particulars:particulars});
+        }
+        else{
+            delete req.session.redirectTo;
+            res.redirect('/login');
+        }
+
+    }
+    else {
+        req.session.redirectTo = '/feed_analyzer/questions';
         res.redirect('/login');
     }
 });
