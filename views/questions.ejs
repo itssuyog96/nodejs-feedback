@@ -59,29 +59,28 @@
                     <div class="portlet-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <table class="table-responsive">
+                                <table class="table table-responsive">
                                     <thead>
                                     <tr>
-                                        <th>Q. NO.</th>
-                                        <th>Question</th>
+                                        <th align="center">Q. NO.</th>
+                                        <th align="center">Questions</th>
                                     </tr>
                                     </thead>
-                                    <% particulars.forEach(function(questions){ %>
+                                    <tbody>
+                                    <% for(questionsx in particulars){ %>
                                     <tr>
-                                        <td colspan="2">#Category</td>
+                                        <td colspan="2" align="center" style="font-weight: bold;"><%= questionsx.toUpperCase() %></td>
                                     </tr>
-                                    <% questions.forEach(function(question){ %>
+                                    <% particulars[questionsx].questions.forEach(function(q){ %>
                                     <tr>
-                                        <td><%= question.qid %></td>
-                                        <td><%= question.question %></td>
+                                        <td><%= q.qid %></td>
+                                        <td><%= q.question %></td>
                                     </tr>
                                     <% }) %>
-                                    <% }) %>
+                                    <% } %>
+                                    </tbody>
 
                                 </table>
-                            </div>
-                            <div class="col-md-2 col-sm-2 col-xs-12">
-                                <a class="btn green btn-outline" data-toggle="modal" data-target="#modal_prof">ADD QUESTION</a>
                             </div>
                         </div>
                     </div>

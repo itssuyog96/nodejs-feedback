@@ -9,7 +9,9 @@
 <% include tpl/header.ejs %>
 
 <style>
-    #show-error{color:red !important;}
+    #show-error{color:red !important; display:none;}
+    #show-error2{color:red !important; display:none;}
+
     #show-success{color:green !important;}
 </style>
 
@@ -51,6 +53,13 @@
                         <span class="caption-helper">Change Password</span>
                     </div>
                 </div>
+                <div class="portlet-body">
+                    <div class="col-md-8 col-md-offset-3">
+                        <span class="span center" style="font-weight: bold;">Your Username : <%= user.name %></span>
+                    </div>
+                </div>
+                <br />
+                <hr />
                 <div class="portlet-body" id="change-pass-div">
                     <form action="#" id="change-password" class="form-horizontal">
                         <input name="id" type="hidden" value="<%= user._id %>" />
@@ -82,6 +91,7 @@
                     </form>
                 </div>
                 <span id="show-success" style="display:none;">Your Password changed successfully!</span>
+                <span id="show-error2" style="display:none;"></span>
             </div>
             <!-- END PORTLET-->
 
@@ -108,26 +118,34 @@
         $('#show-success').fadeOut();
         $('#show-error2').fadeOut();
 
-       if($('#pass1').val() == $('#pass2').val()){
-           console.log('Setting pass');
-           $.ajax({
-               url: '../../ajax/changePassword',
-               data: $('#change-password').serialize(),
-               method: 'POST',
-               success: function(data){
-                   console.log("Password changed!" + data);
-                   $('#show-success').fadeIn();
-               },
-               error: function(error){
-                   console.log("Error occured : "+error.responseText);
-                   $('#show-error2').fadeIn();
-               }
-           });
-       }
-       else{
-           console.log('Nothing happens');
-           $('#show-error').fadeIn();
-       }
+
+        if($('#pass1').val() != '' &&  $('#pass2').val() != '') {
+            if ($('#pass1').val() == $('#pass2').val()) {
+
+                $.ajax({
+                    url: '../../ajax/changePassword',
+                    data: $('#change-password').serialize(),
+                    method: 'POST',
+                    success: function (data) {
+
+                        $('#show-success').fadeIn();
+                    },
+                    error: function (error) {
+
+                        $('#show-error2').text(error.status + ' : ' + error.statusText);
+                        $('#show-error2').fadeIn();
+                    }
+                });
+            }
+            else {
+
+                $('#show-error').fadeIn();
+            }
+        }
+        else{
+            $('#show-error2').text('Password field(s) cannot be empty!');
+            $('#show-error2').fadeIn();
+        }
 
 
     });

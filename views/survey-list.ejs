@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<% include tpl/header.ejs %>
+
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
+<!-- BEGIN HEADER -->
+
+<% include tpl/menu.ejs %>
+
+<!-- END HEADER -->
+
+
+<!-- BEGIN HEADER & CONTENT DIVIDER -->
+<div class="clearfix"> </div>
+<!-- END HEADER & CONTENT DIVIDER -->
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <% include tpl/sidebar.ejs %>
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+
+            <!--h3 class="page-title"> Blank Page Layout
+                <small>blank page layout</small>        To be resolved
+            </h3-->
+
+            <!-- END PAGE HEADER-->
+
+
+            <!--START EDITING FROM HERE-->
+
+            <div class="portlet light portlet-fit ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-settings font-red"></i>
+                        <span class="caption-subject font-red bold uppercase">Create Survey</span>
+                    </div>
+                </div>
+
+                <div class="portlet light  div-survey-add">
+                    <div class="portlet-title">
+                        <div class="caption font-dark">
+                            <i class="icon-list font-dark"></i>
+                            <span class="caption-subject bold uppercase">Create Survey Form</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body" id="create-survey-div">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="survey-list-table" class="table table-responsive">
+                                    <thead>
+                                    <tr>
+                                        <th>Survey ID</th>
+                                        <th>Year</th>
+                                        <th>Semester</th>
+                                        <th>Options</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--STOP EDITING HERE-->
+
+        </div>
+        <!-- END CONTENT BODY -->
+    </div>
+    <!-- END CONTENT -->
+    <% include tpl/quicksidebar.ejs %>
+</div>
+
+<!-- END CONTAINER -->
+
+<% include tpl/footer.ejs %>
+
+<script>
+
+    //$('#survey-list-table').dataTable().destroy();
+
+  $.ajax({
+      url: '../../ajax/getSurveyList',
+      method: 'post',
+      data: {'col_id': '<%= user.col_id %>'},
+      success: function(data){
+          console.log(data);
+          if(data.length > 0){
+              var text = '';
+              data.forEach(function(item){
+                  text =
+                      '<tr>' +
+                      '<td>'+item.survey_id+'</td>' +
+                      '<td>'+item.year+'</td>' +
+                      '<td>'+item.semtype.toUpperCase()+'</td>';
+
+                  switch(item.status){
+                      case '0':
+                                text += '<td><button onClick="activateSurvey(\''+item.survey_id+'\')" id="btn-'+item.survey_id+'" class="btn btn-success">ACTIVATE</button></td></tr>';
+                                break;
+                      case '1':
+                                text += '<td><button onClick="deactivateSurvey(\''+item.survey_id+'\')" id="btn-'+item.survey_id+'" class="btn btn-info">DEACTIVATE</button></td></tr>';
+                                break;
+                  }
+
+                  $('#survey-list-table tbody').append(text);
+              })
+          }
+          else{
+              $('#survey-list-table tbody').append(
+                  '<tr>' +
+                  '<td colspan="4" style="font-weight: bold;" align="center">No data available</td>' +
+                  '</tr>'
+              )
+          }
+      }
+  });
+
+    function activateSurvey(id){
+      $.ajax({
+          url: '../../ajax/changeSurveyStatus',
+          method: 'post',
+          data: {"survey_id": id, "status": '1'},
+          success: function(data){
+              $('#btn-'+id).css('background-color', 'green');
+              $('#btn-'+id).text('SURVEY ACTIVATED');
+          },
+          error: function(data){
+              $('#btn-'+id).css('background-color', 'red');
+              $('#btn-'+id).text('ACTIAVATION FAILED');
+          }
+      })
+    }
+
+    function deactivateSurvey(id){
+        $.ajax({
+            url: '../../ajax/changeSurveyStatus',
+            method: 'post',
+            data: {"survey_id": id, "status": '0'},
+            success: function(data){
+                $('#btn-'+id).css('background-color', 'green');
+                $('#btn-'+id).text('SURVEY DEACTIVATED');
+            },
+            error: function(data){
+                $('#btn-'+id).css('background-color', 'red');
+                $('#btn-'+id).text('DEACTIAVATION FAILED');
+            }
+        })
+    }
+
+</script>
+
+</body>
+
+</html>

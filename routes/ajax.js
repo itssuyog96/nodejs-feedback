@@ -682,4 +682,85 @@ router.get('/generateurl', function (req, res, next){
 
 });
 
+router.post('/create_survey', function (req, res, next) {
+
+    var year = req.body.year;
+    var semtype = req.body.sem;
+    var col_id = req.body.col_id;
+
+    var survey_id = "survey-"+year+"-"+col_id+"-"+semtype;
+
+    try {
+        var db = req.db;
+        var collection = db.get('survey');
+        collection.insert({"survey_id": survey_id,"col_id":req.body.col_id, "year": req.body.year,"semtype":req.body.sem, "status": '0'},function (e, docs) {
+            if (e) throw e;
+            else {
+                console.log(docs);
+                res.end();
+            }
+
+        });
+    }
+    catch(error){
+        res.writeHead(500, {'Content-Type': 'text/html'});
+        res.write('Error !' + error);
+        res.end();
+    }
+});
+
+
+router.post('/getSurveyList', function (req, res, next) {
+
+    var db = req.db;
+    var collection = db.get('survey');
+    collection.find(req.body,function(e,docs){
+        var d = JSON.stringify(docs);
+        console.log(d);
+        if (e) throw e;
+        else {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(d);
+            res.end();
+        }
+
+    });
+});
+
+router.post('/getSurveyStatus', function (req, res, next) {
+
+    var db = req.db;
+    var collection = db.get('survey');
+    collection.find(req.body,function(e,docs){
+        var d = JSON.stringify(docs);
+        console.log(d);
+        if (e) throw e;
+        else {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(d);
+            res.end();
+        }
+
+    });
+});
+
+
+
+router.post('/changeSurveyStatus', function (req, res, next) {
+
+    var db = req.db;
+    var collection = db.get('survey');
+    collection.update({"survey_id":req.body.survey_id},{"$set":{"status":req.body.status}},function(e,docs){
+
+        if (e) throw e;
+        else {
+            res.end();
+        }
+
+    });
+});
+
+
+
+
 module.exports = router;

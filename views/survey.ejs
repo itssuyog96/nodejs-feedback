@@ -58,7 +58,7 @@
                             <div class="col-md-12">
                                 <form id="create-survey">
 
-                                    <input type="hidden" name="col_id" value="" />
+                                    <input type="hidden" name="col_id" value="<%= user.col_id %>" />
 
                                     <div class="col-md-12">
                                         <div class="form-group col-md-6">
@@ -71,10 +71,10 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <div class="col-md-5">
-                                                <label class="form-control" for="year">Semester</label>
+                                                <label class="form-control" for="sem">Semester</label>
                                             </div>
                                             <div class="col-md-5">
-                                                <select class="form-control" name="year" type="text" required >
+                                                <select class="form-control" name="sem" type="text" required >
                                                     <option value="odd">Odd</option>
                                                     <option value="even">Even</option>
                                                 </select>
@@ -125,8 +125,12 @@
                 $.ajax({
                     url: '../../ajax/create_survey',
                     data: $('#create-survey').serialize(),
+                    method: 'POST',
                     success: function(data){
                         $('#success-span').fadeIn();
+                        setTimeout(function(){
+                            location.replace('../../<%= user.role %>/survey_list');
+                        }, 3000);
                     },
                     error: function(error){
                         $('#error-span').text(error.status+' : '+error.statusText);

@@ -126,6 +126,26 @@ router.get('/survey', function(req, res){
 });
 
 
+router.get('/survey_list', function(req, res){
+
+    if(req.session.login) {
+        if(req.session.passport.user.role == 'feed_analyzer'){
+
+            res.render('survey-list', {menu : menu, user : req.session.passport.user});
+
+        }
+        else{
+            delete req.session.redirectTo;
+            res.redirect('/login');
+        }
+
+    }
+    else {
+        req.session.redirectTo = '/feed_analyzer/survey_list';
+        res.redirect('/login');
+    }
+});
+
 router.get('/manage', function(req, res, next){
 
 
