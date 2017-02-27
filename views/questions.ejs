@@ -59,14 +59,25 @@
                     <div class="portlet-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <table id="questions-table"
-                                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                                <table class="table-responsive">
                                     <thead>
                                     <tr>
-                                        <th>QUESTION ID</th>
-                                        <th>QUESTION</th>
+                                        <th>Q. NO.</th>
+                                        <th>Question</th>
                                     </tr>
                                     </thead>
+                                    <% particulars.forEach(function(questions){ %>
+                                    <tr>
+                                        <td colspan="2">#Category</td>
+                                    </tr>
+                                    <% questions.forEach(function(question){ %>
+                                    <tr>
+                                        <td><%= question.qid %></td>
+                                        <td><%= question.question %></td>
+                                    </tr>
+                                    <% }) %>
+                                    <% }) %>
+
                                 </table>
                             </div>
                             <div class="col-md-2 col-sm-2 col-xs-12">
@@ -80,38 +91,6 @@
 
             <!-- MODALS -->
 
-            <!-- Add question modal -->
-            <div class="modal fade div_questions" id="questions" tabindex="-1" role="basic" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                            <h4 class="modal-title">ADD QUESTION</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form id="form-questions">
-
-                                <div class="form-group col-md-12">
-                                    <div class="form-group col-md-4">
-                                        <label for="qid" class="form-control">Question ID</label>
-                                    </div>
-                                    <div class="form-group col-md-7">
-                                        <input type="text" name="qid" class="form-control" required/>
-                                    </div>
-                                </div>
-
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn dark btn-outline close-questions" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn green questions">Save changes</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- /.modal -->
             <!--STOP EDITING HERE-->
 
         </div>

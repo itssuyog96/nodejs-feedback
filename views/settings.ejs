@@ -10,6 +10,7 @@
 
 <style>
     #show-error{color:red !important;}
+    #show-success{color:green !important;}
 </style>
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
@@ -80,6 +81,7 @@
                         </div>
                     </form>
                 </div>
+                <span id="show-success" style="display:none;">Your Password changed successfully!</span>
             </div>
             <!-- END PORTLET-->
 
@@ -102,6 +104,9 @@
 
     $('#change-pass-div').on('click', '.change-pass', function(e){
        e.preventDefault();
+        $('#show-error').fadeOut();
+        $('#show-success').fadeOut();
+        $('#show-error2').fadeOut();
 
        if($('#pass1').val() == $('#pass2').val()){
            console.log('Setting pass');
@@ -111,9 +116,11 @@
                method: 'POST',
                success: function(data){
                    console.log("Password changed!" + data);
+                   $('#show-success').fadeIn();
                },
                error: function(error){
                    console.log("Error occured : "+error.responseText);
+                   $('#show-error2').fadeIn();
                }
            });
        }
