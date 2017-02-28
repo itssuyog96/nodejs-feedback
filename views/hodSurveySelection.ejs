@@ -71,7 +71,7 @@
                                 <tr role="row" class="heading">
                                     <th width="5%" style="background-color: black; color: white; text-align: center">SRN</th>
                                     <th width="12%" style="background-color: black; color: white; text-align: center">NAME OF STUDENT</th>
-                                    <th width="20%" style="background-color: black; color: white; text-align: center">STATUS</th>
+                                    <th width="5%" style="background-color: black; color: white; text-align: center">STATUS</th>
                                     <th width="20%" style="background-color: black; color: white; text-align: center">GENERATE & SEND</th>
                                 </tr>
                             </thead>
@@ -81,6 +81,10 @@
                         </table>
                         <div class="col-md-3">
                             <button class="btn btn-default" id="sendall">SEND TO ALL</button>
+                        </div>
+                        <br><br>
+                        <div id="sent_alert">
+                            <h3 id="sent_message"></h3>
                         </div>
                     </div>
 
@@ -99,8 +103,11 @@
     <% include tpl/footer.ejs %>
     </body>
     <script type="text/javascript">
-        
+
+        var ids = [];
+
         $(document).ready(function () {
+            $("#sent_message").innerHTML = '';
             $.ajax({
                 url: "../../ajax/activeSurvey",
                 method: "POST",
@@ -112,8 +119,29 @@
                 }
             });
         });
-        
+
+        $("#sendall").click(function () {
+            $("#sent_message").text('');
+            $("#sent_message").append('sending...')
+            $.ajax({
+                url: '../../ajax/sendAll',
+                dataType: 'json',
+                data: {"id[]":ids, "length":ids.length},
+                method: 'POST',
+                success: function () {
+                    $("#sent_message").text('');
+                    $("#sent_message").append('URLs sent to above students');
+                },
+                error: function () {
+                    $("#sent_message").text('');
+                    $("#sent_message").append('Error');
+                }
+            })
+        })
+
         $("#sem_sel").change(function () {
+            $("#sent_message").text('');
+            ids.length = 0;
             $("#datatable_students_body").text('');
             $.ajax({
                 url: '../../ajax/retrieve_stud',
@@ -125,6 +153,7 @@
                     //window.alert("success");
                     var i = 1;
                     data.forEach(function (item) {
+                        ids.push(item._id);
                         //window.alert(item);
                         if(item.status == "0"){
                             $("#datatable_students").append(
@@ -156,6 +185,7 @@
                              '</tr>'
                              );
                         }
+                        console.log("ids: " + ids[2]);
                         console.log('Success');
                     })
                 },
@@ -166,6 +196,7 @@
         });
 
         $("#survey_sel").change(function () {
+            $("#sent_message").text('');
             $("#sem_sel").text('');
             $("#datatable_students_body").text('');
             var str = $("#survey_sel").val().toString();
@@ -184,5 +215,16 @@
             }
 
         });
+
+
+        /*
+         router.post('/sendAll', function (req, res) {
+         var i;
+         for(i=0; i<req.body.length; i++){
+         console.log(req.body['id[]'][i]);
+         }
+         res.end();
+         });
+        */
     </script>
 </html>
