@@ -46,9 +46,9 @@
                             <i class="fa fa-angle-down"></i>
 
                             <ul class="dropdown-menu" id="survey_ul">
-                                <!--<li>
-                                    <a href="javascript:;"> <option value="some value">survey-1001-3-even</option></a>
-                                </li>-->
+                                <li>
+                                    <a href="javascript:;"> <option value="null">select one</option></a>
+                                </li>
                             </ul>
                         </select>
                     </div>
@@ -59,28 +59,7 @@
 
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="javascript:;"> <option value="1">1</option></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;"> <option value="2">2</option></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;"> <option value="3">3</option></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;"> <option value="4">4</option></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;"> <option value="5">5</option></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;"> <option value="6">6</option></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;"> <option value="7">7</option></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;"> <option value="8">8</option></a>
+                                    <a href="javascript:;"> <option value="null">select sem</option></a>
                                 </li>
                             </ul>
                         </select>
@@ -121,19 +100,14 @@
     </body>
     <script type="text/javascript">
         
-        $("#sendall").click(function () {
-            window.alert("inside ready");
+        $(document).ready(function () {
             $.ajax({
                 url: "../../ajax/activeSurvey",
                 method: "POST",
+                dataType: 'json',
                 success: function (data) {
-                    window.alert(data);
                     data.forEach(function (item) {
-                        $("#survey_ul").append(
-                            '<li>' +
-                                '<a href="javascript:;"> <option value="' + item.survey_id + '">' + item.survey_id +  '</option></a>' +
-                            '</li>'
-                        )
+                        $("#survey_sel").append($('<option value="' + item.survey_id + '">' + item.survey_id + '</option>'));
                     })
                 }
             });
@@ -148,8 +122,10 @@
                 async: false,
                 dataType: 'json',
                 success: function(data) {
+                    //window.alert("success");
                     var i = 1;
                     data.forEach(function (item) {
+                        //window.alert(item);
                         if(item.status == "0"){
                             $("#datatable_students").append(
                                 '<tr>'+
@@ -187,6 +163,26 @@
                     console.log("Error occured while displaying table! " + data.responseText);
                 }
             });
+        });
+
+        $("#survey_sel").change(function () {
+            $("#sem_sel").text('');
+            $("#datatable_students_body").text('');
+            var str = $("#survey_sel").val().toString();
+            var type = str.split("-")[3];
+            console.log(type);
+            var i;
+            if(type == "even"){
+                for(i=2; i<=8; i+=2){
+                    $("#sem_sel").append($('<option value="'+ i +'">' + i + '</option>'));
+                }
+            }
+            else {
+                for(i=1; i<=8; i+=2){
+                    $("#sem_sel").append($('<option value="'+ i +'">' + i + '</option>'));
+                }
+            }
+
         });
     </script>
 </html>

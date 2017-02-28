@@ -636,10 +636,13 @@ router.post('/retrieve_stud', function (req, res, next) {
     console.log(req.user);
     var db = req.db;
     var collection = db.get('student');
-    collection.find({"col_id":req.user.col_id,"dept_id":req.user.dep_id,"sem":req.body.sem},function(e,docs){
+    collection.find({"col_id":req.user.col_id,"dept_id":req.user.dep_id, "sem":req.body.sem},function(e,docs){
         //var d = JSON.stringify(docs);
-        if (e) throw e;
+        if (e) {
+            console.log("Error: " + e);
+        }
         else {
+            console.log(docs);
             res.writeHead(200, {'Content-Type': 'application/json'});
 
             res.write(JSON.stringify(docs));
@@ -770,7 +773,7 @@ router.post('/activeSurvey', function (req, res, next) {
         if (e) throw e;
         else {
             res.writeHead(200, {'Content-Type': 'application/json'});
-            res.write(docs);
+            res.write(JSON.stringify(docs));
             res.end();
         }
 
