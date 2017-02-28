@@ -101,7 +101,7 @@
                             </tbody>
                         </table>
                         <div class="col-md-3">
-                            <button class="btn btn-default">SEND TO ALL</button>
+                            <button class="btn btn-default" id="sendall">SEND TO ALL</button>
                         </div>
                     </div>
 
@@ -121,12 +121,13 @@
     </body>
     <script type="text/javascript">
         
-        $(document).ready(function () {
+        $("#sendall").click(function () {
+            window.alert("inside ready");
             $.ajax({
                 url: "../../ajax/activeSurvey",
                 method: "POST",
-                async: false,
                 success: function (data) {
+                    window.alert(data);
                     data.forEach(function (item) {
                         $("#survey_ul").append(
                             '<li>' +

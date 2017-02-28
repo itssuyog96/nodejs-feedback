@@ -761,6 +761,23 @@ router.post('/changeSurveyStatus', function (req, res, next) {
 });
 
 
+router.post('/activeSurvey', function (req, res, next) {
+
+    var db = req.db;
+    var collection = db.get('survey');
+    collection.find({"col_id": req.user.col_id , "status": "1"},function(e,docs){
+
+        if (e) throw e;
+        else {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(docs);
+            res.end();
+        }
+
+    });
+});
+
+
 
 
 module.exports = router;
