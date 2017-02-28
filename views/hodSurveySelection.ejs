@@ -45,10 +45,10 @@
                         <select class="btn btn-circle red dropdown-toggle" data-toggle="dropdown" name="hod_survey_dd" id="survey_sel">
                             <i class="fa fa-angle-down"></i>
 
-                            <ul class="dropdown-menu">
-                                <li>
+                            <ul class="dropdown-menu" id="survey_ul">
+                                <!--<li>
                                     <a href="javascript:;"> <option value="some value">survey-1001-3-even</option></a>
-                                </li>
+                                </li>-->
                             </ul>
                         </select>
                     </div>
@@ -122,8 +122,21 @@
     <script type="text/javascript">
         
         $(document).ready(function () {
-
-        })
+            $.ajax({
+                url: "../../ajax/activeSurvey",
+                method: "POST",
+                async: false,
+                success: function (data) {
+                    data.forEach(function (item) {
+                        $("#survey_ul").append(
+                            '<li>' +
+                                '<a href="javascript:;"> <option value="' + item.survey_id + '">' + item.survey_id +  '</option></a>' +
+                            '</li>'
+                        )
+                    })
+                }
+            });
+        });
         
         $("#sem_sel").change(function () {
             $("#datatable_students_body").text('');
@@ -173,6 +186,6 @@
                     console.log("Error occured while displaying table! " + data.responseText);
                 }
             });
-        })
+        });
     </script>
 </html>
