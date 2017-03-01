@@ -181,7 +181,7 @@
                                                         </li>
                                                     </ul>
                                                     <div id="bar" class="progress progress-striped" role="progressbar">
-                                                        <div class="progress-bar progress-bar-success" role="progressbar" style="width: 0%;" ></div>
+                                                        <div class="progress-bar progress-bar-success" ></div>
                                                     </div>
 
                                                     <form id="feedback_form">
@@ -227,9 +227,11 @@
 
                                                             <div class="portlet-body submitFeed1">
                                                                 <div clas="well">
-												    <span class="center">
-														<li class="next"><center><button id="submitFeed1" type="button" class="btn btn-lg btn-default">NEXT ></button></center></li>
-													</span>
+                                                                    <span class="center">
+                                                                        <ul class="pager">
+                                                                            <li class="next"><center><button id="submitFeed1" type="button" class="btn btn-lg btn-default"><a href="javascript:;" class="btn btn-outline green button-next"> Continue</a></button></center></li>
+                                                                        </ul>
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -271,8 +273,11 @@
 
                                                             <div class="portlet-body submitFeed2">
                                                                 <div clas="well">
-                                                                    <span class="center">
-                                                                        <li class="next"><center><button id="submitFeed2" type="button" class="btn btn-lg btn-default">NEXT ></button></center></li>
+                                                                    <span >
+                                                                        <ul class="pager">
+                                                                            <!--<li class="back"><button id="submitFeed1" type="button" class="btn btn-lg btn-default"><a href="javascript:;" class="btn default button-previous"> Back </a></button></li>-->
+                                                                            <li class="next"><center><button id="submitFeed2" type="button" class="btn btn-lg btn-default"><a href="javascript:;" class="btn btn-outline green button-next"> Continue</a></button></center></li>
+                                                                        </ul>
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -296,7 +301,7 @@
                                                                             <td>
                                                                                 <div class="col-md-12 row margin-bottom text-align-center">
                                                                                     <div class="col-md-12">
-                                                                                        <div style="position:fixed;">
+                                                                                        <div >
                                                                                             <input id="rate_<%= ques.qid %>" name="rate_<%= ques.qid %>" data-show-clear="false" class="rating rating-loading star-rating-input" data-size="xs" required>
                                                                                         </div>
 
@@ -322,7 +327,8 @@
                                                             <div class="portlet-body submitFeed3">
                                                                 <div clas="well">
                                                                     <span class="center">
-                                                                        <li class="finish"><center><button id="submitFeed3" type="button" class="btn btn-lg btn-default">NEXT</button></center></li>
+                                                                        <!--<li class="back"><button id="submitFeed1" type="button" class="btn btn-lg btn-default"><a href="javascript:;" class="btn default button-previous"> Back </a></button></li>-->
+                                                                        <li class="next"><center><button id="submitFeed3" type="button" class="btn btn-lg btn-default"><a href="javascript:;" class="btn btn-outline green button-next"> Continue</a></button></center></li>
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -342,10 +348,10 @@
                                                                         <% particulars.student_service.questions.forEach(function(ques1){ %>
                                                                         <tr>
                                                                             <td><%= ques1.question %></td>
-                                                                            <td>
+                                                                           <td>
                                                                                 <div class="col-md-12 row margin-bottom text-align-center">
                                                                                     <div class="col-md-12">
-                                                                                        <div style="position:fixed;">
+                                                                                        <div>
                                                                                             <input id="rate_<%= ques1.qid %>" name="rate_<%= ques1.qid %>" data-show-clear="false" class="rating rating-loading star-rating-input" data-size="xs" required>
                                                                                         </div>
 
@@ -364,7 +370,8 @@
                                                             <div class="portlet-body finishFeed">
                                                                 <div clas="well">
                                                                     <span class="center">
-                                                                        <li class="finish"><center><button id="finishFeed" type="button" class="btn btn-lg btn-default">FINISH</button></center></li>
+                                                                        <!--<li class="back"><button id="submitFeed1" type="button" class="btn btn-lg btn-default"><a href="javascript:;" class="btn default button-previous"> Back </a></button></li>-->
+                                                                        <li class="finish"><center><button id="submitFeed2" type="button" class="btn btn-lg btn-default"><a href="javascript:;" class="btn btn-outline green button-next"> Continue & Finish</a></button></center></li>
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -382,6 +389,20 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <!--<div class="form-actions">
+                                                            <div class="row">
+                                                                <div class="col-md-offset-3 col-md-9">
+                                                                    <a href="javascript:;" class="btn default button-previous">
+                                                                        <i class="fa fa-angle-left"></i> Back </a>
+                                                                    <a href="javascript:;" class="btn btn-outline green button-next"> Continue
+                                                                        <i class="fa fa-angle-right"></i>
+                                                                    </a>
+                                                                    <a href="javascript:;" class="btn green button-submit"> Submit
+                                                                        <i class="fa fa-check"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
                                                     </form>
 
                                                     <!-- END PAGE BASE CONTENT -->
@@ -617,8 +638,7 @@
                                     $('#form_wizard_1 .progress-bar').css({width:$percent+'%'});
                                 }});
                             });
-
-                        </script>
+                         </script>
 
 </body>
 
