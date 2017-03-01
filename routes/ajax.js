@@ -780,6 +780,30 @@ router.post('/activeSurvey', function (req, res, next) {
     });
 });
 
+router.post('/sendAll', function (req, res, next) {
+
+    var db = req.db;
+    var collection = db.get('student');
+    for(var i = 1;i<= req.body.length;i++)
+    {
+        collection.find({"_id": req.user.id[i]},function(e,docs){
+
+            if (e) throw e;
+            else {
+
+                generate.generateSend(docs[0].contact,docs[0].email_id.docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id);
+                res.writeHead(200, 'Sent Successfully!');
+                res.end();
+
+
+            }
+
+        });
+
+    }
+
+});
+
 
 
 

@@ -44,7 +44,6 @@ router.get('/', function (req, res, next){
             if (e) throw e;
             else {
                 console.log('user Token updated');
-                res.end();
             }
 
         });
