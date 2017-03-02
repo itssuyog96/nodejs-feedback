@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<% include tpl/header.ejs %>
+
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
+<!-- BEGIN HEADER -->
+
+<% include tpl/menu.ejs %>
+
+<!-- END HEADER -->
+
+
+<!-- BEGIN HEADER & CONTENT DIVIDER -->
+<div class="clearfix"> </div>
+<!-- END HEADER & CONTENT DIVIDER -->
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <% include tpl/sidebar.ejs %>
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+
+            <!--h3 class="page-title"> Blank Page Layout
+                <small>blank page layout</small>        To be resolved
+            </h3-->
+
+            <!-- END PAGE HEADER-->
+
+
+            <!--START EDITING FROM HERE-->
+            <div class="portlet light select-survey-div">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject bold uppercase">Select Survey</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control" for="survey_id">Select Survey</label>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <select class="form-control" id="survey_id" name="survey_id">
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <a id="select-survey-btn" class="btn green btn-outline select-survey-btn">SELECT SURVEY</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portlet light select-dept-div" style="display:none;">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject bold uppercase">Select Department</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control" for="dept_id">Select Department</label>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <select class="form-control" id="dept_id" name="dept_id">
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <a id="col_modal_btn">SELECT DEPARTMENT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portlet light select-sem-div" style="display:none;">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject bold uppercase">Select Semester</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control" for="dept_id">Select Semester</label>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <select class="form-control" id="dept_id" name="dept_id">
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <a id="col_modal_btn" class="btn green btn-outline" data-toggle="modal" data-target="#modal_colg">SELECT SEMESTER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--STOP EDITING HERE-->
+
+        </div>
+        <!-- END CONTENT BODY -->
+    </div>
+    <!-- END CONTENT -->
+    <% include tpl/quicksidebar.ejs %>
+</div>
+
+
+
+<!-- END CONTAINER -->
+
+<% include tpl/footer.ejs %>
+</body>
+<span id="dept_id"></span>
+<span id="semtype"></span>
+<span id="sem"></span>
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url: '../../ajax/getSurveyList',
+            data: {col_id: 1},
+            method:'POST',
+            success: function(data){
+                data.forEach(function(opt){
+                    $('#survey_id').append('' +
+                        '<option value="'+opt.semtype+'">'+opt.survey_id+'</option>' +
+                        '')
+                });
+
+            }
+
+        });
+    });
+
+    $('.select-survey-div').on('click', '.select-survey-btn', function(e){
+        e.preventDefault();
+
+        $('#semtype').text($('#survey_id').val());
+
+        $.ajax({
+            url: '../../ajax/getDeptList',
+            data: {col_id: 1},
+            method:'POST',
+            success: function(data){
+                $('#dept_id').text('');
+                data.forEach(function(opt){
+                    $('#dept_id').append('' +
+                        '<option value="'+opt.dept_id+'">'+opt.dept_name+'</option>' +
+                        '')
+                });
+
+            }
+
+        });
+
+        $('.select-dept-div').fadeIn();
+
+    })
+
+
+</script>
+
+
+</html>

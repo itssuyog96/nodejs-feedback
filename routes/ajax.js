@@ -730,6 +730,24 @@ router.post('/getSurveyList', function (req, res, next) {
     });
 });
 
+
+router.post('/getDeptList', function (req, res, next) {
+
+    var db = req.db;
+    var collection = db.get('department');
+    collection.find(req.body,function(e,docs){
+        var d = JSON.stringify(docs);
+        console.log(d);
+        if (e) throw e;
+        else {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(d);
+            res.end();
+        }
+
+    });
+});
+
 router.post('/getSurveyStatus', function (req, res, next) {
 
     var db = req.db;
