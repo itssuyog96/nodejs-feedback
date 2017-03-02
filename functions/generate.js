@@ -4,6 +4,8 @@ googleUrl = new GoogleURL({key:'AIzaSyCGV2e7uvykKEnYr68QFZQyWxC1vWFy9O4'});
 const crp = require('../functions/md5');
 const secret = 'Aditya';
 var spawn = require('child_process').spawn;
+var monk = require('monk');
+var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
 
 
 
@@ -25,6 +27,7 @@ module.exports.generateuid = function(col_id,dep_id,sem,roll_no){
 
 module.exports.generateSend = function (contact,email_id,username,key,id) {
 
+
     var data ={
         name: username,
         password: key,
@@ -32,15 +35,15 @@ module.exports.generateSend = function (contact,email_id,username,key,id) {
         email_id:email_id
     };
 
+    console.log(JSON.stringify(data));
+
     var tok = jwt.encode(data,secret);
-    console.log(token);
 
     var token = crp.crypto(tok);
     var HToken = crp.crypto(token);
 
     //console.log(contact+' '+username+' '+nameH+' '+key);
 
-    var db = req.db;
     var collection = db.get("student");
     collection.update({"_id": id},{"$set":{"key":HToken}},function (e,docs){
         var d = JSON.stringify(docs);
@@ -51,7 +54,7 @@ module.exports.generateSend = function (contact,email_id,username,key,id) {
 
     });
 
-    var url = 'http://localhost:3000/profile?access_token='+token;
+    var url = 'http://localhost:3000/stud?access_token='+token;
 
     //var proc = spawn('python',["python-files/SMSMessage.py", contact, username, nameH, key]);
 

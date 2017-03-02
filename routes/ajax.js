@@ -636,7 +636,7 @@ router.post('/retrieve_stud', function (req, res, next) {
     console.log(req.user);
     var db = req.db;
     var collection = db.get('student');
-    collection.find({"col_id":req.user.col_id,"dept_id":req.user.dep_id, "sem":req.body.sem},function(e,docs){
+    collection.find({"col_id":req.user.col_id,"dep_id":req.user.dep_id, "sem":req.body.sem},function(e,docs){
         //var d = JSON.stringify(docs);
         if (e) {
             console.log("Error: " + e);
@@ -781,17 +781,18 @@ router.post('/activeSurvey', function (req, res, next) {
 });
 
 router.post('/sendAll', function (req, res, next) {
-
+    console.log('Inside SendAll');
     var db = req.db;
     var collection = db.get('student');
-    for(var i = 1;i<= req.body.length;i++)
+    for(var i = 0;i< req.body.length;i++)
     {
-        collection.find({"_id": req.user.id[i]},function(e,docs){
+        collection.find({"_id": req.body['id[]'][i]},function(e,docs){
 
             if (e) throw e;
             else {
-
-                generate.generateSend(docs[0].contact,docs[0].email_id.docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id);
+                //console.log(JSON.stringify(docs));
+                console.log(docs[0].name);
+                generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id);
                 res.writeHead(200, 'Sent Successfully!');
                 res.end();
 

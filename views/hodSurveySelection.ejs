@@ -122,10 +122,9 @@
 
         $("#sendall").click(function () {
             $("#sent_message").text('');
-            $("#sent_message").append('sending...')
+            $("#sent_message").append('sending...');
             $.ajax({
                 url: '../../ajax/sendAll',
-                dataType: 'json',
                 data: {"id[]":ids, "length":ids.length},
                 method: 'POST',
                 success: function () {

@@ -4,7 +4,7 @@
 
 var LocalStrategy   = require('passport-local').Strategy;
 var BearerStrategy = require('passport-http-bearer').Strategy;
-
+//var Bstrategy = require('passport-http-bearer').Strategy;
 
 var crp = require('../functions/md5');
 var monk = require('monk');
@@ -114,6 +114,22 @@ module.exports = function(passport) {
             token = crp.crypto(token);
 
             var collection = db.get('users');
+            collection.find({"key": token }, function (err, user) {
+                if (err) { return done(err); }
+                if(user == 0){
+                    return done(null, false,req.flash('loginMessage', 'No user found.'));
+                }
+                return done(null, user[0]);
+            });
+        }
+    ));
+
+    passport.use('studL',new BearerStrategy({},
+        function(token,done) {
+            console.log('In Strategy');
+            token = crp.crypto(token);
+
+            var collection = db.get('student');
             collection.find({"key": token }, function (err, user) {
                 if (err) { return done(err); }
                 if(user == 0){
