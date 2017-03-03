@@ -105,6 +105,7 @@
     <script type="text/javascript">
 
         var ids = [];
+        var surveyid = null;
 
         $(document).ready(function () {
             $("#sent_message").innerHTML = '';
@@ -129,7 +130,7 @@
                 $("#sent_message").append('sending...')
                 $.ajax({
                     url: '../../ajax/sendAll',
-                    data: {"id[]":ids, "length":ids.length},
+                    data: {"id[]":ids, "length":ids.length, "surveyid":surveyid},
                     method: 'POST',
                     success: function () {
                         $("#sent_message").text('');
@@ -202,6 +203,8 @@
         });
 
         $("#survey_sel").change(function () {
+            surveyid = $("#survey_sel").val();
+            console.log(surveyid);
             ids.length = 0;
             $("#sent_message").text('');
             $("#sem_sel").text('');
@@ -231,10 +234,11 @@
             var id = but_id.split("_")[0];
             var para_val = $("#" + id).attr("data-id");
             ids.length = 0;
-            ids.push(para_val)
+            ids.push(para_val);
+            console.log(surveyid);
             $.ajax({
                 url: '../../ajax/sendAll',
-                data: {"id[]": ids, "length": 1},
+                data: {"id[]": ids, "length": 1, "surveyid": surveyid},
                 method: 'POST',
                 success: function () {
                     $("#sent_message").text('');
