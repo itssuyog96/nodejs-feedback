@@ -4,6 +4,11 @@
 <!--[if !IE]><!-->
 <html lang="en">
 <!--<![endif]-->
+<style>
+    .no-click{
+        pointer-events: none;
+    }
+</style>
 <!-- BEGIN HEAD -->
 
 <% include tpl/header.ejs %>
@@ -234,7 +239,7 @@
                             '<tr>'+
                             '<td style="text-align: center">' + (++i) + '</td>' +
                             '<td style="text-align: center">' + item.name + '</td>' +
-                            '<td align="center"> <button style="width:50%" type="button" class="btn red-mint btn-outline sbold uppercase">URL not sent</button> '+'</td>' +
+                            '<td align="center"> <button style="width:50%" type="button" class="btn red-mint btn-outline sbold uppercase no-click">URL not sent</button> '+'</td>' +
                             '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_0" onclick="send_0_1(this)">' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
                             '</tr>'
                             );
@@ -244,7 +249,7 @@
                              '<tr>'+
                              '<td style="text-align: center">' + (++i) + '</td>' +
                              '<td style="text-align: center">' + item.name + '</td>' +
-                             '<td align="center"><button style="width:50%" type="button" class="btn yellow-mint btn-outline sbold uppercase">URL sent</button>' +  '</td>' +
+                             '<td align="center"><button style="width:50%" type="button" class="btn yellow-mint btn-outline sbold uppercase no-click">URL sent</button>' +  '</td>' +
                              '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_1" onclick="send_0_1(this)">' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
                              '</tr>'
                              );
@@ -254,7 +259,7 @@
                              '<tr>'+
                              '<td style="text-align: center">' + (++i) + '</td>' +
                              '<td style="text-align: center">' + item.name + '</td>' +
-                             '<td align="center"><button style="width:50%" type="button" class="btn green-haze btn-outline sbold uppercase">Feedback done</button>'  + '</td>' +
+                             '<td align="center"><button style="width:50%" type="button" class="btn green-haze btn-outline sbold uppercase no-click">Feedback done</button>'  + '</td>' +
                              '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_2" disabled>' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
                              '</tr>'
                              );
@@ -268,7 +273,6 @@
                 }
             });
         });
-
         $("#survey_sel").change(function () {
             surveyid = $("#survey_sel").val();
             console.log(surveyid);
