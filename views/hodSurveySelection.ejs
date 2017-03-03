@@ -4,6 +4,11 @@
 <!--[if !IE]><!-->
 <html lang="en">
 <!--<![endif]-->
+<style>
+    .no-click{
+        pointer-events: none;
+    }
+</style>
 <!-- BEGIN HEAD -->
 
 <% include tpl/header.ejs %>
@@ -38,8 +43,74 @@
                     <!--<div class="note note-info">
 
                     </div>-->
+                    <div class="col-md-6">
+                        <label for="survey_sel">Select Survey</label>
+                        <select class="btn btn-circle blue dropdown-toggle" data-toggle="dropdown" name="hod_survey_dd" id="survey_sel">
+                            <i class="fa fa-angle-down"></i>
+                            <ul class="dropdown-menu" id="survey_ul">
+                                <li>
+                                    <a href="javascript:;"> <option value="null">select one</option></a>
+                                </li>
+                            </ul>
+                        </select>
+                    </div>
 
+                    <div class="col-md-6">
+                        <label for="year_sel">Select Semester</label>
+                        <select class="btn btn-circle blue dropdown-toggle" data-toggle="dropdown" name="hod_sem_dd" id="sem_sel">
+                            <i class="fa fa-angle-down"></i>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="javascript:;"> <option value="">select Sem</option></a>
+                                </li>
+                            </ul>
+                        </select>
+                    </div>
+                    <br><br><br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="portlet light ">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="icon-social-dribbble font-green hide"></i>
+                                        <span class="caption-subject font-dark bold uppercase">Survey Details</span>
+                                    </div>
+                                    <div class="tools">
+                                        <a href="javascript:;" class="collapse"> </a>
+                                        <a href="#portlet-config" data-toggle="modal" class="config"> </a>
+                                        <a href="javascript:;" class="reload"> </a>
+                                        <a href="javascript:;" class="remove"> </a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-checkable" id="datatable_students">
+                                            <thead>
+                                            <tr role="row" class="heading">
+                                                <th> SRN </th>
+                                                <th> NAME OF STUDENT </th>
+                                                <th> STATUS </th>
+                                                <th> GENERATE & SEND </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="datatable_students_body">
+
+                                            </tbody>
+                                        </table>
+                                      <div class="col-md-3">
+                                           <button class="btn btn-primary" id="sendall">SEND TO ALL</button>
+                                      </div>
+                                                <br><br>
+                                       <div id="sent_alert">
+                                           <h3 id="sent_message"></h3>
+                                       </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
                     <!--<p> A black page template with a minimal dependency assets to use as a base for any custom page you create </p>-->
+                        <!--
                     <div class="col-md-6">
                         <label for="survey_sel">Select Survey</label>
                         <select class="btn btn-circle red dropdown-toggle" data-toggle="dropdown" name="hod_survey_dd" id="survey_sel">
@@ -88,11 +159,12 @@
                         </div>
                     </div>
 
-
+-->
                     <!--STOP EDITING HERE-->
 
                 </div>
                 <!-- END CONTENT BODY -->
+                </div>
             </div>
             <!-- END CONTENT -->
             <% include tpl/quicksidebar.ejs %>
@@ -167,7 +239,7 @@
                             '<tr>'+
                             '<td style="text-align: center">' + (++i) + '</td>' +
                             '<td style="text-align: center">' + item.name + '</td>' +
-                            '<td style="background-color: red; text-align: center" >' + 'URL not sent' + '</td>' +
+                            '<td align="center"> <button style="width:50%" type="button" class="btn red-mint btn-outline sbold uppercase no-click">URL not sent</button> '+'</td>' +
                             '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_0" onclick="send_0_1(this)">' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
                             '</tr>'
                             );
@@ -177,7 +249,7 @@
                              '<tr>'+
                              '<td style="text-align: center">' + (++i) + '</td>' +
                              '<td style="text-align: center">' + item.name + '</td>' +
-                             '<td style="background-color: yellow; text-align: center" >' + 'URL sent' + '</td>' +
+                             '<td align="center"><button style="width:50%" type="button" class="btn yellow-mint btn-outline sbold uppercase no-click">URL sent</button>' +  '</td>' +
                              '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_1" onclick="send_0_1(this)">' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
                              '</tr>'
                              );
@@ -187,7 +259,7 @@
                              '<tr>'+
                              '<td style="text-align: center">' + (++i) + '</td>' +
                              '<td style="text-align: center">' + item.name + '</td>' +
-                             '<td style="background-color: green; text-align: center" >' + 'Feedback done' + '</td>' +
+                             '<td align="center"><button style="width:50%" type="button" class="btn green-haze btn-outline sbold uppercase no-click">Feedback done</button>'  + '</td>' +
                              '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_2" disabled>' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
                              '</tr>'
                              );
@@ -201,7 +273,6 @@
                 }
             });
         });
-
         $("#survey_sel").change(function () {
             surveyid = $("#survey_sel").val();
             console.log(surveyid);
