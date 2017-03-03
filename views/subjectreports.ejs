@@ -48,71 +48,65 @@
                     <div class="row">
                         <div class="col-md-12">
                             <form>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control" for="survey_id">Select Survey</label>
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <div class="form-group col-md-6">
+                                            <label class="form-control" for="survey_id">Select Survey</label>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <select class="form-control" id="survey_id" name="survey_id">
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group col-md-6">
+                                            <label class="form-control" for="dept_id">Select Department</label>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <select class="form-control" id="dept_id" name="dept_id">
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group col-md-6">
+                                            <label class="form-control" for="sem">Select Sem</label>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <select class="form-control" id="sem" name="sem">
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <select class="form-control" id="survey_id" name="survey_id">
-                                    </select>
+                                <div class="col-md-6" style="border-left: 1px solid grey !important; padding-left: 5px; heigth: 100%">
+                                    <div id="subject_panel">
+
+                                    </div>
                                 </div>
+
+
+
                             </form>
                         </div>
                         <div class="col-md-2 col-sm-2 col-xs-12">
-                            <a id="select-survey-btn" class="btn green btn-outline select-survey-btn">SELECT SURVEY</a>
+                            <a id="get-subject-btn" class="btn green btn-outline get-subject-btn">GET SUBJECTS</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="portlet light select-dept-div" style="display:none;">
+            <div class="portlet light select-survey-div">
                 <div class="portlet-title">
                     <div class="caption font-dark">
                         <i class="icon-settings font-dark"></i>
-                        <span class="caption-subject bold uppercase">Select Department</span>
+                        <span class="caption-subject bold uppercase">Select Survey</span>
                     </div>
                 </div>
                 <div class="portlet-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <form>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control" for="dept_id">Select Department</label>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <select class="form-control" id="dept_id" name="dept_id">
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-12">
-                            <a id="col_modal_btn">SELECT DEPARTMENT</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="portlet light select-sem-div" style="display:none;">
-                <div class="portlet-title">
-                    <div class="caption font-dark">
-                        <i class="icon-settings font-dark"></i>
-                        <span class="caption-subject bold uppercase">Select Semester</span>
-                    </div>
-                </div>
-                <div class="portlet-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control" for="dept_id">Select Semester</label>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <select class="form-control" id="dept_id" name="dept_id">
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-12">
-                            <a id="col_modal_btn" class="btn green btn-outline" data-toggle="modal" data-target="#modal_colg">SELECT SEMESTER</a>
                         </div>
                     </div>
                 </div>
@@ -134,52 +128,81 @@
 
 <% include tpl/footer.ejs %>
 </body>
-<span id="dept_id"></span>
-<span id="semtype"></span>
-<span id="sem"></span>
+<span id="survey_id_span"></span>
+<span id="subject_id"></span>
+
 <script>
     $(document).ready(function(){
-        $.ajax({
-            url: '../../ajax/getSurveyList',
-            data: {col_id: 1},
-            method:'POST',
-            success: function(data){
-                data.forEach(function(opt){
-                    $('#survey_id').append('' +
-                        '<option value="'+opt.semtype+'">'+opt.survey_id+'</option>' +
-                        '')
-                });
+       $.ajax({
+           url: '../../ajax/getSurveyList',
+           data: {col_id: 1},
+           method: 'POST',
+           success: function(data){
+               data.forEach(function(d){
+                   $('#survey_id').append('<option value="'+d.semtype+'">'+d.survey_id+'</option>')
+               });
 
-            }
+               getSemList();
 
-        });
-    });
-
-    $('.select-survey-div').on('click', '.select-survey-btn', function(e){
-        e.preventDefault();
-
-        $('#semtype').text($('#survey_id').val());
+           }
+       });
 
         $.ajax({
             url: '../../ajax/getDeptList',
             data: {col_id: 1},
-            method:'POST',
+            method: 'POST',
             success: function(data){
-                $('#dept_id').text('');
-                data.forEach(function(opt){
-                    $('#dept_id').append('' +
-                        '<option value="'+opt.dept_id+'">'+opt.dept_name+'</option>' +
-                        '')
+                data.forEach(function(d){
+                    $('#dept_id').append('<option value="'+d.dept_id+'">'+d.dept_name+'</option>')
                 });
 
             }
-
         });
 
-        $('.select-dept-div').fadeIn();
+        $('#survey_id').on('change', function(){
+            getSemList();
+        })
 
-    })
+    });
 
+    $('.select-survey-div').on('click', '.get-subject-btn', function(e){
+        e.preventDefault();
+
+        $.ajax({
+            url: '../../ajax/load_sub',
+            method: 'POST',
+            data: {col_id: 1, dept_id: $('#dept_id').val(), sem: $('#sem').val()},
+            success: function(data){
+                $('#subject_panel').text('');
+                data.data.forEach(function(d){
+                    $('#subject_panel').append('' +
+                        '<div class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 10px;">' +
+                            '<a onclick="javascript:getSurvey('+d.sub_id+', '+d.prof_id+')" align="center" id="'+d.sub_id+'" class="btn blue btn-outline" style="width: 100%;">'+d.sub_name.toUpperCase()+'</a>' +
+                        '</div>');
+                })
+            }
+        })
+    });
+
+    function getSemList(){
+        $('#survey_id_span').text($('#survey_id option:selected').text());
+        var sem = new Array();
+
+        if($('#survey_id').val() == 'odd'){
+            sem = [1, 3, 5, 7];
+        }
+        else if($('#survey_id').val() == 'even'){
+            sem = [2, 4, 6, 8];
+        }
+        $('#sem').text('');
+        for(i in sem){
+            $('#sem').append('<option value="'+sem[i]+'">'+sem[i]+'</option>');
+        }
+    }
+
+    function getSurvey(sub_id, prof_id){
+        console.log(sub_id, prof_id);
+    }
 
 </script>
 
