@@ -28,7 +28,7 @@
     ],
     "child" : [
       {"id" : 1, "name" : "Create Survey", "url" : "../../../feed_analyzer/create_survey", "parent_id" : 5, "icon" : "icon-pencil"},
-      {"id" : 2, "name" : "View All Surveys", "url" : "../../../feed_analyzer/view_survey", "parent_id" : 5, "icon" : "icon-layers"}
+      {"id" : 2, "name" : "View All Surveys", "url" : "../../../feed_analyzer/survey_list", "parent_id" : 5, "icon" : "icon-layers"}
     ]
   },
 

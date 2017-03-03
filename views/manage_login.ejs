@@ -69,6 +69,7 @@
                                     <th>Mobile</th>
                                     <th>Email Id</th>
                                     <th>Generate &amp; Send Link</th>
+                                    <th>Delete</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -204,8 +205,10 @@
             success: function(data){
               console.log(data);
               var i = 0;
+                $('#user-table tbody').text('');
               data.forEach(function(item){
-                  $('#user-table').append('<tr>' +
+
+                  $('#user-table tbody').append('<tr>' +
                       '<td>'+(i++)+'</td>' +
                       '<td>'+item.role+'</td>' +
                       '<td>'+item.col_id+'</td>' +
@@ -215,6 +218,7 @@
                       '<td>'+item.contact+'</td>' +
                       '<td>'+item.email_id+'</td>' +
                       '<td><button class="btn btn-default" onclick="javascript:generate_url(\''+item.password+'\',\''+item.nickname+'\',\''+item.contact+'\',\''+item.email_id+'\',\''+item._id+'\')">GENERATE & SEND URL</button></td>' +
+                      '<td><button class="btn red btn-outline" onclick="javascript:delete_user(\''+item._id+'\')">DELETE</button></td>' +
                       '</tr>');
               });
             },
@@ -244,6 +248,20 @@
                 console.log('Error : '+error.responseText);
             }
         });
+    }
+
+    function delete_user(id){
+        $.ajax({
+            url: '../../ajax/deleteuser',
+            method: 'POST',
+            data: {_id: id},
+            success: function(){
+                load_users();
+            },
+            error: function(){
+                console.log('Error occured while deleting user!');
+            }
+        })
     }
 </script>
 
