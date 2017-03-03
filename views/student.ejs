@@ -490,10 +490,26 @@
                                    data : $('#submit_form').serialize(),
                                    method : 'POST',
                                    success:function () {
+                                       ratingDone();
                                        console.log("done");
                                    }
                                });
                            }
+
+                           function ratingDone(){
+
+                               $.ajax({
+                                   url : '../../ajax/done',
+                                   method : 'POST',
+                                   success:function () {
+                                       console.log("its done you can logout");
+                                       window.location.replace('/logout');
+                                   }
+                               });
+                           }
+
+
+
                         </script>
 
                         <script>
@@ -750,10 +766,9 @@
 
                                         $('#form_wizard_1').find('.button-previous').hide();
                                         $('#form_wizard_1 .button-submit').click(function () {
-                                            //submit me
+                                            //
                                             submit_rating();
 
-                                            alert("Thank You...!");
                                         }).hide();
 
                                         //apply validation on select2 dropdown value change, this only needed for chosen dropdown integration.
