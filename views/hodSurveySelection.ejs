@@ -53,13 +53,13 @@
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label for="year_sel">Select Sem</label>
+                        <label for="year_sel">Select Semester</label>
                         <select class="btn btn-circle red dropdown-toggle" data-toggle="dropdown" name="hod_sem_dd" id="sem_sel">
                             <i class="fa fa-angle-down"></i>
 
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="javascript:;"> <option value="null">select sem</option></a>
+                                    <a href="javascript:;"> <option value="">select Sem</option></a>
                                 </li>
                             </ul>
                         </select>
@@ -80,7 +80,7 @@
                             </tbody>
                         </table>
                         <div class="col-md-3">
-                            <button class="btn btn-default" id="sendall">SEND TO ALL</button>
+                            <button class="btn btn-success" id="sendall">SEND TO ALL</button>
                         </div>
                         <br><br>
                         <div id="sent_alert">
@@ -121,71 +121,78 @@
         });
 
         $("#sendall").click(function () {
-            $("#sent_message").text('');
-            $("#sent_message").append('sending...');
-            $.ajax({
-                url: '../../ajax/sendAll',
-                data: {"id[]":ids, "length":ids.length},
-                method: 'POST',
-                success: function () {
-                    $("#sent_message").text('');
-                    $("#sent_message").append('URLs sent to above students');
-                },
-                error: function () {
-                    $("#sent_message").text('');
-                    $("#sent_message").append('Error');
-                }
-            })
-        })
+            if(ids.length == 0){
+                window.alert("Table is empty!");
+            }
+            else {
+                $("#sent_message").text('');
+                $("#sent_message").append('sending...')
+                $.ajax({
+                    url: '../../ajax/sendAll',
+                    data: {"id[]":ids, "length":ids.length},
+                    method: 'POST',
+                    success: function () {
+                        $("#sent_message").text('');
+                        $("#sent_message").append('URL sent to above students');
+                    },
+                    error: function () {
+                        $("#sent_message").text('');
+                        $("#sent_message").append('Error');
+                    }
+                })
+            }
+
+        });
 
         $("#sem_sel").change(function () {
             $("#sent_message").text('');
             ids.length = 0;
+            console.log("empty: " + ids);
             $("#datatable_students_body").text('');
             $.ajax({
                 url: '../../ajax/retrieve_stud',
                 data: {"sem":$("#sem_sel").val()},
                 method: 'POST',
-                async: false,
                 dataType: 'json',
                 success: function(data) {
                     //window.alert("success");
-                    var i = 1;
+                    var i = 0;
                     data.forEach(function (item) {
                         ids.push(item._id);
+                        console.log("ejs : " + item._id);
                         //window.alert(item);
                         if(item.status == "0"){
                             $("#datatable_students").append(
-                                '<tr>'+
-                                '<td style="text-align: center">' + (i++) + '</td>' +
-                                '<td style="text-align: center">' + item.name + '</td>' +
-                                '<td style="background-color: red; text-align: center" >' + 'URL not sent' + '</td>' +
-                                '<td style="align-content: center"><button class="btn btn-default">' + 'GENERATE & SEND URL' + '</button></td>' +
-                                '</tr>'
+                            '<tr>'+
+                            '<td style="text-align: center">' + (++i) + '</td>' +
+                            '<td style="text-align: center">' + item.name + '</td>' +
+                            '<td style="background-color: red; text-align: center" >' + 'URL not sent' + '</td>' +
+                            '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_0" onclick="send_0_1(this)">' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
+                            '</tr>'
                             );
                         }
                         else if(item.status == "1"){
                              $("#datatable_students").append(
                              '<tr>'+
-                             '<td style="text-align: center">' + (i++) + '</td>' +
+                             '<td style="text-align: center">' + (++i) + '</td>' +
                              '<td style="text-align: center">' + item.name + '</td>' +
                              '<td style="background-color: yellow; text-align: center" >' + 'URL sent' + '</td>' +
-                             '<td style="align-content: center"><button class="btn btn-default">' + 'GENERATE & SEND URL' + '</button></td>' +
+                             '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_1" onclick="send_0_1(this)">' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
                              '</tr>'
                              );
                          }
                         else if(item.status == "2"){
                              $("#datatable_students").append(
                              '<tr>'+
-                             '<td style="text-align: center">' + (i++) + '</td>' +
+                             '<td style="text-align: center">' + (++i) + '</td>' +
                              '<td style="text-align: center">' + item.name + '</td>' +
                              '<td style="background-color: green; text-align: center" >' + 'Feedback done' + '</td>' +
-                             '<td style="align-content: center"><button class="btn btn-default">' + 'GENERATE & SEND URL' + '</button></td>' +
+                             '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_2" disabled>' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
                              '</tr>'
                              );
                         }
-                        console.log("ids: " + ids[2]);
-                        console.log('Success');
+                        //console.log("ids: " + ids[2]);
+                        //console.log('Success');
                     })
                 },
                 error: function(data){
@@ -195,6 +202,7 @@
         });
 
         $("#survey_sel").change(function () {
+            ids.length = 0;
             $("#sent_message").text('');
             $("#sem_sel").text('');
             $("#datatable_students_body").text('');
@@ -202,6 +210,7 @@
             var type = str.split("-")[3];
             console.log(type);
             var i;
+            $("#sem_sel").append($('<option value="">Select Sem</option>'));
             if(type == "even"){
                 for(i=2; i<=8; i+=2){
                     $("#sem_sel").append($('<option value="'+ i +'">' + i + '</option>'));
@@ -212,18 +221,47 @@
                     $("#sem_sel").append($('<option value="'+ i +'">' + i + '</option>'));
                 }
             }
-
         });
 
+        function send_0_1(dom) {
+            $("#sent_message").text('');
+            $("#sent_message").append('sending...');
+            console.log(dom.id);
+            var but_id = dom.id;
+            var id = but_id.split("_")[0];
+            var para_val = $("#" + id).attr("data-id");
+            ids.length = 0;
+            ids.push(para_val)
+            $.ajax({
+                url: '../../ajax/sendAll',
+                data: {"id[]": ids, "length": 1},
+                method: 'POST',
+                success: function () {
+                    $("#sent_message").text('');
+                    $("#sent_message").append('URL sent to Sr No.' + id);
+                },
+                error: function () {
+                    $("#sent_message").text('');
+                    $("#sent_message").append('Error');
+                }
+            });
+        }
 
-        /*
-         router.post('/sendAll', function (req, res) {
+        /*router.post('/sendAll', function (req, res) {
          var i;
+         if(req.body.length == 1){
+         var id = req.body['id[]'];
+         console.log("ids : " + id);
+         }else
+         {
          for(i=0; i<req.body.length; i++){
-         console.log(req.body['id[]'][i]);
+         console.log("i: " + i);
+         console.log("ids : " + req.body['id[]'][i]);
          }
+         }
+         //console.log("omkar: " + req.body['id[]'][0]);
          res.end();
-         });
-        */
+         });*/
+
     </script>
 </html>

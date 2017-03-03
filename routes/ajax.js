@@ -632,8 +632,8 @@ router.post('/load_users', function (req, res, next) {
 
 router.post('/retrieve_stud', function (req, res, next) {
 
-    console.log("****RETRIEVE STUDENT****");
-    console.log(req.user);
+    //console.log("****RETRIEVE STUDENT****");
+    //console.log(req.user);
     var db = req.db;
     var collection = db.get('student');
     collection.find({"col_id":req.user.col_id,"dep_id":req.user.dep_id, "sem":req.body.sem},function(e,docs){
@@ -642,7 +642,7 @@ router.post('/retrieve_stud', function (req, res, next) {
             console.log("Error: " + e);
         }
         else {
-            console.log(docs);
+            //console.log(docs);
             res.writeHead(200, {'Content-Type': 'application/json'});
 
             res.write(JSON.stringify(docs));
@@ -802,9 +802,9 @@ router.post('/sendAll', function (req, res, next) {
     console.log('Inside SendAll');
     var db = req.db;
     var collection = db.get('student');
-    for(var i = 0;i< req.body.length;i++)
-    {
-        collection.find({"_id": req.body['id[]'][i]},function(e,docs){
+    if(req.body.length == 1){
+
+        collection.find({"_id": req.body['id[]']},function(e,docs){
 
             if (e) throw e;
             else {
@@ -814,11 +814,29 @@ router.post('/sendAll', function (req, res, next) {
                 res.writeHead(200, 'Sent Successfully!');
                 res.end();
 
-
             }
 
         });
 
+    }else{
+
+        for(var i = 0;i< req.body.length;i++)
+        {
+            collection.find({"_id": req.body['id[]'][i]},function(e,docs){
+
+                if (e) throw e;
+                else {
+                    //console.log(JSON.stringify(docs));
+                    console.log(docs[0].name);
+                    generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id);
+                    res.writeHead(200, 'Sent Successfully!');
+                    res.end();
+
+                }
+
+            });
+
+        }
     }
 
 });
