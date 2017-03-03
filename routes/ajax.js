@@ -390,6 +390,7 @@ router.post('/submit', function (req, res, next) {
                 function (er2,result) {
                     if (er2) throw er2;
                     else {
+
                         console.log('rating added : '+col_id+' '+dep_id+' '+sem+' '+a[1]+' '+a[2]+' '+req.body[key]+' '+req.year);
                     }
                 })
@@ -450,7 +451,8 @@ router.post('/submit', function (req, res, next) {
         }
         });
         */
-
+    res.writeHead(200, 'rating done!!');
+    res.end();
 
 });
 
@@ -857,6 +859,22 @@ router.post('/sendAll', function (req, res, next) {
     }
 
 });
+
+router.post('/done', function (req, res, next) {
+
+    var db = req.db;
+    var collection = db.get('student');
+    collection.update({"_id": req.user._id} , {"$set":{"status": "2"}},function(e,docs){
+
+        if (e) throw e;
+        else {
+            res.writeHead(200,'done');
+            res.end();
+        }
+
+    });
+});
+
 
 
 
