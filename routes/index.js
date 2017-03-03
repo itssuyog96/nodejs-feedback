@@ -23,15 +23,15 @@ router.get('/googleurl',function (req,res,next) {
 
 router.get('/hash',function (req,res,next) {
   var db = req.db;
-  var collection = db.get('users');
-  const passw = "omkar";
-  const password = crp.crypto(passw);
-  const passwordH = crp.crypto(password);
+  var collection = db.get('student');
+  //const passw = "omkar";
+  //const password = crp.crypto(passw);
+  //const passwordH = crp.crypto(password);
 
-  collection.update({"name":"Omkar"},{"$set":{"nameH":crp.crypto(''),"password":password,"passwordH":passwordH}},function(e,docs){
+  collection.update({"col_id":"1"},{"$set":{"survey_id": ""}},{ multi: true },function(e,docs){
     if (e) show(e);
     else {
-      console.log("user updated");
+      console.log("survey id added");
       res.end();
     }
   });

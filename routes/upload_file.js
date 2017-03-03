@@ -87,7 +87,7 @@ app.post('/', function(req, res) {
                             console.log("userid: " + userid);*/
                         }
 
-                        collection.insert({"col_id":req.user.col_id,"dep_id":req.user.dep_id,"roll_no": roll_no,"name": name,"sem":req.body.sem_dd,"contact":contact,"email_id":email_id, "password":password, "status":"0","role":"student"},function(e,docs){
+                        collection.insert({"col_id":req.user.col_id,"dep_id":req.user.dep_id,"roll_no": roll_no,"name": name,"sem":req.body.sem_dd,"contact":contact,"email_id":email_id, "password":password, "status":"0","role":"student","survey_id":""},function(e,docs){
                             var d = JSON.stringify(docs);
                             if (e) throw e;
                             else {

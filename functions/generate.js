@@ -25,7 +25,7 @@ module.exports.generateuid = function(col_id,dep_id,sem,roll_no){
 };
 
 
-module.exports.generateSend = function (contact,email_id,username,key,id) {
+module.exports.generateSend = function (contact,email_id,username,key,id,survey_id) {
 
 
     var data ={
@@ -45,7 +45,7 @@ module.exports.generateSend = function (contact,email_id,username,key,id) {
     //console.log(contact+' '+username+' '+nameH+' '+key);
 
     var collection = db.get("student");
-    collection.update({"_id": id},{"$set":{"key":HToken}},function (e,docs){
+    collection.update({"_id": id},{"$set":{"key":HToken,"survey_id":survey_id}},function (e,docs){
         var d = JSON.stringify(docs);
         if (e) throw e;
         else {
