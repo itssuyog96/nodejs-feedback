@@ -433,7 +433,7 @@
     function del_profs(id, dept_id, colg_id) {
         $.ajax({
             url: '../ajax/del_prof',
-            data: {prof_id: id, dept_id: dept_id, col_id: colg_id},
+            data: {id: id, dept_id: dept_id, col_id: colg_id},
             method: 'POST',
             success: function (data) {
                 load_<%= profs.name %>(dept_id, colg_id);

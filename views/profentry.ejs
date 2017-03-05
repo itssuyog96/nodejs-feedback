@@ -174,7 +174,7 @@
     function del_profs(id) {
         $.ajax({
             url: '../../ajax/del_prof',
-            data: {'id': id},
+            data: {id: id},
             method: 'POST',
             success: function (data) {
                 load_<%= profs.name %>();
