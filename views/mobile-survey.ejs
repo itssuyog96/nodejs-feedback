@@ -140,6 +140,7 @@
                                                     <input type="hidden" name="col_id" value = "<%= user.col_id %>" />
                                                     <input type="hidden" name="dept_id" value = "<%= user.dep_id %>" />
                                                     <input type="hidden" name="sem" value = "<%= user.sem %>" />
+                                                    <input type="hidden" name="survey_id" value="<%= user.survey_id %>" />
 
                                                     <input type="hidden" name="sub_qty" value="<%= ObjectLength(subject) %>" />
 
@@ -380,7 +381,6 @@
 
                     var handleTitle = function(tab, navigation, index) {
                         var total = navigation.find('li').length;
-                        console.log(total);
                         var current = index + 1;
                         // set wizard title
                         $('.step-title', $('#form_wizard_1')).text('Step ' + (index + 1) + ' of ' + total);
@@ -405,7 +405,7 @@
                             $('#form_wizard_1').find('.button-next').show();
                             $('#form_wizard_1').find('.button-submit').hide();
                         }
-                        App.scrollTo($('.page-title'));
+                        //App.scrollTo($('.page-title'));
                     }
 
                     // default form wizard
