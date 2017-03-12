@@ -368,6 +368,7 @@ router.post('/submit', function (req, res, next) {
     var col_id=req.body.col_id;
     var dep_id=req.body.dept_id;
     var sem=req.body.sem;
+    var survey_id = req.body.survey_id;
     var db = req.db;
     //var regex = new Regex(/rate_\d\d\d\d_\d\d\d/);
     //var regexO = new Regex(/rate_\d\d\d/);
@@ -386,7 +387,7 @@ router.post('/submit', function (req, res, next) {
             var a = key.split('_');
 
             const collection = db.get('rating');
-            collection.insert({"col_id":col_id,"dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":req.body[key],"year":req.year},
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":req.body[key],"year":req.year},
                 function (er2,result) {
                     if (er2) throw er2;
                     else {
@@ -654,38 +655,6 @@ router.post('/retrieve_stud', function (req, res, next) {
     });
 });
 
-
-
-router.get('/generateurl', function (req, res, next){
-
-    try{
-
-        var contact = req.query['contact'];
-        var username = req.query['username'];
-        var nameH = req.query['nameH'];
-        var key = req.query['key'];
-
-        var proc = spawn('python',["../python-files/SMSMessage.py", contact, username, nameH, key]);
-        console.log("Spawned!!!");
-
-        proc.stdout.on('data', function (chunk){
-            var textChunk = chunk.toString();
-            console.log(textChunk)
-        });
-
-        console.log("Process finished");
-        // sms.sendsms(req.body.contact, req.body.username, req.body.nameH, req.body.key);
-    }
-    catch(e){
-        res.write(e);
-        res.end();
-    }
-
-    res.writeHead(200, 'Sent Successfully!');
-    res.end();
-
-
-});
 
 router.post('/create_survey', function (req, res, next) {
 
