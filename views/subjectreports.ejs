@@ -96,6 +96,26 @@
                     </div>
                 </div>
             </div>
+
+            <div class="portlet light">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="portlet light ">
+                            <div class="portlet-title">
+                                <div class="caption font-dark">
+                                    <i class="icon-settings font-dark"></i>
+                                    <span class="caption-subject bold uppercase">Plot</span>
+                                </div>
+
+                            </div>
+                            <div class="portlet-body">
+                                <div id="plot" class="plot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="portlet light select-subdesc-div">
                     <div class="row">
                         <div class="col-md-12">
@@ -167,16 +187,28 @@
             <!-- END THEME LAYOUT SCRIPTS -->
             <script src="../../javascripts/global/scripts/datatable.js" type="text/javascript"></script>
             <script src="../../javascripts/global/plugins/datatables/datatables.all.min.js" type="text/javascript"></script>
-<script src="../../javascripts/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+            <script src="../../javascripts/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
             <!--<script src="../../javascripts/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>-->
 
             <!--<script src="../../javascripts/pages/scripts/table-datatables-scroller.min.js" type="text/javascript"></script>-->
             <!--<script src="../../javascripts/pages/scripts/table-datatables-buttons.min.js" type="text/javascript"></script>-->
+            <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 </body>
 <span id="survey_id_span"></span>
 <span id="subject_id"></span>
 <span id="dept_id_span"></span>
+
+<script>
+    var data = <%- JSON.stringify(questions) %>
+    question = new Array();
+
+    data.forEach(function(ques){
+        question[ques.qid] = ques.question;
+    })
+
+    console.log(question);
+</script>
 
 <script>
     $(document).ready(function(){
@@ -226,8 +258,8 @@
                 $('#subject_panel').text('');
                 data.data.forEach(function(d){
                     $('#subject_panel').append('' +
-                        '<div class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 10px;">' +
-                            '<a onclick="javascript:getSurvey('+d.sub_id+', '+d.prof_id+')" align="center" id="'+d.sub_id+'" class="btn blue btn-outline" style="width: 100%;">'+d.sub_name.toUpperCase()+'</a>' +
+                        '<div id="div-'+d.sub_id+'" class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 10px;">' +
+                            '<a onclick="javascript:getSurvey('+d.sub_id+', '+d.prof_id+')" align="center" id="anchor-'+d.sub_id+'" class="btn blue btn-outline" style="width: 100%;">'+d.sub_name.toUpperCase()+'</a>' +
                         '</div>');
                 })
             }
@@ -251,7 +283,14 @@
         }
     }
 
+    var plotted = new Array();
+
     function getSurvey(sub_id, prof_id){
+        for(i in plotted){
+            if(plotted[i] == sub_id){
+                return true;
+            }
+        }
         console.log(JSON.stringify({sub_id: sub_id, col_id: '<%= user.col_id %>', survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()}));
         $.ajax({
             url: '../../ajax/getRating',
@@ -259,6 +298,28 @@
             data: {sub_id: sub_id, col_id: '<%= user.col_id %>', survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()},
             success: function(data){
                 console.log(JSON.stringify(data));
+                var x = new Array();
+                var y = new Array();
+                data.forEach(function(d){
+                    x.push(String(question[d.q_id]));
+                    y.push(d.v_rating);
+                })
+
+                PLOT = document.getElementById('plot');
+
+                Plotly.plot( PLOT, [{
+                    x: x,
+                    y: y,
+                    name: $('#div-'+sub_id+' a').text()}], {
+                    margin: { t: 0 },
+                    xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
+                    yaxis: { range: [0,5] },
+                    legend : {orientation: 'h'}} );
+
+                plotted.push(sub_id);
+                $('#anchor-'+sub_id).attr('disabled', 'true');
+
+
             },
             error: function(error){
                 console.log(error.statusText);

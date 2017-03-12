@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var tiles = require('../dashmeta.json').principal;
  var menu = require('../menu.json').principal;
+ var questions = require('../questions.json');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -31,7 +32,7 @@ router.get('/', function(req, res, next) {
 
      if(req.session.login) {
          if(req.session.passport.user.role == 'principal'){
-             res.render('subjectreports', {dash : tiles, menu : menu, user : req.session.passport.user});
+             res.render('subjectreports', {dash : tiles, menu : menu, user : req.session.passport.user, questions: questions});
          }
          else{
              delete req.session.redirectTo;
