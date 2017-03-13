@@ -45,7 +45,7 @@
                 </div>
                 <div class="portlet-body">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 col-xs-12 col-sm-12" style="padding-bottom: 20px;">
                             <form>
                                 <div class="col-md-6">
                                     <div class="col-md-12">
@@ -93,11 +93,24 @@
                                 </div>
                             </form>
                         </div>
+                        <hr />
+                        <div class="col-md-12 col-xs-12 col-sm-12" style="border-top: 1px solid grey !important; padding-top: 20px; width: 100%"></div>
+                        <div id="plot" class="plot" style="padding-top: 20px;" align="center">
+                            <div class="col-md-4">
+                                <button style="width: 100%" class="btn btn-outline red bar-plot-btn">BAR PLOT</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button style="width: 100%" class="btn btn-outline red line-plot-btn">LINE PLOT</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button style="width: 100%" class="btn btn-outline red pie-plot-btn">PIE PLOT</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="portlet light">
+            <div class="portlet light bar-plot-div">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="portlet light ">
@@ -109,7 +122,45 @@
 
                             </div>
                             <div class="portlet-body">
-                                <div id="plot" class="plot"></div>
+                                <div id="bar-plot" class="plot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portlet light line-plot-div" style="display:none;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="portlet light ">
+                            <div class="portlet-title">
+                                <div class="caption font-dark">
+                                    <i class="icon-settings font-dark"></i>
+                                    <span class="caption-subject bold uppercase">Plot</span>
+                                </div>
+
+                            </div>
+                            <div class="portlet-body">
+                                <div id="line-plot" class="plot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portlet light pie-plot-div" style="display:none;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="portlet light ">
+                            <div class="portlet-title">
+                                <div class="caption font-dark">
+                                    <i class="icon-settings font-dark"></i>
+                                    <span class="caption-subject bold uppercase">Plot</span>
+                                </div>
+
+                            </div>
+                            <div class="portlet-body">
+                                <div id="pie-plot" class="plot"></div>
                             </div>
                         </div>
                     </div>
@@ -207,7 +258,7 @@
         question[ques.qid] = ques.question;
     })
 
-    console.log(question);
+    //console.log(question);
 </script>
 
 <script>
@@ -297,7 +348,7 @@
             method: 'POST',
             data: {sub_id: sub_id, col_id: '<%= user.col_id %>', survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()},
             success: function(data){
-                console.log(JSON.stringify(data));
+                //console.log(JSON.stringify(data));
                 var x = new Array();
                 var y = new Array();
                 data.forEach(function(d){
@@ -305,16 +356,47 @@
                     y.push(d.v_rating);
                 })
 
-                PLOT = document.getElementById('plot');
+                BAR_PLOT = document.getElementById('bar-plot');
+                LINE_PLOT = document.getElementById('line-plot');
+                PIE_PLOT = document.getElementById('pie-plot');
 
-                Plotly.plot( PLOT, [{
+                Plotly.plot( BAR_PLOT, [{
+                    type: 'bar',
                     x: x,
                     y: y,
                     name: $('#div-'+sub_id+' a').text()}], {
                     margin: { t: 0 },
                     xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
                     yaxis: { range: [0,5] },
+
                     legend : {orientation: 'h'}} );
+
+                Plotly.plot( LINE_PLOT, [{
+                    type: 'line',
+                    x: x,
+                    y: y,
+                    name: $('#div-'+sub_id+' a').text()}], {
+                    margin: { t: 0 },
+                    xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
+                    yaxis: { range: [0,5] },
+
+                    legend : {orientation: 'h'}} );
+
+                Plotly.plot( PIE_PLOT, [{
+                    type: 'pie',
+                    values: y,
+                    labels: x,
+                    name: $('#div-'+sub_id+' a').text()}], {
+                    margin: { t: 0 },
+                    xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
+                    yaxis: { range: [0,5] },
+                    showlegend: false,
+                    legend : {orientation: 'h'}} );
+                var update = {
+                    width: 1200,  // or any new width
+                    height: 400  // " "
+                };
+                Plotly.relayout(BAR_PLOT, update);
 
                 plotted.push(sub_id);
                 $('#anchor-'+sub_id).attr('disabled', 'true');
@@ -326,6 +408,51 @@
             }
         })
     }
+
+    $('#plot').on('click', '.bar-plot-btn', function(){
+
+        var update = {
+            width: 1200,  // or any new width
+            height: 400  // " "
+        };
+        var BAR_PLOT = document.getElementById('bar-plot');
+        Plotly.relayout(BAR_PLOT, update);
+
+        $('.bar-plot-div').fadeIn();
+        $('.pie-plot-div').fadeOut();
+        $('.line-plot-div').fadeOut();
+    })
+
+    $('#plot').on('click', '.line-plot-btn', function(){
+
+        var update = {
+            width: 1200,  // or any new width
+            height: 600  // " "
+        };
+
+        var LINE_PLOT = document.getElementById('line-plot');
+        Plotly.relayout(LINE_PLOT, update);
+
+        $('.bar-plot-div').fadeOut();
+        $('.pie-plot-div').fadeOut();
+        $('.line-plot-div').fadeIn();
+    })
+
+    $('#plot').on('click', '.pie-plot-btn', function(){
+
+        var update = {
+            width: 1000,  // or any new width
+            height: 600  // " "
+        };
+
+        var PIE_PLOT = document.getElementById('pie-plot');
+        Plotly.relayout(PIE_PLOT, update);
+
+
+        $('.bar-plot-div').fadeOut();
+        $('.pie-plot-div').fadeIn();
+        $('.line-plot-div').fadeOut();
+    })
 
 </script>
 
