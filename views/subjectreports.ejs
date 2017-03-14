@@ -110,7 +110,7 @@
                 </div>
             </div>
 
-            <div class="portlet light bar-plot-div">
+            <div class="portlet light bar-plot-div" style="display:none;">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="portlet light ">
@@ -167,37 +167,6 @@
                 </div>
             </div>
 
-            <div class="portlet light select-subdesc-div">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="portlet light ">
-                                <div class="portlet-title">
-                                    <div class="caption font-dark">
-                                        <i class="icon-settings font-dark"></i>
-                                        <span class="caption-subject bold uppercase">SUBJECT NAME</span>
-                                    </div>
-
-                                </div>
-                                <div class="portlet-body">
-                                    <table class="table table-striped table-bordered table-hover order-column" id="sample_1">
-                                        <thead>
-                                        <tr>
-                                            <th>Particulars</th>
-                                            <th>Rating</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>O</td>
-                                                <td>2</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
 
 
             <!--STOP EDITING HERE-->
@@ -348,7 +317,7 @@
             method: 'POST',
             data: {sub_id: sub_id, col_id: '<%= user.col_id %>', survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()},
             success: function(data){
-                //console.log(JSON.stringify(data));
+                console.log(JSON.stringify(data));
                 var x = new Array();
                 var y = new Array();
                 data.forEach(function(d){
@@ -389,14 +358,15 @@
                     name: $('#div-'+sub_id+' a').text()}], {
                     margin: { t: 0 },
                     xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
-                    yaxis: { range: [0,5] },
-                    showlegend: false,
+                    yaxis: {  },
+                    showlegend: true,
                     legend : {orientation: 'h'}} );
                 var update = {
                     width: 1200,  // or any new width
                     height: 400  // " "
                 };
                 Plotly.relayout(BAR_PLOT, update);
+                $('.bar-plot-div').fadeIn();
 
                 plotted.push(sub_id);
                 $('#anchor-'+sub_id).attr('disabled', 'true');
@@ -442,7 +412,7 @@
 
         var update = {
             width: 1000,  // or any new width
-            height: 600  // " "
+            height: 1000  // " "
         };
 
         var PIE_PLOT = document.getElementById('pie-plot');
