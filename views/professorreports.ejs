@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<% include tpl/header.ejs %>
+
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
+<!-- BEGIN HEADER -->
+<% include tpl/menu.ejs %>
+
+<!-- END HEADER -->
+
+
+<!-- BEGIN HEADER & CONTENT DIVIDER -->
+<div class="clearfix"> </div>
+<!-- END HEADER & CONTENT DIVIDER -->
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <% include tpl/sidebar.ejs %>
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+
+            <!--h3 class="page-title"> Blank Page Layout
+                <small>blank page layout</small>        To be resolved
+            </h3-->
+
+            <!-- END PAGE HEADER-->
+
+
+            <!--START EDITING FROM HERE-->
+            <div class="portlet light select-survey-div">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject bold uppercase">Select Survey</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12 col-sm-12" style="padding-bottom: 20px;">
+                            <form>
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <div class="form-group col-md-6">
+                                            <label class="form-control" for="survey_id">Select Survey</label>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <select class="form-control" id="survey_id" name="survey_id">
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group col-md-6">
+                                            <label class="form-control" for="dept_id">Select Department</label>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <select class="form-control" id="dept_id" name="dept_id">
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <a style="width:100%;" id="get-subject-btn" class="btn green btn-outline get-subject-btn">GET PROFESSORS</a>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-6" style="border-left: 1px solid grey !important; padding-left: 5px; heigth: 100%">
+                                    <div id="subject_panel">
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <hr />
+                        <div class="col-md-12 col-xs-12 col-sm-12" style="border-top: 1px solid grey !important; padding-top: 20px; width: 100%"></div>
+                        <div id="plot" class="plot" style="padding-top: 20px;" align="center">
+                            <div class="col-md-4">
+                                <button style="width: 100%" class="btn btn-outline red bar-plot-btn">BAR PLOT</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button style="width: 100%" class="btn btn-outline red line-plot-btn">LINE PLOT</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button style="width: 100%" class="btn btn-outline red pie-plot-btn">PIE PLOT</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portlet light bar-plot-div" style="display:none;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="portlet light ">
+                            <div class="portlet-title">
+                                <div class="caption font-dark">
+                                    <i class="icon-settings font-dark"></i>
+                                    <span class="caption-subject bold uppercase">Plot</span>
+                                </div>
+
+                            </div>
+                            <div class="portlet-body">
+                                <div id="bar-plot" class="plot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portlet light line-plot-div" style="display:none;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="portlet light ">
+                            <div class="portlet-title">
+                                <div class="caption font-dark">
+                                    <i class="icon-settings font-dark"></i>
+                                    <span class="caption-subject bold uppercase">Plot</span>
+                                </div>
+
+                            </div>
+                            <div class="portlet-body">
+                                <div id="line-plot" class="plot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portlet light pie-plot-div" style="display:none;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="portlet light ">
+                            <div class="portlet-title">
+                                <div class="caption font-dark">
+                                    <i class="icon-settings font-dark"></i>
+                                    <span class="caption-subject bold uppercase">Plot</span>
+                                </div>
+
+                            </div>
+                            <div class="portlet-body">
+                                <div id="pie-plot" class="plot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!--STOP EDITING HERE-->
+
+        </div>
+        <!-- END CONTENT BODY -->
+    </div>
+    <!-- END CONTENT -->
+    <% include tpl/quicksidebar.ejs %>
+</div>
+
+
+
+<!-- END CONTAINER -->
+
+<% include tpl/footer.ejs %>
+
+
+<!--[if lt IE 9]>
+<script src="../../javascripts/global/plugins/respond.min.js"></script>
+<script src="../../javascripts/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+<!-- BEGIN CORE PLUGINS -->
+<script src="../../javascripts/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN THEME GLOBAL SCRIPTS -->
+<script src="../../javascripts/global/scripts/app.min.js" type="text/javascript"></script>
+<!-- END THEME GLOBAL SCRIPTS -->
+<!-- BEGIN THEME LAYOUT SCRIPTS -->
+<script src="../../javascripts/layouts/layout5/scripts/layout.min.js" type="text/javascript"></script>
+
+<!-- END THEME LAYOUT SCRIPTS -->
+<script src="../../javascripts/global/scripts/datatable.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/datatables/datatables.all.min.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+<!--<script src="../../javascripts/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>-->
+
+<!--<script src="../../javascripts/pages/scripts/table-datatables-scroller.min.js" type="text/javascript"></script>-->
+<!--<script src="../../javascripts/pages/scripts/table-datatables-buttons.min.js" type="text/javascript"></script>-->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+</body>
+<span id="survey_id_span"></span>
+<span id="subject_id"></span>
+<span id="dept_id_span"></span>
+
+<script>
+    var data = <%- JSON.stringify(questions) %>
+        question = new Array();
+
+    data.forEach(function(ques){
+        question[ques.qid] = ques.question;
+    })
+
+    //console.log(question);
+</script>
+
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url: '../../ajax/getSurveyList',
+            data: {col_id: 1},
+            method: 'POST',
+            success: function(data){
+                data.forEach(function(d){
+                    $('#survey_id').append('<option value="'+d.semtype+'">'+d.survey_id+'</option>')
+                });
+
+                $('#survey_id_span').text($('#survey_id option:selected').text());
+
+            }
+        });
+
+        $.ajax({
+            url: '../../ajax/getDeptList',
+            data: {col_id: 1},
+            method: 'POST',
+            success: function(data){
+                data.forEach(function(d){
+                    $('#dept_id').append('<option value="'+d.dept_id+'">'+d.dept_name+'</option>')
+                });
+
+
+                $('#dept_id_span').text($('#dept_id option:selected').val());
+
+            }
+        });
+
+    });
+
+    $('.select-survey-div').on('click', '.get-subject-btn', function(e){
+        e.preventDefault();
+
+        $.ajax({
+            url: '../../ajax/load_prof',
+            method: 'POST',
+            data: {col_id: 1, dept_id: $('#dept_id').val()},
+            success: function(data){
+                $('#subject_panel').text('');
+                data.data.forEach(function(d){
+                    $('#subject_panel').append('' +
+                        '<div id="div-'+d.prof_id+'" class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 10px;">' +
+                        '<a onclick="javascript:getSurvey('+d.prof_id+')" align="center" id="anchor-'+d.prof_id+'" class="btn blue btn-outline" style="width: 100%;">'+d.prof_name.toUpperCase()+'</a>' +
+                        '</div>');
+                })
+            }
+        })
+    });
+
+    $('#survey_id').on('change', function(){
+        $('#survey_id_span').text($('#survey_id option:selected').text());
+    })
+
+
+    var plotted = new Array();
+
+    function getSurvey(prof_id){
+        for(i in plotted){
+            if(plotted[i] == prof_id){
+                return true;
+            }
+        }
+        console.log(JSON.stringify({prof_id: prof_id, col_id: '<%= user.col_id %>', survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()}));
+        $.ajax({
+            url: '../../ajax/getRating',
+            method: 'POST',
+            data: {prof_id: prof_id, col_id: '<%= user.col_id %>', survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()},
+            success: function(data){
+                console.log(JSON.stringify(data));
+                var x = new Array();
+                var y = new Array();
+                data.forEach(function(d){
+                    x.push(String(question[d.q_id]));
+                    y.push(d.v_rating);
+                })
+
+                BAR_PLOT = document.getElementById('bar-plot');
+                LINE_PLOT = document.getElementById('line-plot');
+                PIE_PLOT = document.getElementById('pie-plot');
+
+                Plotly.plot( BAR_PLOT, [{
+                    type: 'bar',
+                    x: x,
+                    y: y,
+                    name: $('#div-'+prof_id+' a').text()}], {
+                    margin: { t: 0 },
+                    xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
+                    yaxis: { range: [0,5] },
+
+                    legend : {orientation: 'h'}} );
+
+                Plotly.plot( LINE_PLOT, [{
+                    type: 'line',
+                    x: x,
+                    y: y,
+                    name: $('#div-'+prof_id+' a').text()}], {
+                    margin: { t: 0 },
+                    xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
+                    yaxis: { range: [0,5] },
+
+                    legend : {orientation: 'h'}} );
+
+                Plotly.plot( PIE_PLOT, [{
+                    type: 'pie',
+                    values: y,
+                    labels: x,
+                    name: $('#div-'+prof_id+' a').text()}], {
+                    margin: { t: 0 },
+                    xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
+                    yaxis: {  },
+                    showlegend: true,
+                    legend : {orientation: 'h'}} );
+                var update = {
+                    width: 1200,  // or any new width
+                    height: 400  // " "
+                };
+                Plotly.relayout(BAR_PLOT, update);
+                $('.bar-plot-div').fadeIn();
+
+                plotted.push(prof_id);
+                $('#anchor-'+prof_id).attr('disabled', 'true');
+
+
+            },
+            error: function(error){
+                console.log(error.statusText);
+            }
+        })
+    }
+
+    $('#plot').on('click', '.bar-plot-btn', function(){
+
+        var update = {
+            width: 1200,  // or any new width
+            height: 400  // " "
+        };
+        var BAR_PLOT = document.getElementById('bar-plot');
+        Plotly.relayout(BAR_PLOT, update);
+
+        $('.bar-plot-div').fadeIn();
+        $('.pie-plot-div').fadeOut();
+        $('.line-plot-div').fadeOut();
+    })
+
+    $('#plot').on('click', '.line-plot-btn', function(){
+
+        var update = {
+            width: 1200,  // or any new width
+            height: 600  // " "
+        };
+
+        var LINE_PLOT = document.getElementById('line-plot');
+        Plotly.relayout(LINE_PLOT, update);
+
+        $('.bar-plot-div').fadeOut();
+        $('.pie-plot-div').fadeOut();
+        $('.line-plot-div').fadeIn();
+    })
+
+    $('#plot').on('click', '.pie-plot-btn', function(){
+
+        var update = {
+            width: 1000,  // or any new width
+            height: 1000  // " "
+        };
+
+        var PIE_PLOT = document.getElementById('pie-plot');
+        Plotly.relayout(PIE_PLOT, update);
+
+
+        $('.bar-plot-div').fadeOut();
+        $('.pie-plot-div').fadeIn();
+        $('.line-plot-div').fadeOut();
+    })
+
+</script>
+
+
+
+</html>
