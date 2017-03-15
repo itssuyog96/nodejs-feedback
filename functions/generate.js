@@ -45,7 +45,7 @@ module.exports.generateSend = function (contact,email_id,username,key,id,survey_
     //console.log(contact+' '+username+' '+nameH+' '+key);
 
     var collection = db.get("student");
-    collection.update({"_id": id},{"$set":{"key":HToken,"survey_id":survey_id}},function (e,docs){
+    collection.update({"_id": id},{"$set":{"key":HToken,"survey_id":survey_id,"status":"1"}},function (e,docs){
         var d = JSON.stringify(docs);
         if (e) throw e;
         else {

@@ -788,8 +788,9 @@ router.post('/sendAll', function (req, res, next) {
             else {
                 //console.log(JSON.stringify(docs));
                 console.log(docs[0].name);
-                generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id);
-                res.writeHead(200, 'Sent Successfully!');
+                generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id,req.body.surveyid);
+                res.writeHead(200,{'Content-Type': 'application/json'});
+                res.write(docs[0].status);
                 res.end();
 
             }
@@ -833,9 +834,4 @@ router.post('/done', function (req, res, next) {
 
     });
 });
-
-
-
-
-
 module.exports = router;
