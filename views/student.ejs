@@ -318,7 +318,7 @@
                                                                 <div clas="well">
                                                                     <span class="center">
                                                                         <center>
-                                                                            <h3>Please click on SUBMIT </h3><br />
+                                                                            <h3 id="thankyou">Please click on SUBMIT </h3><br />
                                                                             <h2><span style="font-size: small" id="redirect" hidden>Please wait...Redirecting...</span></h2>
                                                                         </center>
                                                                     </span>
@@ -425,6 +425,7 @@
     <script>
        function submit_rating(){
            console.log($('#submit_form').serialize());
+           $('#thankyou').text('Thank You!');
            $('#redirect').show();
            $.ajax({
                url : '../../ajax/submit',
@@ -445,7 +446,9 @@
                method : 'POST',
                success:function () {
                    console.log("its done you can logout");
-                   window.location.replace('/logout');
+                   setTimeout(function(){
+                       window.location.replace('/logout');
+                   }, 2000);
                }
            });
        }

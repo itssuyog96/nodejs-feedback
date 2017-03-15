@@ -132,7 +132,7 @@ module.exports = function(passport) {
             var collection = db.get('student');
             collection.find({"key": token }, function (err, user) {
                 if (err) { return done(err); }
-                if(user == 0 || user.status == '2'){
+                if(user == 0 || user[0].status == "2"){
                     return done(null, false,req.flash('loginMessage', 'No user found.'));
                 }
                 return done(null, user[0]);

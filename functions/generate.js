@@ -60,7 +60,9 @@ module.exports.generateSend = function (contact,email_id,username,key,id,survey_
 
     googleUrl.shorten( url, function(err, shortUrl ) {
         console.log(shortUrl);
-        var proc = spawn('python',["python-files/mailer_v3.py", email_id, username,shortUrl]);
+        console.log(err);
+        console.log(url);
+        var proc = spawn('python',["python-files/mailer_v3.py", email_id, username,url]);
         console.log("Spawned!!!");
 
         proc.stdout.on('data', function (chunk){
