@@ -38,10 +38,6 @@ router.get('/hash',function (req,res,next) {
 });
 
 
-router.get('/hodsurvey', function (req, res) {
-    res.render('hodSurveySelection', {dash : tiles, menu : menu, user : req.session.passport.user});
-});
-
 
 router.get('/', function(req, res, next) {
   //res.render('index', { title: 'Express' });

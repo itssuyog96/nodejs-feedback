@@ -21,9 +21,9 @@
   },
 
   "hod":{
-    "tiles" : ["UPLOAD DETAILS", "DEPARTMENT REPORTS", "PROFESSOR REPORTS", "SUBJECT REPORTS", "SETTINGS"],
+    "tiles" : ["UPLOAD DETAILS", "SURVEY STATUS", "DEPARTMENT REPORTS", "PROFESSOR REPORTS", "SUBJECT REPORTS", "SETTINGS"],
     "fa_icons" : ["fa-upload", "fa-check-square-o", "fa-line-chart", "fa-line-chart", "fa-cogs"],
     "bg_style" : ["bg-blue", "bg-red", "bg-green-sharp", "bg-green", "bg-yellow"],
-    "url" : ["../../../headofdepartment/upload", "../../../headofdepartment/department", "../../../headofdepartment/professor", "../../../", "../../../headofdepartment/settings"]
+    "url" : ["../../../headofdepartment/upload", "../../../headofdepartment/hodsurvey", "../../../headofdepartment/department", "../../../headofdepartment/professor", "../../../", "../../../headofdepartment/settings"]
   }
 }

@@ -43,7 +43,7 @@ app.post('/', function(req, res) {
             fs.rename("./" + sampleFile.name, "./StudentExcelFiles/" + req.body.sem_dd + ".xlsx" , function (err) {
                 if(err){
                     console.log(err);
-                    res.status(500).send(err);
+                    //res.status(500).send(err);
                 }
                 else {
                     if(typeof require !== 'undefined') XLSX = require('xlsx');
@@ -52,7 +52,7 @@ app.post('/', function(req, res) {
 
                     var name, roll_no, email_id, contact, x, role, nameH="N", password, passwordH1="M", passwordH2="T", uid;
 
-                    var workbook = XLSX.readFile("workbooks/StudentDetails.xlsx");
+                    var workbook = XLSX.readFile("StudentExcelFiles/"+req.body.sem_dd+".xlsx");
                     var sheet = workbook.Sheets['details'];
 
                     console.log("excel data");
@@ -60,7 +60,7 @@ app.post('/', function(req, res) {
                     var db = req.db;
                     var collection = db.get('student');
 
-                    for(x = 2; x < 4; x++){
+                    for(x = 2; x < 100; x++){
 
                         if(sheet['A' + x.toString()] == undefined)
                         {
@@ -77,7 +77,7 @@ app.post('/', function(req, res) {
                             roll_no = sheet['A' + x.toString()].v;
                             email_id = sheet['C' + x.toString()].v;
                             contact = sheet['D' + x.toString()].v;
-                            uid = sheet['E' + x.toString()].v;
+                            //uid = sheet['E' + x.toString()].v;
 
                             /*console.log("name:" + name);
                             console.log("roll:" + roll_no);
@@ -92,7 +92,7 @@ app.post('/', function(req, res) {
                             if (e) throw e;
                             else {
                                 console.log('student updated');
-                                res.end();
+                                //res.end();
                             }
 
                         });

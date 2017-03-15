@@ -5,7 +5,7 @@ const crp = require('../functions/md5');
 const secret = 'Aditya';
 var spawn = require('child_process').spawn;
 var monk = require('monk');
-var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
+var db = monk('mongodb://localhost:27017/feed-db');
 
 
 
@@ -54,7 +54,7 @@ module.exports.generateSend = function (contact,email_id,username,key,id,survey_
 
     });
 
-    var url = 'http://localhost:3000/stud?access_token='+token;
+    var url = 'http://172.18.1.50/stud?access_token='+token;
 
     //var proc = spawn('python',["python-files/SMSMessage.py", contact, username, nameH, key]);
 

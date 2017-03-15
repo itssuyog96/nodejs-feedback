@@ -26,7 +26,24 @@ router.get('/', function(req, res, next) {
         req.session.redirectTo = '/headofdepartment/';
         res.redirect('/login');
     }
+});
 
+router.get('/hodsurvey', function(req, res, next) {
+
+    if(req.session.login) {
+        if(req.session.passport.user.role == 'hod'){
+            res.render('hodsurveySelection', {dash : tiles, menu : menu, user : req.session.passport.user});
+        }
+        else{
+            delete req.session.redirectTo;
+            res.redirect('/login');
+        }
+
+    }
+    else {
+        req.session.redirectTo = '/headofdepartment/hodsurvey';
+        res.redirect('/login');
+    }
 });
 
 router.get('/upload', function(req, res, next) {

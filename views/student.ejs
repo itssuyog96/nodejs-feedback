@@ -318,8 +318,8 @@
                                                                 <div clas="well">
                                                                     <span class="center">
                                                                         <center>
-                                                                            <h3>Thank You! Your feedback has been submitted.</h3><br />
-                                                                            <span style="font-size: small">Redirecting...</span>
+                                                                            <h3>Please click on SUBMIT </h3><br />
+                                                                            <h2><span style="font-size: small" id="redirect" hidden>Please wait...Redirecting...</span></h2>
                                                                         </center>
                                                                     </span>
                                                                 </div>
@@ -425,6 +425,7 @@
     <script>
        function submit_rating(){
            console.log($('#submit_form').serialize());
+           $('#redirect').show();
            $.ajax({
                url : '../../ajax/submit',
                data : $('#submit_form').serialize(),
@@ -444,7 +445,7 @@
                method : 'POST',
                success:function () {
                    console.log("its done you can logout");
-                   //window.location.replace('/logout');
+                   window.location.replace('/logout');
                }
            });
        }
@@ -527,7 +528,7 @@
                         doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
                         errorElement: 'span', //default input error message container
                         errorClass: 'help-block help-block-error', // default input error message class
-                        focusInvalid: false, // do not focus the last invalid input
+                        focusInvalid: false, // do not focus the lapast invalid input
 //                                            rules: {
 //                                                //account
 //                                                username: {
@@ -725,19 +726,21 @@
 
                             switch(index){
                                 case 1:
-                                    if(!checkerrors1()){ return true; }
+                                    if(!checkerrors1()){ return false; }
                                     break;
                                 case 2:
-                                    if(!checkerrors2()){ return true; }
+                                    if(!checkerrors2()){ return false; }
                                     break;
                                 case 3:
-                                    if(!checkerrors3()){ return true; }
+                                    if(!checkerrors3()){ return false; }
                                     break;
                                 case 4:
-                                    if(!checkerrors4()){ return true; }
+                                    if(!checkerrors4()){ return false; }
                                     break;
                                 default:
                             }
+
+                            $('#star-errors').fadeOut();
 
                             handleTitle(tab, navigation, index);
                         },
@@ -748,6 +751,7 @@
                             handleTitle(tab, navigation, index);
                         },
                         onTabShow: function (tab, navigation, index) {
+                            $('#star-errors').fadeOut();
                             var total = navigation.find('li').length;
                             var current = index + 1;
                             var $percent = (current / total) * 100;

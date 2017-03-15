@@ -48,7 +48,7 @@ router.get('/', function (req, res, next){
 
         });
 
-        var url = 'https://bvcoe-feedback.herokuapp.com/profile?access_token='+token;
+        var url = 'http://172.18.1.50/profile?access_token='+token;
 
         //var proc = spawn('python',["python-files/SMSMessage.py", contact, username, nameH, key]);
 

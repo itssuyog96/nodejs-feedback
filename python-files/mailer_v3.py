@@ -82,8 +82,6 @@ to_name = sys.argv[2]
 #password = sys.argv[4]
 url = sys.argv[3]
 
-#message = "Click on the following link to login --> http://localhost:3000/api/login?username=" + username + "&password=" + password
-#message = "hi"
 message = "Hi " + to_name + ", Click on the following link to login into feedback system. Link -> " + url
 print("inside mail")
 sys.stdout.flush()

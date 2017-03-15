@@ -2,7 +2,7 @@
  * Created by arun on 16/09/2016.
  */
 var monk = require('monk');
-var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
+var db = monk('mongodb://localhost:27017/feed-db');
 
 //var db=require('../db-config');
 var College=function (info) {
