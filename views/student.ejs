@@ -336,6 +336,7 @@
                                                                     <a href="javascript:;" class="btn green button-submit"> Submit
                                                                         <i class="fa fa-check"></i>
                                                                     </a>
+                                                                    <span id="star-errors" style="color:red; display:none;"><i>Please check if everything is rated!</i></span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -365,80 +366,6 @@
 </div>
     <!-- END CONTAINER -->
 
-    <div class="modal fade bs-modal-lg" id="myProfile" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">MY PROFILE</h4>
-                </div>
-                <div class="modal-body">
-
-                    <table class="table table-responsive table-hover">
-                        <tbody>
-                        <tr>
-                            <td>COLLEGE</td><td><%= user.col_name %></td>
-                        </tr>
-                        <tr>
-                            <td>DEPARTMENT</td><td><%= user.dept_name %></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <table class="table table-responsive table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>SUBJECT ID</th>
-                                        <th>SUBJECT NAME</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <% subject.forEach(function(item){ %>
-                                    <tr>
-                                        <td><%= item.sub_id %></td><td><%= item.sub_name %></td>
-                                    </tr>
-                                    <% }); %>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td>
-                                <table class="table table-responsive table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>PROFESSOR ID</th>
-                                        <th>PROFESSOR NAME</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <% subject.forEach(function(item){ %>
-                                    <tr>
-                                        <td><%= item.sub_id %></td><td><%= item.sub_name %></td>
-                                    </tr>
-                                    <% }); %>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    User ID Hash : <%= user._id %>
-                    <hr>
-                    Your identity is secure.
-                    <hr>
-
-
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
 
     <!--[if lt IE 9]>
     <script src="../../javascripts/global/plugins/respond.min.js"></script>
@@ -523,6 +450,42 @@
 
 
 
+    </script>
+
+    <script>
+        function checkerrors1(){
+            for(i in rate1){
+                if(!rate1[1]){
+                    return false;
+                }
+            }
+            return true;
+        }
+        function checkerrors2(){
+            for(i in rate2){
+                if(!rate2[1]){
+                    return false;
+                }
+            }
+            return true;
+        }
+        function checkerrors3(){
+            for(i in rate3){
+                if(!rate3[1]){
+                    return false;
+                }
+            }
+            return true;
+        }
+        function checkerrors4(){
+            for(i in rate4){
+                if(!rate4[1]){
+                    $('#star-erros').fadeIn();
+                    return false;
+                }
+            }
+            return true;
+        }
     </script>
 
     <script>
@@ -708,6 +671,7 @@
                     }
 
                     var handleTitle = function(tab, navigation, index) {
+                        $('#star-erros').fadeOut();
                         var total = navigation.find('li').length;
                         var current = index + 1;
                         // set wizard title
@@ -755,8 +719,20 @@
                             success.hide();
                             error.hide();
 
-                            if (form.valid() == false) {
-                                return false;
+                            switch(index){
+                                case 1:
+                                    if(!checkerrors1()){ return false; }
+                                    break;
+                                case 2:
+                                    if(!checkerrors2()){ return false; }
+                                    break;
+                                case 3:
+                                    if(!checkerrors3()){ return false; }
+                                    break;
+                                case 4:
+                                    if(!checkerrors4()){ return false; }
+                                    break;
+                                default:
                             }
 
                             handleTitle(tab, navigation, index);
@@ -797,7 +773,81 @@
         jQuery(document).ready(function() {
             FormWizard.init();
         });
+
     </script>
+
+<script>
+    var rate1 = new Object();
+    var rate2 = new Object();
+    var rate3 = new Object();
+    var rate4 = new Object();
+</script>
+
+<script>
+<% particulars.faculty.questions.forEach(function(ques){ %>
+<% subject.forEach(function(item){ %>
+    rate1.rate_<%= item.sub_id %>_<%= ques.qid %>_<%= item.prof_id %> = false
+<% }); %>
+<%}); %>
+</script>
+
+<script>
+    <% particulars.laboratory.questions.forEach(function(ques){ %>
+    <% subject.forEach(function(item){ %>
+    rate2.rate_<%= item.sub_id %>_<%= ques.qid %>_<%= item.prof_id %> = false
+    <% }); %>
+    <%}); %>
+</script>
+
+<script>
+    <% particulars.overall.questions.forEach(function(ques){ %>
+    rate3.rate_<%= ques.qid %> = false
+    <%}); %>
+</script>
+
+<script>
+    <% particulars.student_service.questions.forEach(function(ques){ %>
+    rate4.rate_<%= ques.qid %> = false
+    <%}); %>
+</script>
+
+<!-- Star input validation -->
+
+<% particulars.faculty.questions.forEach(function(ques){ %>
+<% subject.forEach(function(item){ %>
+<script>
+    $('#rate_<%= item.sub_id %>_<%= ques.qid %>_<%= item.prof_id %>').on('rating.change', function(event, value, caption) {
+        rate1.rate_<%= item.sub_id %>_<%= ques.qid %>_<%= item.prof_id %> = true;
+    });
+</script>
+<% }); %>
+<%}); %>
+
+<% particulars.laboratory.questions.forEach(function(ques){ %>
+<% subject.forEach(function(item){ %>
+<script>
+    $('#rate_<%= item.sub_id %>_<%= ques.qid %>_<%= item.prof_id %>').on('rating.change', function(event, value, caption) {
+        rate2.rate_<%= item.sub_id %>_<%= ques.qid %>_<%= item.prof_id %> = true;
+    });
+</script>
+<% }); %>
+<%}); %>
+
+<% particulars.overall.questions.forEach(function(ques){ %>
+<script>
+    $('#rate_<%= ques.qid %>').on('rating.change', function(event, value, caption) {
+        rate3.rate_<%= ques.qid %> = true;
+    });
+</script>
+<%}); %>
+
+<% particulars.student_service.questions.forEach(function(ques){ %>
+<script>
+    $('#rate_<%= ques.qid %>').on('rating.change', function(event, value, caption) {
+        rate4.rate_<%= ques.qid %> = true;
+    });
+</script>
+<%}); %>
 
 </body>
 
