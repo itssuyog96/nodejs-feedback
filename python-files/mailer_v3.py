@@ -26,6 +26,7 @@ class MailerApp:
         msg['To'] = self.to_addr
         msg['From'] = self.from_addr
         msg['Subject'] = self.subject
+        #msg['Cc'] = 'nidhipranjan@gmail.com'
 
         if self.attachments:
             self.attach_file(msg)
