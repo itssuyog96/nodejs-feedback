@@ -370,29 +370,19 @@ router.post('/submit', function (req, res, next) {
     var sem=req.body.sem;
     var survey_id = req.body.survey_id;
     var db = req.db;
-    //var regex = new Regex(/rate_\d\d\d\d_\d\d\d/);
-    //var regexO = new Regex(/rate_\d\d\d/);
-    /* Testing
-    for (var key in req.body){
-        if(key.length == 8){
-            var a = key.split('_');
-            var str = "remark_" + a[1];
-            console.log(req.body[str]);
 
-        }
-    }*/
     for (var key in req.body) {
-        if (key.length == 13) {
+        if (key.length > 10) {
             //console.log(key);
             var a = key.split('_');
 
             const collection = db.get('rating');
-            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":req.body[key],"year":req.year},
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":req.body[key],"year":req.year, "prof_id" : a[3]},
                 function (er2,result) {
                     if (er2) throw er2;
                     else {
 
-                        console.log('rating added : '+col_id+' '+dep_id+' '+sem+' '+a[1]+' '+a[2]+' '+req.body[key]+' '+req.year);
+                        console.log('rating added : '+col_id+' '+dep_id+' '+sem+' '+a[1]+' '+a[2]+' '+a[3]+' '+req.body[key]+' '+req.year);
                     }
                 })
 

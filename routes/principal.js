@@ -47,6 +47,25 @@ router.get('/', function(req, res, next) {
 
  });
 
+ router.get('/professorreports', function(req, res, next) {
+
+     if(req.session.login) {
+         if(req.session.passport.user.role == 'principal'){
+             res.render('professorreports', {dash : tiles, menu : menu, user : req.session.passport.user, questions: questions});
+         }
+         else{
+             delete req.session.redirectTo;
+             res.redirect('/login');
+         }
+
+     }
+     else {
+         req.session.redirectTo = '/principal/';
+         res.redirect('/login');
+     }
+
+ });
+
 
  router.get('/settings', function(req, res, next) {
 

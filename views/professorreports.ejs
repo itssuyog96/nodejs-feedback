@@ -69,18 +69,8 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <div class="form-group col-md-6">
-                                            <label class="form-control" for="sem">Select Sem</label>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <select class="form-control" id="sem" name="sem">
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <a style="width:100%;" id="get-subject-btn" class="btn green btn-outline get-subject-btn">GET SUBJECTS</a>
+                                            <a style="width:100%;" id="get-subject-btn" class="btn green btn-outline get-subject-btn">GET PROFESSORS</a>
                                         </div>
                                     </div>
 
@@ -185,34 +175,34 @@
 <% include tpl/footer.ejs %>
 
 
-            <!--[if lt IE 9]>
-            <script src="../../javascripts/global/plugins/respond.min.js"></script>
-            <script src="../../javascripts/global/plugins/excanvas.min.js"></script>
-            <![endif]-->
-            <!-- BEGIN CORE PLUGINS -->
-            <script src="../../javascripts/global/plugins/jquery.min.js" type="text/javascript"></script>
-            <script src="../../javascripts/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-            <script src="../../javascripts/global/plugins/js.cookie.min.js" type="text/javascript"></script>
-            <script src="../../javascripts/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
-            <script src="../../javascripts/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-            <script src="../../javascripts/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-            <script src="../../javascripts/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
-            <!-- END CORE PLUGINS -->
-            <!-- BEGIN THEME GLOBAL SCRIPTS -->
-            <script src="../../javascripts/global/scripts/app.min.js" type="text/javascript"></script>
-            <!-- END THEME GLOBAL SCRIPTS -->
-            <!-- BEGIN THEME LAYOUT SCRIPTS -->
-            <script src="../../javascripts/layouts/layout5/scripts/layout.min.js" type="text/javascript"></script>
+<!--[if lt IE 9]>
+<script src="../../javascripts/global/plugins/respond.min.js"></script>
+<script src="../../javascripts/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+<!-- BEGIN CORE PLUGINS -->
+<script src="../../javascripts/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN THEME GLOBAL SCRIPTS -->
+<script src="../../javascripts/global/scripts/app.min.js" type="text/javascript"></script>
+<!-- END THEME GLOBAL SCRIPTS -->
+<!-- BEGIN THEME LAYOUT SCRIPTS -->
+<script src="../../javascripts/layouts/layout5/scripts/layout.min.js" type="text/javascript"></script>
 
-            <!-- END THEME LAYOUT SCRIPTS -->
-            <script src="../../javascripts/global/scripts/datatable.js" type="text/javascript"></script>
-            <script src="../../javascripts/global/plugins/datatables/datatables.all.min.js" type="text/javascript"></script>
-            <script src="../../javascripts/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-            <!--<script src="../../javascripts/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>-->
+<!-- END THEME LAYOUT SCRIPTS -->
+<script src="../../javascripts/global/scripts/datatable.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/datatables/datatables.all.min.js" type="text/javascript"></script>
+<script src="../../javascripts/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+<!--<script src="../../javascripts/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>-->
 
-            <!--<script src="../../javascripts/pages/scripts/table-datatables-scroller.min.js" type="text/javascript"></script>-->
-            <!--<script src="../../javascripts/pages/scripts/table-datatables-buttons.min.js" type="text/javascript"></script>-->
-            <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<!--<script src="../../javascripts/pages/scripts/table-datatables-scroller.min.js" type="text/javascript"></script>-->
+<!--<script src="../../javascripts/pages/scripts/table-datatables-buttons.min.js" type="text/javascript"></script>-->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 </body>
 <span id="survey_id_span"></span>
@@ -221,7 +211,7 @@
 
 <script>
     var data = <%- JSON.stringify(questions) %>
-    question = new Array();
+        question = new Array();
 
     data.forEach(function(ques){
         question[ques.qid] = ques.question;
@@ -232,19 +222,19 @@
 
 <script>
     $(document).ready(function(){
-       $.ajax({
-           url: '../../ajax/getSurveyList',
-           data: {col_id: 1},
-           method: 'POST',
-           success: function(data){
-               data.forEach(function(d){
-                   $('#survey_id').append('<option value="'+d.semtype+'">'+d.survey_id+'</option>')
-               });
+        $.ajax({
+            url: '../../ajax/getSurveyList',
+            data: {col_id: 1},
+            method: 'POST',
+            success: function(data){
+                data.forEach(function(d){
+                    $('#survey_id').append('<option value="'+d.semtype+'">'+d.survey_id+'</option>')
+                });
 
-               getSemList();
+                $('#survey_id_span').text($('#survey_id option:selected').text());
 
-           }
-       });
+            }
+        });
 
         $.ajax({
             url: '../../ajax/getDeptList',
@@ -261,61 +251,45 @@
             }
         });
 
-        $('#survey_id').on('change', function(){
-            getSemList();
-        })
-
     });
 
     $('.select-survey-div').on('click', '.get-subject-btn', function(e){
         e.preventDefault();
 
         $.ajax({
-            url: '../../ajax/load_sub',
+            url: '../../ajax/load_prof',
             method: 'POST',
-            data: {col_id: 1, dept_id: $('#dept_id').val(), sem: $('#sem').val()},
+            data: {col_id: 1, dept_id: $('#dept_id').val()},
             success: function(data){
                 $('#subject_panel').text('');
                 data.data.forEach(function(d){
                     $('#subject_panel').append('' +
-                        '<div id="div-'+d.sub_id+'" class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 10px;">' +
-                            '<a onclick="javascript:getSurvey('+d.sub_id+', '+d.prof_id+')" align="center" id="anchor-'+d.sub_id+'" class="btn blue btn-outline" style="width: 100%;">'+d.sub_name.toUpperCase()+'</a>' +
+                        '<div id="div-'+d.prof_id+'" class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 10px;">' +
+                        '<a onclick="javascript:getSurvey('+d.prof_id+')" align="center" id="anchor-'+d.prof_id+'" class="btn blue btn-outline" style="width: 100%;">'+d.prof_name.toUpperCase()+'</a>' +
                         '</div>');
                 })
             }
         })
     });
 
-    function getSemList(){
+    $('#survey_id').on('change', function(){
         $('#survey_id_span').text($('#survey_id option:selected').text());
+    })
 
-        var sem = new Array();
-
-        if($('#survey_id').val() == 'odd'){
-            sem = [1, 3, 5, 7];
-        }
-        else if($('#survey_id').val() == 'even'){
-            sem = [2, 4, 6, 8];
-        }
-        $('#sem').text('');
-        for(i in sem){
-            $('#sem').append('<option value="'+sem[i]+'">'+sem[i]+'</option>');
-        }
-    }
 
     var plotted = new Array();
 
-    function getSurvey(sub_id, prof_id){
+    function getSurvey(prof_id){
         for(i in plotted){
-            if(plotted[i] == sub_id){
+            if(plotted[i] == prof_id){
                 return true;
             }
         }
-        console.log(JSON.stringify({sub_id: sub_id, col_id: '<%= user.col_id %>', survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()}));
+        console.log(JSON.stringify({prof_id: prof_id, col_id: '<%= user.col_id %>', survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()}));
         $.ajax({
             url: '../../ajax/getRating',
             method: 'POST',
-            data: {sub_id: sub_id, col_id: '<%= user.col_id %>', survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()},
+            data: {prof_id: prof_id, col_id: '<%= user.col_id %>', survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()},
             success: function(data){
                 console.log(JSON.stringify(data));
                 var x = new Array();
@@ -333,7 +307,7 @@
                     type: 'bar',
                     x: x,
                     y: y,
-                    name: $('#div-'+sub_id+' a').text()}], {
+                    name: $('#div-'+prof_id+' a').text()}], {
                     margin: { t: 0 },
                     xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
                     yaxis: { range: [0,5] },
@@ -344,7 +318,7 @@
                     type: 'line',
                     x: x,
                     y: y,
-                    name: $('#div-'+sub_id+' a').text()}], {
+                    name: $('#div-'+prof_id+' a').text()}], {
                     margin: { t: 0 },
                     xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
                     yaxis: { range: [0,5] },
@@ -355,7 +329,7 @@
                     type: 'pie',
                     values: y,
                     labels: x,
-                    name: $('#div-'+sub_id+' a').text()}], {
+                    name: $('#div-'+prof_id+' a').text()}], {
                     margin: { t: 0 },
                     xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
                     yaxis: {  },
@@ -368,8 +342,8 @@
                 Plotly.relayout(BAR_PLOT, update);
                 $('.bar-plot-div').fadeIn();
 
-                plotted.push(sub_id);
-                $('#anchor-'+sub_id).attr('disabled', 'true');
+                plotted.push(prof_id);
+                $('#anchor-'+prof_id).attr('disabled', 'true');
 
 
             },
