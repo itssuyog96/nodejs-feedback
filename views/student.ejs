@@ -456,7 +456,8 @@
     <script>
         function checkerrors1(){
             for(i in rate1){
-                if(!rate1[1]){
+                if(!rate1[i]){
+                    $('#star-errors').fadeIn();
                     return false;
                 }
             }
@@ -464,7 +465,8 @@
         }
         function checkerrors2(){
             for(i in rate2){
-                if(!rate2[1]){
+                if(!rate2[i]){
+                    $('#star-errors').fadeIn();
                     return false;
                 }
             }
@@ -472,7 +474,8 @@
         }
         function checkerrors3(){
             for(i in rate3){
-                if(!rate3[1]){
+                if(!rate3[i]){
+                    $('#star-errors').fadeIn();
                     return false;
                 }
             }
@@ -480,8 +483,8 @@
         }
         function checkerrors4(){
             for(i in rate4){
-                if(!rate4[1]){
-                    $('#star-erros').fadeIn();
+                if(!rate4[i]){
+                    $('#star-errors').fadeIn();
                     return false;
                 }
             }
@@ -672,7 +675,7 @@
                     }
 
                     var handleTitle = function(tab, navigation, index) {
-                        $('#star-erros').fadeOut();
+                        $('#star-errors').fadeOut();
                         var total = navigation.find('li').length;
                         var current = index + 1;
                         // set wizard title
@@ -722,16 +725,16 @@
 
                             switch(index){
                                 case 1:
-                                    if(!checkerrors1()){ return false; }
+                                    if(!checkerrors1()){ return true; }
                                     break;
                                 case 2:
-                                    if(!checkerrors2()){ return false; }
+                                    if(!checkerrors2()){ return true; }
                                     break;
                                 case 3:
-                                    if(!checkerrors3()){ return false; }
+                                    if(!checkerrors3()){ return true; }
                                     break;
                                 case 4:
-                                    if(!checkerrors4()){ return false; }
+                                    if(!checkerrors4()){ return true; }
                                     break;
                                 default:
                             }
