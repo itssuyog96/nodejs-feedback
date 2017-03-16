@@ -8,7 +8,7 @@ var BearerStrategy = require('passport-http-bearer').Strategy;
 
 var crp = require('../functions/md5');
 var monk = require('monk');
-var db = monk('mongodb://localhost:27017/feed-db');
+var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
 
 module.exports = function(passport) {
 

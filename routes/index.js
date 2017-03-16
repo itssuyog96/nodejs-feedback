@@ -6,7 +6,7 @@ var tiles = require('../dashmeta.json').hod;
 var menu = require('../menu.json').hod;
 googleUrl = new GoogleURL({key:'AIzaSyCGV2e7uvykKEnYr68QFZQyWxC1vWFy9O4'});
 /* GET home page. */
-
+var json2xls = require('json2xls');
 
 router.get('/googleurl',function (req,res,next) {
 
@@ -211,6 +211,22 @@ router.get('/num',function (req,res,next) {
       res.end();
     }
   });
+});
+
+
+router.get('/excel',function (req,res,next) {
+  var db = req.db;
+
+  var que = [];
+  const collection = db.get('sub_report');
+  collection.find({},function (err,data) {
+    data.forEach(function(item){
+      que = item.report;
+    });
+    setTimeout(function(){
+      res.xls('data.xlsx',que);
+    },5000)
+  })
 });
 
 module.exports = router;

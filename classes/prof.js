@@ -2,7 +2,7 @@
  * Created by adikr on 14-09-2016.
  */
 var monk = require('monk');
-var db = monk('mongodb://localhost:27017/feed-db');
+var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
 
 //var db=require('../db-config');
 var Professor=function (info) {
