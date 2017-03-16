@@ -6,7 +6,6 @@ var tiles = require('../dashmeta.json').hod;
 var menu = require('../menu.json').hod;
 googleUrl = new GoogleURL({key:'AIzaSyCGV2e7uvykKEnYr68QFZQyWxC1vWFy9O4'});
 /* GET home page. */
-var json2xls = require('json2xls');
 
 router.get('/googleurl',function (req,res,next) {
 

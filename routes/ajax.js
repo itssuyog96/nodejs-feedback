@@ -16,6 +16,7 @@ const crp = require('../functions/md5');
 const secret = 'Aditya';
 var spawn = require('child_process').spawn;
 var sms = require('../functions/py_sms');
+const nodemailer = require('nodemailer');
 //var Regex = require('regex');
 
 /* GET home page. */
@@ -777,9 +778,19 @@ router.post('/activeSurvey', function (req, res, next) {
 });
 
 router.post('/sendAll', function (req, res, next) {
-    console.log('Inside SendAll');
     var db = req.db;
     var collection = db.get('student');
+    var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        /*port: 25,
+        tls:{
+            rejectUnauthorized: false
+        },*/
+        auth: {
+            user: 'thewirecoy@gmail.com',
+            pass: 'Success@2020'
+        }
+    });
     if(req.body.length == 1){
 
         collection.find({"_id": req.body['id[]']},function(e,docs){
@@ -787,35 +798,48 @@ router.post('/sendAll', function (req, res, next) {
             if (e) throw e;
             else {
                 //console.log(JSON.stringify(docs));
-                console.log(docs[0].name);
-                generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id,req.body.surveyid);
-                res.writeHead(200,{'Content-Type': 'application/json'});
-                res.write(docs[0].status);
-                res.end();
-
+                /*var i=1;
+                setInterval(function () {
+                    if(i<=5){
+                        generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id,req.body.surveyid, transporter);
+                        i++;
+                    }
+                    else {
+                        clearInterval();
+                    }
+                }, 1000);*/
+                generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id,req.body.surveyid, transporter);
+                setTimeout(function () {
+                    res.writeHead(200, {'Content-Type': 'application/json'});
+                    res.write(docs[0].status);
+                    res.end();
+                }, 3000);
             }
 
         });
 
     }else{
-
-        for(var i = 0;i< req.body.length;i++)
-        {
-            collection.find({"_id": req.body['id[]'][i]},function(e,docs){
-
-                if (e) throw e;
-                else {
-                    //console.log(JSON.stringify(docs));
-                    console.log(docs[0].name);
-                    generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id);
-                    res.writeHead(200, 'Sent Successfully!');
-                    res.end();
-
-                }
-
-            });
-
-        }
+        var i=0;
+        setInterval(function () {
+            if(i<5){
+                console.log(i);
+                collection.find({"_id": req.body['id[]'][i]},function(e,docs){
+                    if (e) throw e;
+                    else {
+                        //console.log(JSON.stringify(docs));
+                        console.log(docs[0].name);
+                        generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id,req.body.surveyid, transporter);
+                        i++;
+                    }
+                });
+            }else {
+                clearInterval();
+            }
+        }, 1000);
+        setTimeout(function () {
+            res.writeHead(200, 'Sent Successfully!');
+            res.end();
+        }, 8000);
     }
 
 });

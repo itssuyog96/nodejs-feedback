@@ -32,10 +32,10 @@ class MailerApp:
             self.attach_file(msg)
 
         msg.attach(MIMEText(self.htmlbody, 'html'))
-        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server = smtplib.SMTP('mail.pskbusinessworld.com', 25)
         server.starttls()
-        server.login(self.from_addr, self.sender_pass)
-        server.sendmail(self.from_addr, self.to_addr, msg.as_string())
+        server.login("test@pskbusinessworld.com", "Success@2020")
+        server.sendmail("test@pskbusinessworld.com", self.to_addr, msg.as_string())
         print("Email sent successfully to {name}!".format(name=self.stud_name))
         sys.stdout.flush()
         server.quit()
