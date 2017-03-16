@@ -443,8 +443,12 @@ router.post('/submit', function (req, res, next) {
         }
         });
         */
-    res.writeHead(200, 'rating done!!');
-    res.end();
+    setTimeout(function() {
+            res.writeHead(200, 'rating done!!');
+            res.end();
+        }
+    ,5000)
+
 
 });
 

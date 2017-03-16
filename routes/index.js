@@ -62,7 +62,9 @@ router.get('/sub_rep',function (req ,res,next) {
   var sem = "6";
   var col_id = "1";
   var dept_id = "1001";
-  var survey_id = "survey-2017-1-even";
+  const survey_id = "survey-2017-1-even";
+  const collectionc = db.get(survey_id+'_sub_report');
+  collectionc.drop();
   const collection = db.get('subject');
   collection.find({"sem":sem,"dept_id":dept_id,"col_id": col_id},function (err,data) {
     if (err) {
@@ -87,8 +89,9 @@ router.get('/sub_rep',function (req ,res,next) {
             res.end();
           }
           else {
-            const collectionc = db.get('sub_report');
-            collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"sem":sem,"sub_id":item.sub_id,"sub_name": item.sub_name,"report":d},function (e,done) {
+
+
+            collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"sem":sem,"sub_id":item.sub_id,"sub_name": item.sub_name,"prof_id":item.prof_id,"report":d},function (e,done) {
               console.log('done');
             })
           }
