@@ -11,7 +11,6 @@ var bodyParser = require('body-parser');
 var session=require('express-session');
 require('./config/passport')(passport);
 
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var blank = require('./routes/blank');
@@ -31,8 +30,7 @@ var generateurl = require('./routes/generateurl');
 
 var mongo = require('mongodb');
 var monk = require('monk');
-//var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
-  var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
+var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
 
 //db connector
 app.use(function(req,res,next){

@@ -66,6 +66,24 @@ router.get('/', function(req, res, next) {
 
  });
 
+ router.get('/excelreports', function(req, res, next) {
+
+     if(req.session.login) {
+         if(req.session.passport.user.role == 'principal'){
+             res.render('subject_excel', {dash : tiles, menu : menu, user : req.session.passport.user});
+         }
+         else{
+             delete req.session.redirectTo;
+             res.redirect('/login');
+         }
+
+     }
+     else {
+         req.session.redirectTo = '/principal/excelreports';
+         res.redirect('/login');
+     }
+
+ });
 
  router.get('/settings', function(req, res, next) {
 

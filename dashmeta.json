@@ -7,17 +7,17 @@
   },
 
   "feeder":{
-    "tiles" : ["PROFESSORS", "SUBJECTS", "QUESTIONS", "SURVEY", "REPORTS", "SETTINGS"],
-    "fa_icons" : ["fa-user", "fa-book", "fa-question", "fa-check-square-o", "fa-line-chart", "fa-cogs"],
-    "bg_style" : ["bg-blue", "bg-red", "bg-green-sharp", "bg-yellow", "bg-green", "bg-dark"],
-    "url" : ["../../../feed_analyzer/professor", "../../../feed_analyzer/subjects", "../../../feed_analyzer/questions", "../../../feed_analyzer/survey", "../../../feed_analyzer/reports", "../../../feed_analyzer/settings"]
+    "tiles" : ["PROFESSORS", "SUBJECTS", "SUBJECT - PROFESSOR ASSIGN", "QUESTIONS", "SURVEY", "REPORTS", "SETTINGS"],
+    "fa_icons" : ["fa-user", "fa-book", "fa-question", "fa-exchange", "fa-check-square-o", "fa-line-chart", "fa-cogs"],
+    "bg_style" : ["bg-blue", "bg-red", "bg-green-sharp", "bg-light", "bg-yellow", "bg-green", "bg-dark"],
+    "url" : ["../../../feed_analyzer/professor", "../../../feed_analyzer/subjects", "../../../feed_analyzer/prof_assign", "../../../feed_analyzer/questions", "../../../feed_analyzer/survey", "../../../feed_analyzer/reports", "../../../feed_analyzer/settings"]
   },
 
   "principal":{
-    "tiles" : ["DEPARTMENT REPORTS", "PROFESSOR REPORTS", "SUBJECT REPORTS", "SETTINGS"],
-    "fa_icons" : ["fa-user", "fa-book", "fa-question", "fa-check-square-o"],
-    "bg_style" : ["bg-blue", "bg-red", "bg-green-sharp", "bg-yellow"],
-    "url" : ["../../../principal/departmentreports", "../../../principal/professorreports", "../../../principal/subjectreports", "../../../principal/settings"]
+    "tiles" : ["DEPARTMENT REPORTS", "PROFESSOR REPORTS", "SUBJECT REPORTS", "EXCEL REPORTS", "SETTINGS"],
+    "fa_icons" : ["fa-user", "fa-book", "fa-question", "fa-file-excel-o", "fa-check-square-o"],
+    "bg_style" : ["bg-blue", "bg-red", "bg-green-sharp", "bg-green", "bg-yellow"],
+    "url" : ["../../../principal/departmentreports", "../../../principal/professorreports", "../../../principal/subjectreports", "../../../principal/excelreports", "../../../principal/settings"]
   },
 
   "hod":{

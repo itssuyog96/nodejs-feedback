@@ -116,6 +116,35 @@ app.post('/', function(req, res) {
 });
 
 
+app.post('/manual', function(req, res) {
+
+    var name, roll_no, email_id, contact, x, role, nameH="N", password, passwordH1="M", passwordH2="T", uid;
+
+    var db = req.db;
+    var collection = db.get('student');
+
+    name = req.body.name;
+
+    password = generate.generatePassword();
+    password = crp.crypto(password);
+
+    roll_no = req.body.roll_no;
+    email_id = req.body.email_id;
+    contact = req.body.contact;
+
+
+    collection.insert({"col_id":req.user.col_id,"dep_id":req.user.dep_id,"roll_no": roll_no,"name": name,"sem":req.body.sem_dd,"contact":contact,"email_id":email_id, "password":password, "status":"0","role":"student","survey_id":""},function(e,docs){
+        var d = JSON.stringify(docs);
+        if (e) throw e;
+        else {
+            console.log('student updated');
+            res.end();
+        }
+
+    });
+
+});
+
 module.exports = app;
 
 //TODO: upload.ejs -> button placement

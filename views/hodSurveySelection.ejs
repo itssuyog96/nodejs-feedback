@@ -92,6 +92,11 @@
                                                 <th> STATUS </th>
                                                 <th> GENERATE & SEND </th>
                                             </tr>
+                                            <tr>
+                                                <div class="addStudent" style="padding-bottom: 30px; display:none;">
+                                                    <button class="btn btn-success btn-add-student" data-toggle="modal" data-target="#add_student">ADD STUDENT</button>
+                                                </div>
+                                            </tr>
                                             </thead>
                                             <tbody id="datatable_students_body">
 
@@ -217,7 +222,7 @@
 
         });
 
-        $("#sem_sel").change(function () {
+        getStudents = function(){
             $("#sent_message").text('');
             ids.length = 0;
             console.log("empty: " + ids);
@@ -236,42 +241,47 @@
                         //window.alert(item);
                         if(item.status == "0"){
                             $("#datatable_students").append(
-                            '<tr>'+
-                            '<td style="text-align: center">' + (++i) + '</td>' +
-                            '<td style="text-align: center">' + item.name + '</td>' +
-                            '<td align="center"> <button style="width:50%" type="button" class="btn red-mint btn-outline sbold uppercase no-click">URL not sent</button> '+'</td>' +
-                            '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_0" onclick="send_0_1(this)">' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
-                            '</tr>'
+                                '<tr>'+
+                                '<td style="text-align: center">' + (++i) + '</td>' +
+                                '<td style="text-align: center">' + item.name + '</td>' +
+                                '<td align="center"> <button style="width:50%" type="button" class="btn red-mint btn-outline sbold uppercase no-click">URL not sent</button> '+'</td>' +
+                                '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_0" onclick="send_0_1(this)">' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
+                                '</tr>'
                             );
                         }
                         else if(item.status == "1"){
-                             $("#datatable_students").append(
-                             '<tr>'+
-                             '<td style="text-align: center">' + (++i) + '</td>' +
-                             '<td style="text-align: center">' + item.name + '</td>' +
-                             '<td align="center"><button style="width:50%" type="button" class="btn yellow-mint btn-outline sbold uppercase no-click">URL sent</button>' +  '</td>' +
-                             '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_1" onclick="send_0_1(this)">' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
-                             '</tr>'
-                             );
-                         }
+                            $("#datatable_students").append(
+                                '<tr>'+
+                                '<td style="text-align: center">' + (++i) + '</td>' +
+                                '<td style="text-align: center">' + item.name + '</td>' +
+                                '<td align="center"><button style="width:50%" type="button" class="btn yellow-mint btn-outline sbold uppercase no-click">URL sent</button>' +  '</td>' +
+                                '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_1" onclick="send_0_1(this)">' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
+                                '</tr>'
+                            );
+                        }
                         else if(item.status == "2"){
-                             $("#datatable_students").append(
-                             '<tr>'+
-                             '<td style="text-align: center">' + (++i) + '</td>' +
-                             '<td style="text-align: center">' + item.name + '</td>' +
-                             '<td align="center"><button style="width:50%" type="button" class="btn green-haze btn-outline sbold uppercase no-click">Feedback done</button>'  + '</td>' +
-                             '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_2" disabled>' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
-                             '</tr>'
-                             );
+                            $("#datatable_students").append(
+                                '<tr>'+
+                                '<td style="text-align: center">' + (++i) + '</td>' +
+                                '<td style="text-align: center">' + item.name + '</td>' +
+                                '<td align="center"><button style="width:50%" type="button" class="btn green-haze btn-outline sbold uppercase no-click">Feedback done</button>'  + '</td>' +
+                                '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_2" disabled>' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
+                                '</tr>'
+                            );
                         }
                         //console.log("ids: " + ids[2]);
                         //console.log('Success');
+                        $('.addStudent').fadeIn();
                     })
                 },
                 error: function(data){
                     console.log("Error occured while displaying table! " + data.responseText);
                 }
             });
+        }
+
+        $("#sem_sel").change(function () {
+            getStudents();
         });
         $("#survey_sel").change(function () {
             surveyid = $("#survey_sel").val();
@@ -340,4 +350,86 @@
          });*/
 
     </script>
+
+<!-- Add add student modal -->
+<div class="modal fade div_add_student" id="add_student" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Add Student</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form-add-student">
+                    <input id="sem_dd" type="hidden" name="sem_dd" value="0" />
+                    <div class="col-md-12 form-group">
+                        <div class="form-group col-md-6">
+                            <label for="roll_no">Roll No :</label>
+                            </div>
+                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" name="roll_no" id="roll_no" required />
+                            </div>
+                        </div>
+                    <div class="col-md-12">
+                        <div class="form-group col-md-6">
+                            <label for="name">Student Name :</label>
+                            </div>
+                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" name="name" id="name" required />
+                            </div>
+                        </div>
+                    <div class="col-md-12">
+                        <div class="form-group col-md-6">
+                            <label for="email_id">Student E-mail :</label>
+                            </div>
+                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" name="email_id" id="email_id" required />
+                            </div>
+                        </div>
+                    <div class="col-md-12">
+                        <div class="form-group col-md-6">
+                            <label for="name">Student Contact :</label>
+                            </div>
+                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" name="contact" id="contact" required /q>
+                            </div>
+                        </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark btn-outline close-add-student" data-dismiss="modal">Close</button>
+                <button type="button" class="btn green add-student-btn">Save changes</button>
+                <span id="error-msg" style="color: red;"></span>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<script>
+    $('.modal-footer').on('click', '.add-student-btn', function(e){
+        e.preventDefault();
+        $('#sem_dd').val($("#sem_sel").val());
+
+        $.ajax({
+            url: '../../upload_file/manual',
+            method: 'POST',
+            data : $('form#form-add-student').serialize(),
+            success: function(data){
+                //$('form#form-add-student')[0].reset();
+                $('.close-add-student').click();
+                getStudents();
+            },
+            error: function(error){
+                $('#error-msg').text(error.statusText);
+            }
+        })
+        console.log();
+
+    })
+</script>
+
 </html>

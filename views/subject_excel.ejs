@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<% include tpl/header.ejs %>
+
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
+<!-- BEGIN HEADER -->
+
+<% include tpl/menu.ejs %>
+
+<!-- END HEADER -->
+
+
+<!-- BEGIN HEADER & CONTENT DIVIDER -->
+<div class="clearfix"> </div>
+<!-- END HEADER & CONTENT DIVIDER -->
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <% include tpl/sidebar.ejs %>
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+
+            <!--h3 class="page-title"> Blank Page Layout
+                <small>blank page layout</small>        To be resolved
+            </h3-->
+
+            <!-- END PAGE HEADER-->
+
+
+            <!--START EDITING FROM HERE-->
+
+            <div class="note note-info">
+                <p> Before downloading reports make sure that they are generated. Reports can be generated from HOD's login.</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet light ">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="icon-social-dribbble font-green hide"></i>
+                                <span class="caption-subject font-dark bold uppercase">Survey Details</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div>
+                                <div class="tiles tiles-subject">
+
+                                    <a href="#">
+                                        <div class="tile bg-red">
+                                            <div class="tile-body">
+                                                <i class="fa fa-database"></i>
+                                            </div>
+                                            <div class="tile-object">
+                                                <div class="name"> SUBJECT WISE </div>
+                                                <div class="number"> # </div>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--STOP EDITING HERE-->
+
+        </div>
+        <!-- END CONTENT BODY -->
+    </div>
+    <!-- END CONTENT -->
+    <% include tpl/quicksidebar.ejs %>
+</div>
+
+<!-- END CONTAINER -->
+
+<% include tpl/footer.ejs %>
+</body>
+
+<script>
+    $('.portlet-body').on('click', '.tiles-subject', function(){
+        $.ajax({
+            url: '../../../ajax/get_sub_reports_excel',
+            method: 'POST',
+            data: {col_id: 1, dept_id: '1001', sem: 6, survey_id: 'survey-2017-1-even'},
+            success: function(data){
+                console.log(data);
+            },
+            error: function(error){
+                console.log(error.statusText);
+            }
+        })
+    })
+</script>
+
+</html>

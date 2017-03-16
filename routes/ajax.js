@@ -393,7 +393,7 @@ router.post('/submit', function (req, res, next) {
             var b = key.split('_');
             var str = "remark_"+ b[1];
             const collectionb = db.get('rating');
-            collectionb.insert({"col_id":col_id,"dept_id":dep_id,"sem":sem,"sub_id": null ,"q_id":b[1],"v_rating":req.body[key],"remark":req.body[str],"year":req.year},
+            collectionb.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id": null ,"q_id":b[1],"v_rating":req.body[key],"remark":req.body[str],"year":req.year},
                 function (er,result) {
                     if (er) throw er;
                     else {
@@ -967,7 +967,7 @@ router.get('/get_sub_reports',function (req,res) {
     var sem = req.query['sem'];
     console.log(survey_id, col_id, dept_id, sem);
 
-    const collection = db.get('sub_report');
+    const collection = db.get(survey_id+'_sub_report');
     collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"sem":sem},function (e,done) {
         if(e) {
             show(e);
@@ -984,6 +984,27 @@ router.get('/get_sub_reports',function (req,res) {
 
 
 });
+
+router.post('/get_sub_reports_excel',function (req,res) {
+    var db = req.db;
+    var survey_id = req.body.survey_id;
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+    var sem = req.body.sem;
+    console.log(survey_id, col_id, dept_id, sem);
+
+    questions = require('../questions.json');
+
+    var proc = spawn('python3',["python-files/subject_excel.py", survey_id, col_id, dept_id, sem, questions]);
+    console.log("Spawned!!!");
+
+    proc.stdout.on('data', function (chunk){
+        var textChunk = chunk.toString();
+        console.log(textChunk)
+    });
+});
+
+
 
 
 
