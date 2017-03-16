@@ -931,6 +931,32 @@ router.post('/prof_rep',function (req ,res,next) {
 
 });
 
+router.get('/get_sub_reports',function (req,res) {
+    var db = req.db;
+    var survey_id = req.query['survey_id'];
+    var col_id = req.query['col_id'];
+    var dept_id = req.query['dept_id'];
+    var sem = req.query['sem'];
+    console.log(survey_id, col_id, dept_id, sem);
+
+    const collection = db.get('sub_report');
+    collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"sem":sem},function (e,done) {
+        if(e) {
+            show(e);
+            res.end();
+        }
+        else {
+            console.log(JSON.stringify(done))
+            res.writeHead(200,'Context-Type','application/json')
+            res.end(JSON.stringify(done));
+        }
+
+    })
+
+
+
+});
+
 
 
 module.exports = router;
