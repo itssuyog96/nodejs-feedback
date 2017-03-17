@@ -45,7 +45,7 @@ module.exports.generateSend = function (contact,email_id,username,key,id,survey_
     //console.log(contact+' '+username+' '+nameH+' '+key);
 
     var collection = db.get("student");
-    console.log("----------------------------" + survey_id);
+    //console.log("----------------------------" + survey_id);
     collection.update({"_id": id},{"$set":{"key":HToken,"survey_id":survey_id,"status":"1"}},function (e,docs){
         var d = JSON.stringify(docs);
         if (e) throw e;
@@ -61,9 +61,9 @@ module.exports.generateSend = function (contact,email_id,username,key,id,survey_
     //var proc = spawn('python',["python-files/SMSMessage.py", contact, username, nameH, key]);
 
     googleUrl.shorten( url, function(err, shortUrl ) {
-        console.log(shortUrl);
-        console.log(err);
-        console.log(url);
+        //console.log(shortUrl);
+        //console.log(err);
+        //console.log(url);
         /*var proc = spawn('python',["python-files/mailer_v3.py", email_id, username,url]);
         console.log("Spawned!!!");
 

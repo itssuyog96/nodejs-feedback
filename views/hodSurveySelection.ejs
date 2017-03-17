@@ -333,6 +333,23 @@
             });
         }
 
+        window.onbeforeunload = function () {
+            localStorage.setItem(survey, $("#survey_sel").val());
+            localStorage.setItem(sem, $("#sem_sel").val());
+        }
+
+        window.onload = function () {
+            var survey = localStorage.getItem(survey);
+            var sem = localStorage.getItem(sem);
+
+            if(survey!=null){
+                $("#survey_sel").val(survey);
+                if(sem!=null){
+                    $("#sem_sel").val(sem);
+                }
+            }
+        }
+
         /*router.post('/sendAll', function (req, res) {
          var i;
          if(req.body.length == 1){
@@ -391,7 +408,7 @@
                             <label for="name">Student Contact :</label>
                             </div>
                         <div class="form-group col-md-6">
-                            <input type="text" class="form-control" name="contact" id="contact" required /q>
+                            <input type="text" class="form-control" name="contact" id="contact" required />
                             </div>
                         </div>
 
