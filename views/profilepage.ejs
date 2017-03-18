@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<% include tpl/header.ejs %>
+
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
+<!-- BEGIN HEADER -->
+
+<% include tpl/menu.ejs %>
+
+<!-- END HEADER -->
+
+
+<!-- BEGIN HEADER & CONTENT DIVIDER -->
+<div class="clearfix"> </div>
+<!-- END HEADER & CONTENT DIVIDER -->
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <% include tpl/sidebar.ejs %>
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+
+            <!--h3 class="page-title"> Blank Page Layout
+                <small>blank page layout</small>        To be resolved
+            </h3-->
+
+            <!-- END PAGE HEADER-->
+
+
+            <!--START EDITING FROM HERE-->
+
+            <div>
+                <div class="jumbotron" style="background: transparent" align="center">
+                    <!--<h1>Welcome, XYZ (HOD) !</h1>-->
+                    <h1>Profile page</h1>
+                    <hr>
+                </div>
+            </div>
+            <div>
+                <div class="col-md-6" style="background-color: #d0d1cc">
+                    <h3><b>Name:</b> <%= name %></h3>
+                    <br>
+                    <h3><b>Role:</b> <%= role %></h3>
+                    <br>
+                    <h3><b>Email ID:</b> <%= email %></h3>
+                    <br>
+                    <h3><b>Contact:</b> <%= contact %></h3>
+                </div>
+                <div class="col-md-1">
+                    <div style="border-left:2px solid #000;height:280px"></div>
+                </div>
+                <div class="col-md-5">
+                    <div style="margin-top: 8%">
+                        <button type="button" class="btn btn-primary btn-lg btn-block" id="change_email">Change Email ID</button>
+                        <br><br>
+                        <button type="button" class="btn btn-primary btn-lg btn-block" id="change_contact">Change Contact</button>
+                        <br><br>
+                        <div class="alert alert-info">
+                            <strong>Info!</strong> Go to setting to change your password
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--STOP EDITING HERE-->
+
+        </div>
+        <!-- END CONTENT BODY -->
+    </div>
+    <!-- END CONTENT -->
+    <% include tpl/quicksidebar.ejs %>
+</div>
+
+<!-- END CONTAINER -->
+
+<% include tpl/footer.ejs %>
+</body>
+<script type="text/javascript">
+    $("#change_email").click(function () {
+        
+    })
+    
+    $("#change_contact").click(function () {
+        
+    })
+</script>
+
+</html>

@@ -377,7 +377,7 @@ router.post('/submit', function (req, res, next) {
             //console.log(key);
             var a = key.split('_');
 
-            const collection = db.get('rating');
+            const collection = db.get('test_rating');
             collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":req.body[key],"year":req.year, "prof_id" : a[3]},
                 function (er2,result) {
                     if (er2) throw er2;
@@ -392,7 +392,7 @@ router.post('/submit', function (req, res, next) {
             //console.log(key);
             var b = key.split('_');
             var str = "remark_"+ b[1];
-            const collectionb = db.get('rating');
+            const collectionb = db.get('test_rating');
             collectionb.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id": null ,"q_id":b[1],"v_rating":req.body[key],"remark":req.body[str],"year":req.year},
                 function (er,result) {
                     if (er) throw er;
@@ -448,8 +448,6 @@ router.post('/submit', function (req, res, next) {
             res.end();
         }
     ,5000)
-
-
 });
 
 router.post('/updateSub', function (req, res, next) {
@@ -821,9 +819,7 @@ router.post('/sendAll', function (req, res, next) {
                     res.end();
                 }, 2000);
             }
-
         });
-
     }else{
         var i;
         /*setInterval(function () {
@@ -870,7 +866,6 @@ router.post('/sendAll', function (req, res, next) {
             res.end();
         }, (leng+5)*1000);
     }
-
 });
 
 router.post('/done', function (req, res, next) {
@@ -884,7 +879,6 @@ router.post('/done', function (req, res, next) {
             res.writeHead(200,'done');
             res.end();
         }
-
     });
 });
 
@@ -927,9 +921,6 @@ router.post('/sub_rep',function (req ,res,next) {
             });
             setTimeout(function(){res.end();},10000);
         }
-
-
-
     })
 
 });

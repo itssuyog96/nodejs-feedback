@@ -44,7 +44,7 @@
   "hod": {
     "parent" : [
       {"id" : 1, "name" : "Dashboard", "url" : "../../../headofdepartment", "icon" : "icon-home"},
-      {"id" : 2, "name" : "Upload", "url" : "../../../headofdepartment/upload", "icon" : "icon-upload"},
+      {"id" : 2, "name" : "Upload", "url" : "../../../headofdepartment/upload", "icon" : "fa fa-upload"},
       {"id" : 3, "name" : "Reports", "url" : "../../../headofdepartment/reports", "icon" : "icon-bar-chart"},
       {"id" : 4, "name" : "Settings", "url" : "../../../headofdepartment/settings", "icon" : "icon-settings"}
     ],

@@ -45,7 +45,25 @@ router.get('/hodsurvey', function(req, res, next) {
         res.redirect('/login');
     }
 });
+ //--------------------------------------------------------------------
+router.get('/profile', function (req, res) {
+    if(req.session.login) {
+        if(req.session.passport.user.role == 'hod'){
+            res.render('profilepage', {dash : tiles, menu : menu, user : req.session.passport.user, name: "XYZ", role: "HOD", email: "xyz@gmail.com", contact: "1234567890"});
 
+        }
+        else{
+            delete req.session.redirectTo;
+            res.redirect('/login');
+        }
+
+    }
+    else {
+        req.session.redirectTo = '/headofdepartment/';
+        res.redirect('/login');
+    }
+});
+//----------------------------------------------------------------------
 router.get('/upload', function(req, res, next) {
 
     if(req.session.login) {

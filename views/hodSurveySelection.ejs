@@ -284,6 +284,10 @@
             getStudents();
         });
         $("#survey_sel").change(function () {
+            survey_sel_change();
+        });
+
+        function survey_sel_change() {
             surveyid = $("#survey_sel").val();
             console.log(surveyid);
             ids.length = 0;
@@ -300,12 +304,12 @@
                     $("#sem_sel").append($('<option value="'+ i +'">' + i + '</option>'));
                 }
             }
-            else {
+            else if(type == "odd") {
                 for(i=1; i<=8; i+=2){
                     $("#sem_sel").append($('<option value="'+ i +'">' + i + '</option>'));
                 }
             }
-        });
+        }
 
         function send_0_1(dom) {
             $("#sent_message").text('');
@@ -325,6 +329,9 @@
                 success: function () {
                     $("#sent_message").text('');
                     $("#sent_message").append('URL sent to Sr No.' + id);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 500);
                 },
                 error: function () {
                     $("#sent_message").text('');
@@ -334,20 +341,37 @@
         }
 
         window.onbeforeunload = function () {
-            localStorage.setItem(survey, $("#survey_sel").val());
-            localStorage.setItem(sem, $("#sem_sel").val());
+            localStorage.setItem("survey", $("#survey_sel").val());
+            localStorage.setItem("sem", $("#sem_sel").val());
+            localStorage.setItem("message", $("#sent_message").text());
         }
 
         window.onload = function () {
-            var survey = localStorage.getItem(survey);
-            var sem = localStorage.getItem(sem);
+            var survey = localStorage.getItem("survey");
+            var sem = localStorage.getItem("sem");
+            var message = localStorage.getItem("message");
 
-            if(survey!=null){
-                $("#survey_sel").val(survey);
-                if(sem!=null){
-                    $("#sem_sel").val(sem);
+            console.log(survey);
+            console.log(sem);
+            console.log(message);
+
+            localStorage.clear();
+
+            setTimeout(function () {
+                if(survey!=null){
+                    $("#survey_sel").val(survey);
+                    setTimeout(function () {
+                        survey_sel_change();
+                        setTimeout(function () {
+                            if(sem!=null){
+                                $("#sem_sel").val(sem);
+                                getStudents();
+                                $("#sent_message").text(message);
+                            }
+                        }, 1500);
+                    }, 1500);
                 }
-            }
+            }, 1500);
         }
 
         /*router.post('/sendAll', function (req, res) {
