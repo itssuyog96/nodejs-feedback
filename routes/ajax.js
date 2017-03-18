@@ -1036,7 +1036,118 @@ router.post('/deleteuser', function(req, res){
 
         res.end()
     })
-})
+});
+
+
+////////////////////////////////////////////// LAB OPERATIONS /////////////////////////////////////////////////////////
+
+router.post('/addlab',function (req,res) {
+    var db = req.db;
+    const collection = db.get('labs');
+
+    collection.insert(req.body,function(err,data) {
+        if(err){
+            show(err);
+            res.end();
+        }
+        else {
+            console.log('lab Added');
+            res.writeHead(200,'lab Added');
+            res.end();
+        }
+    });
+});
+
+router.post('/getlabs',function (req,res) {
+    var db = req.db;
+    const collection = db.get('labs');
+
+    collection.find(req.body,function(err,data) {
+        if(err){
+            show(err);
+            res.end();
+        }
+        else {
+            console.log('lab Added');
+            res.writeHead(200,'Content-Type','application/json');
+            res.end(JSON.stringify(data));
+        }
+    });
+});
+
+router.post('/getlab',function (req,res) {
+    var db = req.db;
+    const collection = db.get('labs');
+    //const collections = db.get('subjects');
+
+    collection.find(req.body,function(err,data) {
+        if(err){
+            show(err);
+            res.end();
+        }
+        else {
+            console.log('lab Added');
+            res.writeHead(200,'Content-Type','application/json');
+            res.end(JSON.stringify(data[0]));
+        }
+    });
+});
+
+
+router.post('/fetchlabs',function (req,res) {
+
+    var db = req.db;
+    const collection = db.get('subject');
+    collection.find({"col_id":req.body.col_id,"dept_id":req.body.dept_id,"sub_id":req.body.sub_id},function(e,docs){
+
+        if (e) throw e;
+        else {
+            if(docs[0].lab_id) {
+                const collectionb = db.get('labs');
+                collectionb.find({"lab_id":docs[0].lab_id},function (er,doc1) {
+                    if (er) throw er;
+                    else {
+                        var pass = {
+                            id  : docs[0].lab_id,
+                            name: doc1[0].lab_name
+                        };
+                        res.writeHead(200, {'Content-Type': 'application/json'});
+                        res.write(JSON.stringify(pass));
+                        //res.writeHead(doc1[0].prof_name); just for name
+                        res.end();
+                    }
+
+                });
+            }
+            else {
+                res.write("NA");
+                res.end();
+            }
+        }
+
+    });
+
+})// preassign
+
+router.post('/updatesublab',function(req,res){
+
+    var db = req.db;
+    const collection = db.get('subject');
+
+    collection.update({"col_id":req.body.col_id,"dept_id":req.body.dept_id,"sub_id":req.body.sub_id},{"$set":{"lab_id":req.body.prof_id}},function(e,data) {
+        if (e) throw e;
+        else {
+            console.log('subject updated');
+            res.writeHead(200,'subject updated');
+            res.end();
+        }
+    })
+
+}); // update lab
+
+
+
+
 
 
 
