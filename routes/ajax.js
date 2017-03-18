@@ -782,6 +782,7 @@ router.post('/activeSurvey', function (req, res, next) {
 });
 
 router.post('/sendAll', function (req, res, next) {
+    var leng = parseInt(req.body.length, 10);
     var db = req.db;
     var collection = db.get('student');
     var transporter = nodemailer.createTransport({
@@ -795,6 +796,7 @@ router.post('/sendAll', function (req, res, next) {
             pass: 'Success@2020'
         }
     });
+    console.log(leng);
     if(req.body.length == 1){
 
         collection.find({"_id": req.body['id[]']},function(e,docs){
@@ -817,33 +819,56 @@ router.post('/sendAll', function (req, res, next) {
                     res.writeHead(200, {'Content-Type': 'application/json'});
                     res.write(docs[0].status);
                     res.end();
-                }, 3000);
+                }, 2000);
             }
 
         });
 
     }else{
-        var i=0;
-        setInterval(function () {
-            if(i<5){
-                console.log(i);
+        var i;
+        /*setInterval(function () {
+            console.log("i : " + i);
+            if(i < leng){
                 collection.find({"_id": req.body['id[]'][i]},function(e,docs){
                     if (e) throw e;
                     else {
                         //console.log(JSON.stringify(docs));
                         console.log(docs[0].name);
                         generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id,req.body.surveyid, transporter);
-                        i++;
                     }
                 });
+                i++;
             }else {
+                console.log("clear interval");
                 clearInterval();
             }
         }, 1000);
         setTimeout(function () {
+            console.log("timeout");
             res.writeHead(200, 'Sent Successfully!');
             res.end();
-        }, 8000);
+        }, 15000);*/
+
+        for(i=0; i<leng; i++){
+            (function (a) {
+                console.log(a);
+                setTimeout(function () {
+                    collection.find({"_id": req.body['id[]'][a]},function(e,docs){
+                        if (e) throw e;
+                        else {
+                            //console.log(JSON.stringify(docs));
+                            generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id,req.body.surveyid, transporter);
+                        }
+                    });
+                }, 1000);
+            })(i)
+        }
+        console.log("Timeout : " + (leng+1)*1000);
+        setTimeout(function () {
+            console.log("timeout");
+            res.writeHead(200, 'Sent Successfully!');
+            res.end();
+        }, (leng+5)*1000);
     }
 
 });
@@ -986,15 +1011,16 @@ router.get('/get_sub_reports',function (req,res) {
 });
 
 router.post('/get_sub_reports_excel',function (req,res) {
-    var db = req.db;
+    //var db = req.db;
     var survey_id = req.body.survey_id;
     var col_id = req.body.col_id;
     var dept_id = req.body.dept_id;
     var sem = req.body.sem;
     console.log(survey_id, col_id, dept_id, sem);
 
+    //questions = require('../questions.json');
 
-    var proc = spawn('python3',["python-files/subject_excel.py", survey_id, col_id, dept_id, sem]);
+    var proc = spawn('python',["python-files/subject_excel.py", survey_id, col_id, dept_id, sem]);
     console.log("Spawned!!!");
 
     proc.stdout.on('data', function (chunk){
