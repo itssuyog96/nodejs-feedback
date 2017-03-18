@@ -54,6 +54,21 @@
         "sem"
       ]
     },
+    "lab": {
+      "columns": [
+        "SR. NO.",
+        "DEPARTMENT ID",
+        "LAB ID",
+        "LAB NAME",
+        "OPTIONS"
+      ],
+      "name": "table_lab",
+      "column_data": [
+        "dept_id",
+        "lab_id",
+        "lab_name"
+      ]
+    },
     "Survey": {
       "columns": [
         "SURVEY_ID",

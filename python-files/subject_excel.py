@@ -22,20 +22,28 @@ def response(url):
 data = response(url)
 jsondata = json.loads(data)
 
+bold = workbook.add_format({'bold': True})
+
 for i in jsondata:
     # x = Data()
     for j in i:
 
         if(j == 'sub_id'):
             worksheet = workbook.add_worksheet(str(i[j]))
-            worksheet.write('B6', "Q ID")
-            worksheet.write('C6', "Question")
-            worksheet.write('D6', "Rating")
-            worksheet.write('B3', "Subject ID")
+            worksheet.write('B6', "Q ID", bold)
+            worksheet.write('C6', "Question", bold)
+            worksheet.write('D6', "Rating", bold)
+            worksheet.write('B3', "Subject ID", bold)
             worksheet.write('C3', str(i[j]))
+        elif(j == 'sub_name'):
+            worksheet.write('B4', "Subject Name", bold)
+            worksheet.write('C4', str(i[j]))
         elif(j == 'prof_id'):
-            worksheet.write('E3', "Professor ID")
+            worksheet.write('E3', "Professor ID", bold)
             worksheet.write('F3', str(i[j]))
+        #elif(j == 'prof_name'):
+        #    worksheet.write('E3', "Professor Name", bold)
+        #    worksheet.write('F3', str(i[j]))
             b = 0
         count = 0
         a = False
@@ -44,11 +52,12 @@ for i in jsondata:
             if(j == "report"):
                 for l in k:
                     if(l == 'q_id'):
-                        worksheet.write('B'+str(6+count+1), str(k[l]))
+                        worksheet.write('B'+str(6+count+1), k[l])
+                    elif(l == 'qname'):
                         worksheet.write('C'+str(6+count+1), k[l])
                         a = True
                     elif(l == 'avgR'):
-                        worksheet.write('D'+str(6+count+1), str(k[l]))
+                        worksheet.write('D'+str(6+count+1), k[l])
                         b = True
                     if(a&b):
                         count += 1

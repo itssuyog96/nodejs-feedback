@@ -41,6 +41,17 @@
         "Subject Name": "sub_name"
       },
       "name": "modal_subj"
+    },
+    "lab": {
+      "title": "ADD NEW LABORATORY",
+      "class": "m_lab",
+      "form": {
+        "College ID": "col_id",
+        "Department ID": "dept_id",
+        "Lab ID" : "lab_id",
+        "Lab Name": "lab_name"
+      },
+      "name": "modal_lab"
     }
   },
   "survey": {

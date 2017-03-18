@@ -993,9 +993,8 @@ router.post('/get_sub_reports_excel',function (req,res) {
     var sem = req.body.sem;
     console.log(survey_id, col_id, dept_id, sem);
 
-    questions = require('../questions.json');
 
-    var proc = spawn('python3',["python-files/subject_excel.py", survey_id, col_id, dept_id, sem, questions]);
+    var proc = spawn('python3',["python-files/subject_excel.py", survey_id, col_id, dept_id, sem]);
     console.log("Spawned!!!");
 
     proc.stdout.on('data', function (chunk){
@@ -1003,6 +1002,24 @@ router.post('/get_sub_reports_excel',function (req,res) {
         console.log(textChunk)
     });
 });
+
+router.post('/dummy',function (req,res) {
+    setTimeout(function(){
+        res.end()
+    }, 2000)
+});
+
+router.post('/deleteuser', function(req, res){
+    var db = req.db;
+
+    const collection = db.get('users');
+
+    collection.remove({'_id' : req.body._id}, function(e, done){
+        if(e) throw e
+
+        res.end()
+    })
+})
 
 
 

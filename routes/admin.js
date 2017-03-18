@@ -32,7 +32,7 @@ router.get('/manage', function(req, res, next){
 
     if(req.session.login) {
         if(req.session.passport.user.role == 'admin'){
-            res.render('admin', {menu : menu, user : req.session.passport.user, col: tdata.college, dept: tdata.department, profs: tdata.professor, subj: tdata.subject, mdata: mdata.topics});
+            res.render('admin', {menu : menu, user : req.session.passport.user, col: tdata.college, dept: tdata.department, profs: tdata.professor, subj: tdata.subject, lab: tdata.lab, mdata: mdata.topics});
         }
         else{
             delete req.session.redirectTo;

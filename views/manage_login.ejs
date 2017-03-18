@@ -218,7 +218,7 @@
                       '<td>'+item.contact+'</td>' +
                       '<td>'+item.email_id+'</td>' +
                       '<td><button class="btn btn-default" onclick="javascript:generate_url(\''+item.password+'\',\''+item.nickname+'\',\''+item.contact+'\',\''+item.email_id+'\',\''+item._id+'\')">GENERATE & SEND URL</button></td>' +
-                      '<td><button class="btn red btn-outline" onclick="javascript:delete_user(\''+item._id+'\')">DELETE</button></td>' +
+                      '<td><button id="btn-'+item._id+'" class="btn red btn-outline" onclick="javascript:delete_user(\''+item._id+'\')">DELETE</button><img style="display:none;" height="4.5%" width="20%" src="https://i.stack.imgur.com/kOnzy.gif" id="loader-'+item._id+'"></img></td>' +
                       '</tr>');
               });
             },
@@ -251,6 +251,9 @@
     }
 
     function delete_user(id){
+        $('#btn-'+id).fadeOut(0);
+        $('#loader-'+id).fadeIn();
+
         $.ajax({
             url: '../../ajax/deleteuser',
             method: 'POST',
@@ -260,6 +263,8 @@
             },
             error: function(){
                 console.log('Error occured while deleting user!');
+                $('#loader-'+id).fadeOut();
+                $('#btn-'+id).fadeIn();
             }
         })
     }
