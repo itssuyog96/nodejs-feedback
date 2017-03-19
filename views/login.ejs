@@ -71,23 +71,8 @@
         </div>
     </form>
     <!-- END LOGIN FORM -->
-    <!-- BEGIN FORGOT PASSWORD FORM -->
-    <form class="forget-form" action="index.html" method="post">
-        <div class="form-title">
-            <span class="form-title">Forget Password ?</span>
-            <span class="form-subtitle">Enter your e-mail to reset it.</span>
-        </div>
-        <div class="form-group">
-            <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email"
-                   name="email"/></div>
-        <div class="form-actions">
-            <button type="button" id="back-btn" class="btn btn-default">Back</button>
-            <button type="submit" class="btn btn-primary uppercase pull-right">Submit</button>
-        </div>
-    </form>
-    <!-- END FORGOT PASSWORD FORM -->
 </div>
-<div class="copyright hide"> 2016 © Produced with love</div>
+<div class="copyright hide"> 2017 © Produced with love</div>
 <!-- END LOGIN -->
 <!--[if lt IE 9]>
 <script src="javascript/plugins/respond.min.js"></script>
@@ -113,129 +98,6 @@
 <!-- BEGIN THEME LAYOUT SCRIPTS -->
 <!-- END THEME LAYOUT SCRIPTS -->
 
-<script>
-    /*var Login = function () {
-        var e = function () {
-                    $(".login-form").validate({
-                        errorElement: "span",
-                        errorClass: "help-block",
-                        focusInvalid: !1,
-                        rules: {
-                            username: {
-                                required: !0
-                            },
-                            password: {
-                                required: !0
-                            },
-                            remember: {
-                                required: !1
-                            }
-                        },
-                        messages: {
-                            username: {
-                                required: "Username is required."
-                            },
-                            password: {
-                                required: "Password is required."
-                            }
-                        },
-                        invalidHandler: function (e, r) {
-                            $(".alert-danger", $(".login-form")).show()
-                        },
-                        highlight: function (e) {
-                            $(e).closest(".form-group").addClass("has-error")
-                        },
-                        success: function (e) {
-                            e.closest(".form-group").removeClass("has-error"),
-                                    e.remove()
-                        },
-                        errorPlacement: function (e, r) {
-                            e.insertAfter(r.closest(".input-icon"))
-                        },
-                        submitHandler: function (e) {
-                            //e.preventDefault();
-                            console.log("Executing login ajax...!");
-                            $.ajax({
-                                url: 'ajax/login',
-                                data: $('.login-form').serialize(),
-                                method: 'POST',
-                                error: function (error) {
-                                    $("#login-error-message").text("Login error ("+error.status+") : "+ error.responseText);
-                                    $(".alert-warning", $(".login-form")).show();
-                                },
-                                success: function () {
-                                    $(".form-group").removeClass("has-error");
-                                    $("#login-success-message").text("Login OK.. Redirecting...");
-                                    $(".alert-success", $(".login-form")).show();
-                                    window.location.href = '/admin';
-                                }
-                            });
-                        }
-                    }),
-                            $(".login-form input").keypress(function (e) {
-                                return 13 == e.which ? ($(".login-form").validate().form() && $(".login-form").submit(),
-                                        !1) : void 0
-                            })
-                }
-                , r = function () {
-                    $(".forget-form").validate({
-                        errorElement: "span",
-                        errorClass: "help-block",
-                        focusInvalid: !1,
-                        ignore: "",
-                        rules: {
-                            email: {
-                                required: !0,
-                                email: !0
-                            }
-                        },
-                        messages: {
-                            email: {
-                                required: "Email is required."
-                            }
-                        },
-                        invalidHandler: function (e, r) {
-                        },
-                        highlight: function (e) {
-                            $(e).closest(".form-group").addClass("has-error")
-                        },
-                        success: function (e) {
-                            e.closest(".form-group").removeClass("has-error"),
-                                    e.remove()
-                        },
-                        errorPlacement: function (e, r) {
-                            e.insertAfter(r.closest(".input-icon"))
-                        },
-                        submitHandler: function (e) {
-                            e.submit()
-                        }
-                    }),
-                            $(".forget-form input").keypress(function (e) {
-                                return 13 == e.which ? ($(".forget-form").validate().form() && $(".forget-form").submit(),
-                                        !1) : void 0
-                            }),
-                            jQuery("#forget-password").click(function () {
-                                jQuery(".login-form").hide(),
-                                        jQuery(".forget-form").show()
-                            }),
-                            jQuery("#back-btn").click(function () {
-                                jQuery(".login-form").show(),
-                                        jQuery(".forget-form").hide()
-                            })
-                }
-                ;
-        return {
-            init: function () {
-                e(),
-                        r()
-            }
-        }
-    }();
-    jQuery(document).ready(function () {
-        Login.init()
-    });
-*/
-</script>
 
 </body>
 

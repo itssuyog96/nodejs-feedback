@@ -365,89 +365,58 @@ router.post('/getrating', function (req, res, next) {
 
 router.post('/submit', function (req, res, next) {
 
-    console.log(req.body);
-    var col_id=req.body.col_id;
-    var dep_id=req.body.dept_id;
-    var sem=req.body.sem;
+    var col_id  =   req.body.col_id;
+    var dep_id  =   req.body.dept_id;
+    var sem     =   req.body.sem;
     var survey_id = req.body.survey_id;
     var db = req.db;
 
+    var a, b, str;
+
+    const collection = db.get('test_rating_' + req.year);
+
     for (var key in req.body) {
-        if (key.length > 10) {
-            //console.log(key);
-            var a = key.split('_');
+        if (key.length == 17) {
+            a = key.split('_');
 
-            const collection = db.get('test_rating');
-            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":req.body[key],"year":req.year, "prof_id" : a[3]},
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":req.body[key], "prof_id" : a[3]},
                 function (er2,result) {
-                    if (er2) throw er2;
+                    if (er2) console.log(er2);
                     else {
+                    }
+                })
 
-                        console.log('rating added : '+col_id+' '+dep_id+' '+sem+' '+a[1]+' '+a[2]+' '+a[3]+' '+req.body[key]+' '+req.year);
+        }
+        else if (key.length == 18) {
+
+            a = key.split('_');
+
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":req.body[key], "lab_id" : a[3]},
+                function (er2,result) {
+                    if (er2) console.log(er2);
+                    else {
                     }
                 })
 
         }
         else if(key.length == 8) {
-            //console.log(key);
-            var b = key.split('_');
-            var str = "remark_"+ b[1];
-            const collectionb = db.get('test_rating');
-            collectionb.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id": null ,"q_id":b[1],"v_rating":req.body[key],"remark":req.body[str],"year":req.year},
+
+            b = key.split('_');
+            str = "remark_"+ b[1];
+
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id, "q_id":b[1], "v_rating":req.body[key],"remark":req.body[str]},
                 function (er,result) {
-                    if (er) throw er;
+                    if (er) console.log(er);
                     else {
-                        console.log('rating added : '+col_id+' '+dep_id+' '+sem+' '+b[1]+' '+req.body[key]+' '+req.body[str]+' '+req.year);
                     }
                 })
         }
     }
-    /*
-    var col_id=req.body.col_id;
-    var dep_id=req.body.dept_id;
-    var sem=req.body.sem;
-    console.log(req.year);
-    console.log(req.body);
-    var db = req.db;
 
-    const collection = db.get('subject');
+    setTimeout(function(){
+        res.end()
+    }, 5000);
 
-    collection.find({"col_id":col_id,"dept_id":dep_id,"sem":sem},function(e,docs){
-        var d = JSON.stringify(docs[0].sub_name);
-        console.log(req.body.rate[1]);
-
-        console.log(d);
-        var count=docs.length;
-        if (e) throw e;
-        else {
-            const collectiona = db.get('question');
-            var k=0;
-            for(var i=0;i<count;i++) {
-                collectiona.find({"col_id":col_id,"dep_id":dep_id,"sem":sem,"sub_id": docs[i].sub_id}, function (er, docs_a) {
-                    var sub_id=docs_a[0].sub_id;
-                    var count2 = docs_a.length;
-                    for (var j=0;j<count2;j++,k++)
-                    {
-                        const collectionb = db.get('rating');
-                        console.log(req.body.rate[k]);
-                        collectionb.insert({"col_id":col_id,"dept_id":dep_id,"sem":sem,"sub_id":sub_id,"q_id":docs_a[j].q_id, "quesn" : docs_a[j].question,"v_rating":req.body.rate[k],"year":req.year},
-                        function (er2,result) {
-                            if (er2) throw er2;
-                            else {
-                                console.log('rating added');
-                            }
-                        })
-                    }
-                    });
-            }
-        }
-        });
-        */
-    setTimeout(function() {
-            res.writeHead(200, 'rating done!!');
-            res.end();
-        }
-    ,5000)
 });
 
 router.post('/updateSub', function (req, res, next) {
@@ -1070,7 +1039,7 @@ router.post('/getlabs',function (req,res) {
         else {
             console.log('lab Added');
             res.writeHead(200,'Content-Type','application/json');
-            res.end(JSON.stringify(data));
+            res.end('{"data" : '+JSON.stringify(data)+'}');
         }
     });
 });
@@ -1094,7 +1063,7 @@ router.post('/getlab',function (req,res) {
 });
 
 
-router.post('/fetchlabs',function (req,res) {
+router.post('/fetchlab',function (req,res) {
 
     var db = req.db;
     const collection = db.get('subject');
@@ -1129,12 +1098,12 @@ router.post('/fetchlabs',function (req,res) {
 
 })// preassign
 
-router.post('/updatesublab',function(req,res){
+router.post('/updateSubLab',function(req,res){
 
     var db = req.db;
     const collection = db.get('subject');
 
-    collection.update({"col_id":req.body.col_id,"dept_id":req.body.dept_id,"sub_id":req.body.sub_id},{"$set":{"lab_id":req.body.prof_id}},function(e,data) {
+    collection.update({"col_id":req.body.col_id,"dept_id":req.body.dept_id,"sub_id":req.body.sub_id},{"$set":{"lab_id":req.body.lab_id}},function(e,data) {
         if (e) throw e;
         else {
             console.log('subject updated');
