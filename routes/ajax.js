@@ -1336,6 +1336,59 @@ router.get('/get_sub_reports',function (req,res) {
 
 });
 
+router.get('/get_lab_reports',function (req,res) {
+    var db = req.db;
+    var survey_id = req.query['survey_id'];
+    var col_id = req.query['col_id'];
+    var dept_id = req.query['dept_id'];
+
+    console.log(survey_id, col_id, dept_id);
+
+    const collection = db.get(/*survey_id+*/'lab_report');
+    collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},function (e,done) {
+        if(e) {
+            show(e);
+            res.end();
+        }
+        else {
+            console.log(JSON.stringify(done))
+            res.writeHead(200,'Context-Type','application/json')
+            res.end(JSON.stringify(done));
+        }
+
+    })
+
+
+
+});
+
+router.get('/get_prof_reports',function (req,res) {
+    var db = req.db;
+    var survey_id = req.query['survey_id'];
+    var col_id = req.query['col_id'];
+    var dept_id = req.query['dept_id'];
+
+    console.log(survey_id, col_id, dept_id);
+
+    const collection = db.get(/*survey_id+*/'profR_report');
+    collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},function (e,done) {
+        if(e) {
+            show(e);
+            res.end();
+        }
+        else {
+            console.log(JSON.stringify(done))
+            res.writeHead(200,'Context-Type','application/json')
+            res.end(JSON.stringify(done));
+        }
+
+    })
+
+
+
+});
+
+
 router.post('/get_sub_reports_excel',function (req,res) {
     //var db = req.db;
     var survey_id = req.body.survey_id;
@@ -1494,11 +1547,11 @@ router.post('/change_mail', function (req, res) {
     collection.update({"nickname": req.body.name, "role": req.body.role}, {"$set":{"email_id": req.body.new_email}}, function (e, data) {
         if(e) throw e;
         else {
-            req.user.email_id = req.body.new_email;
-            //console.log("email updated");
+            console.log("email updated");
+            res.end();
         }
     });
-    res.end();
+
 });
 
 router.post('/change_contact', function (req, res) {
@@ -1513,11 +1566,31 @@ router.post('/change_contact', function (req, res) {
     collection.update({"nickname": req.body.name, "role": req.body.role}, {"$set":{"contact": req.body.new_contact}}, function (e, data) {
         if(e) throw e;
         else {
-            //console.log("contact updated");
-            req.user.contact = req.body.new_contact;
+            console.log("contact updated");
+            res.end();
         }
     });
-    res.end();
+
 });
+
+router.post('/getSubjectReports', function (req, res) {
+
+    var db = req.db;
+    var survey_id = req.body.survey_id;
+    var dept_id = req.body.dept_id;
+    var sub_id = req.body.sub_id;
+    const collection = db.get(survey_id + '_' + req.user.col_id + '_' + dept_id + '_sub_report');
+
+    collection.find({"col_id": req.user.col_id, "dept_id" : dept_id, "survey_id": survey_id, "sub_id": sub_id}, function(e, data){
+        if(e) {
+            console.log(e)
+        }
+        else{
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify(data[0]));
+        }
+    })
+});
+
 
 module.exports = router;

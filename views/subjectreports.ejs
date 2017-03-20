@@ -277,10 +277,12 @@
             success: function(data){
                 $('#subject_panel').text('');
                 data.data.forEach(function(d){
-                    $('#subject_panel').append('' +
-                        '<div id="div-'+d.sub_id+'" class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 10px;">' +
+                    if(d.prof_id != 'NA'){
+                        $('#subject_panel').append('' +
+                            '<div id="div-'+d.sub_id+'" class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 10px;">' +
                             '<a onclick="javascript:getSurvey('+d.sub_id+', '+d.prof_id+')" align="center" id="anchor-'+d.sub_id+'" class="btn blue btn-outline" style="width: 100%;">'+d.sub_name.toUpperCase()+'</a>' +
-                        '</div>');
+                            '</div>');
+                    }
                 })
             }
         })
@@ -312,18 +314,17 @@
                 return true;
             }
         }
-        console.log(JSON.stringify({sub_id: sub_id, col_id: '<%= user.col_id %>', survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()}));
+        console.log(JSON.stringify({sub_id: sub_id, survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()}));
         $.ajax({
-            url: '../../ajax/getRating',
+            url: '../../ajax/getSubjectReports',
             method: 'POST',
-            data: {sub_id: sub_id, col_id: '<%= user.col_id %>', survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()},
+            data: {sub_id: sub_id, survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()},
             success: function(data){
-                console.log(JSON.stringify(data));
                 var x = new Array();
                 var y = new Array();
-                data.forEach(function(d){
+                data.report.forEach(function(d){
                     x.push(String(question[d.q_id]));
-                    y.push(d.v_rating);
+                    y.push(d.avgR);
                 })
 
                 BAR_PLOT = document.getElementById('bar-plot');
@@ -334,7 +335,7 @@
                     type: 'bar',
                     x: x,
                     y: y,
-                    name: $('#div-'+sub_id+' a').text()}], {
+                    name: data.sub_name + " (" + data.prof_name + ")" }], {
                     margin: { t: 0 },
                     xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
                     yaxis: { range: [0,5] },
@@ -345,7 +346,7 @@
                     type: 'line',
                     x: x,
                     y: y,
-                    name: $('#div-'+sub_id+' a').text()}], {
+                    name: data.sub_name + " (" + data.prof_name + ")"}], {
                     margin: { t: 0 },
                     xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
                     yaxis: { range: [0,5] },
@@ -356,7 +357,7 @@
                     type: 'pie',
                     values: y,
                     labels: x,
-                    name: $('#div-'+sub_id+' a').text()}], {
+                    name: data.sub_name + " (" + data.prof_name + ")"}], {
                     margin: { t: 0 },
                     xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
                     yaxis: {  },

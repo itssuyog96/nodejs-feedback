@@ -31,6 +31,7 @@ for i in jsondata:
 
         if(j == 'sub_id'):
             worksheet = workbook.add_worksheet(str(i[j]))
+            cur_sub_id = str(i[j])
             worksheet.write('B6', "Q ID", bold)
             worksheet.write('C6', "Question", bold)
             worksheet.write('D6', "Rating", bold)
@@ -42,9 +43,9 @@ for i in jsondata:
         elif(j == 'prof_id'):
             worksheet.write('E3', "Professor ID", bold)
             worksheet.write('F3', str(i[j]))
-        #elif(j == 'prof_name'):
-        #    worksheet.write('E3', "Professor Name", bold)
-        #    worksheet.write('F3', str(i[j]))
+        elif(j == 'prof_name'):
+            worksheet.write('E3', "Professor Name", bold)
+            worksheet.write('F3', str(i[j]))
             b = 0
         count = 0
         a = False
@@ -64,6 +65,14 @@ for i in jsondata:
                         count += 1
                         a = False
                         b = False
+
+    chart = workbook.add_chart({'type': 'pie'})
+    chart.set_legend({'position': 'right'})
+    chart.add_series({
+        'categories' : '=\''+cur_sub_id+'\'!$C$7:$C$21',
+        'values' : '=\''+cur_sub_id+'\'!$D$7:$D$21'
+        })
+    worksheet.insert_chart('B24', chart)
 
 print("Omkar")
 
