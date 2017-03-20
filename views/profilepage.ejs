@@ -187,10 +187,12 @@
                 });
             }else {
                 $("#new_mail").attr("placeholder", "Please enter a valid email id");
+                $("#new_mail").val("");
             }
         }
         else {
             $("#new_mail").attr("placeholder", "Please enter a valid email id");
+            $("#new_mail").val("");
         }
     });
 
@@ -224,12 +226,14 @@
                 });
             }else {
                 $("#new_contact").attr("placeholder", "Please enter a valid contact number");
+                $("#new_contact").val("");
             }
         }
         else {
             $("#new_contact").attr("placeholder", "Please enter a valid contact number");
+            $("#new_contact").val("");
         }
-    })
+    });
 
     function close_form(id) {
         $("#" + id).hide();
