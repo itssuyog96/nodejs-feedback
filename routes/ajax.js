@@ -930,12 +930,14 @@ router.get('/sub_rep',function (req ,res,next) {
 });
 
 
-router.post('/prof_rep',function (req ,res,next) {
+router.get('/prof_rep',function (req ,res,next) {
     var db = req.db;
     var col_id = "1";
     var dept_id = "1001";
     var survey_id = "survey-2017-1-even";
     const collection = db.get('professor');
+    const collectionc = db.get(survey_id+'_'+col_id+'_'+dept_id+'_prof_report_strict');
+    collectionc.drop();
     collection.find({"dept_id":dept_id,"col_id": col_id},function (err,data) {
         if (err) {
             console.log(err);
@@ -946,12 +948,13 @@ router.post('/prof_rep',function (req ,res,next) {
 
                 console.log(item.prof_id);
                 //var db = req.db;
-                const collectionb = db.get('rating');
+                const collectionb = db.get('test_rating_' + req.year);
                 // we can add survey id here by passing it in this function and puting that constraint on $match in aggregate
                 collectionb.aggregate([{$match:{"prof_id" : item.prof_id,"col_id":col_id,"dept_id":dept_id}} ,
                     {$group :{"_id":"$q_id" ,
                         AvgScore :{$avg : "$v_rating"}
                     }},
+                    {$sort:{_id : 1}},
                     {$project:{q_id :"$_id",avgR :"$AvgScore",_id:0}}
                 ],function (er,d) {
                     if (er) {
@@ -959,7 +962,6 @@ router.post('/prof_rep',function (req ,res,next) {
                         res.end();
                     }
                     else {
-                        const collectionc = db.get('prof_report');
                         collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id,"prof_name": item.prof_name,"report":d},function (e,done) {
                             if(e) {
                                 console.log(e);
@@ -979,7 +981,7 @@ router.post('/prof_rep',function (req ,res,next) {
 
 });
 
-router.post('/profR_rep',function (req ,res,next) {
+router.get('/profR_rep',function (req ,res,next) {
     var db = req.db;
     var col_id = "1";
     var dept_id = "1001";
@@ -1059,19 +1061,6 @@ router.post('/profR_rep',function (req ,res,next) {
                                     })
                                 });
 
-                                /*setTimeout(function(){*/
-
-
-
-                                /*},2500);*/
-                                /*
-                                 collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id,"prof_name": item.prof_name,"report":d},function (e,done) {
-                                 if(e) {
-                                 console.log(e);
-                                 res.end();
-                                 }
-                                 console.log('done');
-                                 })*/
                             }
                         });
                     }
@@ -1592,5 +1581,23 @@ router.post('/getSubjectReports', function (req, res) {
     })
 });
 
+router.post('/getProfReports', function (req, res) {
+
+    var db = req.db;
+    var survey_id = req.body.survey_id;
+    var dept_id = req.body.dept_id;
+    var prof_id = req.body.prof_id;
+    const collection = db.get(survey_id + '_' + req.user.col_id + '_' + dept_id + '_prof_report_strict');
+
+    collection.find({"col_id": req.user.col_id, "dept_id" : dept_id, "survey_id": survey_id, "prof_id": prof_id}, function(e, data){
+        if(e) {
+            console.log(e)
+        }
+        else{
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify(data[0]));
+        }
+    })
+});
 
 module.exports = router;

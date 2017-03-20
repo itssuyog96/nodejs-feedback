@@ -44,17 +44,6 @@ module.exports.generateSend = function (contact,email_id,username,key,id,survey_
 
     //console.log(contact+' '+username+' '+nameH+' '+key);
 
-    var collection = db.get("student");
-    //console.log("----------------------------" + survey_id);
-    collection.update({"_id": id},{"$set":{"key":HToken,"survey_id":survey_id,"status":"1"}},function (e,docs){
-        var d = JSON.stringify(docs);
-        if (e) throw e;
-        else {
-            console.log('user Token updated');
-        }
-
-    });
-
     //var url = 'http://172.18.1.50/stud?access_token='+token;
     var url = 'https://bvcoe-feedback.herokuapp.com/stud?access_token='+token;
 
@@ -82,7 +71,19 @@ module.exports.generateSend = function (contact,email_id,username,key,id,survey_
         };
         transporter.sendMail(mailOptions, function (err, info) {
             if(err) console.log(err);
-            else console.log("Message " + info.messageId + " sent: " + info.response);
+            else {
+                console.log("Message " + info.messageId + " sent: " + info.response);
+                var collection = db.get("student");
+                //console.log("----------------------------" + survey_id);
+                collection.update({"_id": id},{"$set":{"key":HToken,"survey_id":survey_id,"status":"1"}},function (e,docs){
+                    var d = JSON.stringify(docs);
+                    if (e) throw e;
+                    else {
+                        console.log('user Token updated');
+                    }
+
+                });
+            }
         });
     });
 };

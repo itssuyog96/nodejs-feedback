@@ -117,7 +117,7 @@ module.exports = function(passport) {
             collection.find({"key": token }, function (err, user) {
                 if (err) { return done(err); }
                 if(user == 0){
-                    return done(null, false,req.flash('loginMessage', 'No user found.'));
+                    return done(null, false, {error: true, message: 'No User found!', statusCode: 404});
                 }
                 return done(null, user[0]);
             });
@@ -132,9 +132,12 @@ module.exports = function(passport) {
             var collection = db.get('student');
             collection.find({"key": token }, function (err, user) {
                 if (err) { return done(err); }
-                if(user == 0 || user[0].status == "2"){
-                    return done(null, false,req.flash('loginMessage', 'No user found.'));
+                if(user == 0){
+                    return done(null, false, {error: true, message: 'No User found!', statusCode: 404});
                 }
+               /* if(user[0].status == "2"){
+                    return done(null, false, {error: true, message: 'Feedback is already done!', statusCode: 403});
+                }*/
                 return done(null, user[0]);
             });
         }

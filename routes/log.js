@@ -51,6 +51,15 @@ module.exports = function(app, passport) {
         }
     );
 
+    app.get('/stud',
+        passport.authenticate('studL', { session: true, failureRedirect: '/login' }),
+        function(req, res) {
+
+                req.session.login = 1;
+                res.redirect('/student');
+            });
+
+
     app.get('/profile',
         passport.authenticate('bearer', { session: true, failureRedirect: '/login' }),
         function(req, res) {
@@ -82,22 +91,6 @@ module.exports = function(app, passport) {
             delete req.session.redirectTo;
 
             res.redirect(redirectTo);
-        });
-
-
-    app.get('/stud',
-        passport.authenticate('studL', { session: true, failureRedirect: '/login' }),
-        function(req, res) {
-
-            console.log(req.user);
-            req.session.login= 1;
-
-
-
-            //var redirectTo = req.session.redirectTo ? req.session.redirectTo : choice;
-            //delete req.session.redirectTo;
-            res.redirect('/student');
-
         });
 
 

@@ -285,18 +285,19 @@
                 return true;
             }
         }
-        console.log(JSON.stringify({prof_id: prof_id, col_id: '<%= user.col_id %>', survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()}));
+        console.log(JSON.stringify({prof_id: prof_id, survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()}));
         $.ajax({
-            url: '../../ajax/getRating',
+            url: '../../ajax/getProfReports',
             method: 'POST',
-            data: {prof_id: prof_id, col_id: '<%= user.col_id %>', survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()},
+            data: {prof_id: prof_id, survey_id: $('#survey_id_span').text(), dept_id: $('#dept_id_span').text()},
             success: function(data){
                 console.log(JSON.stringify(data));
                 var x = new Array();
                 var y = new Array();
-                data.forEach(function(d){
+
+                data.report.forEach(function(d){
                     x.push(String(question[d.q_id]));
-                    y.push(d.v_rating);
+                    y.push(d.avgR);
                 })
 
                 BAR_PLOT = document.getElementById('bar-plot');
@@ -307,7 +308,7 @@
                     type: 'bar',
                     x: x,
                     y: y,
-                    name: $('#div-'+prof_id+' a').text()}], {
+                    name: data.prof_name }], {
                     margin: { t: 0 },
                     xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
                     yaxis: { range: [0,5] },
@@ -318,7 +319,7 @@
                     type: 'line',
                     x: x,
                     y: y,
-                    name: $('#div-'+prof_id+' a').text()}], {
+                    name: data.prof_name}], {
                     margin: { t: 0 },
                     xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
                     yaxis: { range: [0,5] },
@@ -329,9 +330,9 @@
                     type: 'pie',
                     values: y,
                     labels: x,
-                    name: $('#div-'+prof_id+' a').text()}], {
+                    name: data.prof_name }], {
                     margin: { t: 0 },
-                    xaxis: {type: 'category', showticklabels: false, tickangle: '90' },
+                    xaxis: {type:'category', showticklabels: false, tickangle: '90' },
                     yaxis: {  },
                     showlegend: true,
                     legend : {orientation: 'h'}} );
@@ -385,8 +386,8 @@
     $('#plot').on('click', '.pie-plot-btn', function(){
 
         var update = {
-            width: 1000,  // or any new width
-            height: 1000  // " "
+            width: 700,  // or any new width
+            height: 700  // " "
         };
 
         var PIE_PLOT = document.getElementById('pie-plot');
