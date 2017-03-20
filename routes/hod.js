@@ -32,7 +32,7 @@ router.get('/hodsurvey', function(req, res, next) {
 
     if(req.session.login) {
         if(req.session.passport.user.role == 'hod'){
-            res.render('hodsurveySelection', {dash : tiles, menu : menu, user : req.session.passport.user});
+            res.render('hodSurveySelection', {dash : tiles, menu : menu, user : req.session.passport.user});
         }
         else{
             delete req.session.redirectTo;
