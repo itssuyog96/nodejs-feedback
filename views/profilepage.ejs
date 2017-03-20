@@ -38,75 +38,101 @@
 
             <!--START EDITING FROM HERE-->
 
-            <div>
-                <div class="jumbotron" style="background: transparent" align="center">
-                    <h1>Profile page</h1>
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-list font-dark"></i>
+                        <span class="caption-subject bold uppercase">Profile Page</span>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <div class="col-md-6" style="background-color: #d0d1cc">
-                    <h3 id="users_name" data-name="<%= user.nickname %>"><b>Name:</b> <%= user.nickname %></h3>
-                    <br>
-                    <h3 id="users_role" data-role="<%= user.role %>"><b>Role:</b> <%= user.role %></h3>
-                    <br>
-                    <h3 id="users_dept_id" data-deptid="<%= user.dep_id %>"><b>Dept ID:</b>
-                        <% if(user.dep_id == ""){ %>
-                        <%= "----" %>
-                        <% } else {%>
-                        <%= user.dep_id %>
-                        <% } %>
-                    </h3>
-                    <br>
-                    <h3 id="users_email" data-email="<%= user.email_id %>"><b>Email ID:</b> <%= user.email_id %></h3>
-                    <br>
-                    <h3 id="users_contact" data-contact="<%= user.contact %>"><b>Contact:</b> <%= user.contact %></h3>
-
-                    <h3 id="users_col_id" data-colid="<%= user.col_id %>" hidden><b>Col ID:</b> <%= user.col_id %></h3>
-                </div>
-                <div class="col-md-1">
-                    <div style="border-left:2px solid #000;height:360px"></div>
-                </div>
-                <div class="col-md-5">
-                    <div>
-                        <button type="button" class="btn btn-primary btn-lg btn-block" id="change_email">Change Email ID</button>
-                        <br>
-                        <div class="alert alert-info" id="mail" hidden>
-                            <div class="input-group" id="mail_form">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-primary" type="button" id="close" onclick="close_form('mail')"><i class="fa fa-times-circle"></i></button>
-                                </span>
-                                <input type="text" id="new_mail" class="form-control" placeholder="Enter Email ID" required/>
-                                <span class="input-group-btn">
-                                        <button class="btn btn-primary" type="button" id="accept_mail">Confirm</button>
-                                </span>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="note note-info">
+                                <b><strong>Info!</strong></b> Go to setting to change your password
                             </div>
-                        </div>
-                        <div id="mail_message">
+                                <form>
+                                    <div class="form-group">
+                                        <div class="form-group col-md-5">
+                                            <label class="form-control" id="users_name" data-name="<%= user.nickname %>"><b>Name : </b> <%= user.nickname %>
+                                            </label>
+                                        </div>
+                                        <div class="form-group col-md-5">
+                                            <label class="form-control" id="users_role" data-role="<%= user.role %>"> <b>Role : </b> <%= user.role %>
+                                            </label>
+                                        </div>
+                                        <div class="form-group col-md-5">
+                                            <label class="form-control" id="users_dept_id" data-deptid="<%= user.dep_id %>">
+                                            <b>Department ID : </b>
+                                                <% if(user.dep_id == ""){ %>
+                                                <%= "----" %>
+                                                <% } else {%>
+                                                <%= user.dep_id %>
+                                                <% } %>
 
-                        </div>
-                        <br>
-                        <button type="button" class="btn btn-primary btn-lg btn-block" id="change_contact">Change Contact</button>
-                        <br>
-                        <div class="alert alert-info" id="contact" hidden>
-                            <div class="input-group" id="contact_form">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-primary" type="button" id="close" onclick="close_form('contact')"><i class="fa fa-times-circle"></i></button>
-                                </span>
-                                <input type="tel" id="new_contact" class="form-control" placeholder="Enter Contact" required/>
-                                <span class="input-group-btn">
-                                        <button class="btn btn-primary" type="button" id="accept_contact">Confirm</button>
-                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="form-group col-md-5">
+                                            <label class="form-control" id="users_email" data-email="<%= user.email_id %>">
+                                            <b>Email ID : </b> <%= user.email_id %>
+                                            </label>
+                                        </div>
+                                        <div class="form-group col-md-5">
+                                            <label class="form-control" id="users_contact" data-contact="<%= user.contact %>">
+                                            <b>Contact : </b> <%= user.contact %>
+                                            </label>
+                                        </div>
+                                        <div class="form-group col-md-5">
+                                            <label class="form-control" id="users_col_id" data-colid="<%= user.col_id %>" hidden>
+                                            <b>College ID : </b> <%= user.col_id %>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                        </div>
-                        <div id="contact_message">
+                            <div class="col-md-12">
+                                    <div class="col-md-5">
+                                        <button type="button" class="btn btn-primary " id="change_email">Change Email ID</button>
+                                        <br>
+                                        <div class="alert alert-info" id="mail" hidden>
+                                            <div class="input-group" id="mail_form">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-primary" type="button" id="close" onclick="close_form('mail')"><i class="fa fa-times-circle"></i></button>
+                                                </span>
+                                                <input type="text" id="new_mail" class="form-control" placeholder="Enter Email ID" required/>
+                                                <span class="input-group-btn">
+                                                        <button class="btn btn-primary" type="button" id="accept_mail">Confirm</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div id="mail_message" class="col-md-12">
 
-                        </div>
-                        <br>
-                        <div class="alert alert-info">
-                            <strong>Info!</strong> Go to setting to change your password
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <button type="button" class="btn btn-primary" id="change_contact">Change Contact</button>
+                                        <div class="alert alert-info" id="contact" hidden>
+                                            <div class="input-group" id="contact_form">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-primary" type="button" id="close" onclick="close_form('contact')"><i class="fa fa-times-circle"></i></button>
+                                                </span>
+                                                <input type="tel" id="new_contact" class="form-control" placeholder="Enter Contact" required/>
+                                                <span class="input-group-btn">
+                                                        <button class="btn btn-primary" type="button" id="accept_contact">Confirm</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div id="contact_message">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
             <!--STOP EDITING HERE-->
         </div>
@@ -130,7 +156,7 @@
         $("#contact_message").text('');
         $("#contact").show();
     })
-    
+
     $("#accept_mail").click(function () {
         if($("#new_mail").val() != null){
             if(validateEmail($("#new_mail").val())){
@@ -142,18 +168,18 @@
                         $("#mail").hide();
                         $("#mail_message").text('');
                         $("#mail_message").html(
-                            '<div class="alert alert-info alert-dismissable">'+
-                                '<a href="#" class="close" data-dismiss="alert"><i class="fa fa-times-circle"></i></a>'+
-                                '<h3>Email changed successfully!</h3>'+
-                            '</div>'
+                                '<div class="alert alert-info alert-dismissable" style="margin-top: 15px; margin-left: -15px">'+
+                                    '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">x<i class="fa fa-times-circle"></i></button>'+
+                                        '<strong>Email changed successfully!</strong>'+
+                                '</div>'
                         );
                     },
                     error: function () {
                         $("#mail").hide();
                         $("#mail_message").text('');
                         $("#mail_message").html(
-                            '<div class="alert alert-info alert-dismissable">'+
-                                '<a href="#" class="close" data-dismiss="alert"><i class="fa fa-times-circle"></i></a>'+
+                            '<div class="alert alert-info alert-dismissable" style="margin-top: 15px; margin-left: -15px">'+
+                                '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">x<i class="fa fa-times-circle"></i></button>'+
                                 '<h3>An error occured. Please try again</h3>'+
                             '</div>'
                         );
