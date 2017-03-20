@@ -85,6 +85,43 @@ router.get('/prof_assign', function(req, res){
     }
 });
 
+router.get('/lab_assign', function(req, res){
+
+    if(req.session.login) {
+        if(req.session.passport.user.role == 'feed_analyzer'){
+
+            var db = req.db;
+            const collection = db.get('labs');
+            collection.find({col_id : req.user.col_id}, function(e, docs){
+
+                if(e){
+                    console.log("Error occured while fetching labs information");
+                }
+                else{
+                    const collectionb = db.get('department');
+                    collectionb.find({col_id: req.user.col_id}, function(e2, docsb){
+                        if(e2) throw e2;
+                        res.render('lab_assign', {menu : menu, user : req.session.passport.user, lab : docs, departments: docsb});
+                    });
+
+                }
+
+            });
+
+        }
+        else{
+            delete req.session.redirectTo;
+            res.redirect('/login');
+        }
+
+    }
+    else {
+        req.session.redirectTo = '/feed_analyzer/lab_assign';
+        res.redirect('/login');
+    }
+});
+
+
 router.get('/reports', function(req, res){
 
     if(req.session.login) {
@@ -104,6 +141,8 @@ router.get('/reports', function(req, res){
         res.redirect('/login');
     }
 });
+
+
 
 router.get('/survey', function(req, res){
 

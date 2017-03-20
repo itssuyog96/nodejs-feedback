@@ -9,17 +9,18 @@ dept_id = sys.argv[3]
 sem = sys.argv[4]
 
 
-workbook = xlsxwriter.Workbook(str(survey_id)+"_"+str(dept_id)+"_"+str(sem)+".xlsx")
+workbook = xlsxwriter.Workbook('public/downloads/'+str(survey_id)+"_"+str(dept_id)+"_"+str(sem)+".xlsx")
 worksheet = workbook.add_worksheet()
 
 
-url = "http://localhost:3000/ajax/get_sub_reports?survey_id="+str(survey_id)+"&col_id="+str(col_id)+"&dept_id="+str(dept_id)+"&sem="+str(sem)
+url = "http://bvcoe-feedback.herokuapp.com/ajax/get_sub_reports?survey_id="+str(survey_id)+"&col_id="+str(col_id)+"&dept_id="+str(dept_id)+"&sem="+str(sem)
 
 def response(url):
     with urllib.request.urlopen(url) as response:
         return response.read()
 
 data = response(url)
+
 jsondata = json.loads(data)
 
 bold = workbook.add_format({'bold': True})

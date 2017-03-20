@@ -365,89 +365,68 @@ router.post('/getrating', function (req, res, next) {
 
 router.post('/submit', function (req, res, next) {
 
-    console.log(req.body);
-    var col_id=req.body.col_id;
-    var dep_id=req.body.dept_id;
-    var sem=req.body.sem;
+    var col_id  =   req.body.col_id;
+    var dep_id  =   req.body.dept_id;
+    var sem     =   req.body.sem;
     var survey_id = req.body.survey_id;
+    var judge ;
     var db = req.db;
 
+    var a, b, str;
+
+    const collection = db.get('test_rating_' + req.year);
+
     for (var key in req.body) {
-        if (key.length > 10) {
-            //console.log(key);
-            var a = key.split('_');
+        if (key.length == 17) {
+            a = key.split('_');
 
-            const collection = db.get('test_rating');
-            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":req.body[key],"year":req.year, "prof_id" : a[3]},
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":parseInt(req.body[key]), "prof_id" : a[3],"studentOver":""},
                 function (er2,result) {
-                    if (er2) throw er2;
+                    if (er2) console.log(er2);
                     else {
+                    }
+                })
 
-                        console.log('rating added : '+col_id+' '+dep_id+' '+sem+' '+a[1]+' '+a[2]+' '+a[3]+' '+req.body[key]+' '+req.year);
+        }
+        else if (key.length == 18) {
+
+            a = key.split('_');
+
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":parseInt(req.body[key]), "lab_id" : a[3],"studentOver":""},
+                function (er2,result) {
+                    if (er2) console.log(er2);
+                    else {
                     }
                 })
 
         }
         else if(key.length == 8) {
-            //console.log(key);
-            var b = key.split('_');
-            var str = "remark_"+ b[1];
-            const collectionb = db.get('test_rating');
-            collectionb.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id": null ,"q_id":b[1],"v_rating":req.body[key],"remark":req.body[str],"year":req.year},
+
+            b = key.split('_');
+            str = "remark_"+ b[1];
+            if(b[1][0] == '3'){
+                judge = 'overall';
+            }
+            else if(b[1][0] == '4'){
+                judge = 'studentS';
+            }
+            else {
+                judge == null;
+            }
+
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id, "q_id":b[1],"v_rating":parseInt(req.body[key]),"remark":req.body[str],"studentOver":judge},
                 function (er,result) {
-                    if (er) throw er;
+                    if (er) console.log(er);
                     else {
-                        console.log('rating added : '+col_id+' '+dep_id+' '+sem+' '+b[1]+' '+req.body[key]+' '+req.body[str]+' '+req.year);
                     }
                 })
         }
     }
-    /*
-    var col_id=req.body.col_id;
-    var dep_id=req.body.dept_id;
-    var sem=req.body.sem;
-    console.log(req.year);
-    console.log(req.body);
-    var db = req.db;
 
-    const collection = db.get('subject');
+    setTimeout(function(){
+        res.end()
+    }, 5000);
 
-    collection.find({"col_id":col_id,"dept_id":dep_id,"sem":sem},function(e,docs){
-        var d = JSON.stringify(docs[0].sub_name);
-        console.log(req.body.rate[1]);
-
-        console.log(d);
-        var count=docs.length;
-        if (e) throw e;
-        else {
-            const collectiona = db.get('question');
-            var k=0;
-            for(var i=0;i<count;i++) {
-                collectiona.find({"col_id":col_id,"dep_id":dep_id,"sem":sem,"sub_id": docs[i].sub_id}, function (er, docs_a) {
-                    var sub_id=docs_a[0].sub_id;
-                    var count2 = docs_a.length;
-                    for (var j=0;j<count2;j++,k++)
-                    {
-                        const collectionb = db.get('rating');
-                        console.log(req.body.rate[k]);
-                        collectionb.insert({"col_id":col_id,"dept_id":dep_id,"sem":sem,"sub_id":sub_id,"q_id":docs_a[j].q_id, "quesn" : docs_a[j].question,"v_rating":req.body.rate[k],"year":req.year},
-                        function (er2,result) {
-                            if (er2) throw er2;
-                            else {
-                                console.log('rating added');
-                            }
-                        })
-                    }
-                    });
-            }
-        }
-        });
-        */
-    setTimeout(function() {
-            res.writeHead(200, 'rating done!!');
-            res.end();
-        }
-    ,5000)
 });
 
 router.post('/updateSub', function (req, res, next) {
@@ -975,6 +954,333 @@ router.post('/prof_rep',function (req ,res,next) {
 
 });
 
+router.post('/profR_rep',function (req ,res,next) {
+    var db = req.db;
+    var col_id = "1";
+    var dept_id = "1001";
+    var survey_id = "survey-2017-1-even";
+    const collection = db.get('professor');
+    const collectionb = db.get('subject');
+    const collectiond = db.get('test_rating_'+ req.year);
+    const collectionc = db.get('profR_report');
+    collection.aggregate([{$match:{"col_id":col_id,"dept_id":dept_id}} ,
+        {$group :{"_id":"$prof_id","prof_name":{"$first":"$prof_name"}}},
+        {$project:{prof_id :"$_id",prof_name : 1}}
+    ],function (err,data) {
+        if (err) {
+            console.log('FIRST      ',err);
+            res.end();
+        }
+        else {
+            //console.log(data);
+            data.forEach(function (item) {
+
+                console.log(item);
+                collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id,"prof_name": item.prof_name,"subjects":[]},function (e,done) {
+                    if(e) {
+                        console.log(e);
+                        res.end();
+                    }
+                    else {
+                        console.log('prof added');
+                        collectionb.aggregate([{$match:{"prof_id" : item.prof_id,"col_id":col_id,"dept_id":dept_id}} ,
+                            /*{$group :{"_id":"$q_id"
+                             /!*AvgScore :{$avg : "$v_rating"}*!/
+                             }}*/
+                            {$project:{prof_id : 1 , sub_id : 1 , sub_name : 1, sem : 1}}
+                        ],function (er,d) {
+                            if (er) {
+                                console.log('SECOND            ',er);
+                                res.end();
+                            }
+                            else {
+
+                                //console.log(d);
+                                d.forEach(function(sub) {
+                                    collectiond.aggregate([{$match:{"prof_id" : item.prof_id,"col_id":col_id,"dept_id":dept_id,"sub_id":sub.sub_id}} ,
+                                        {$group :{"_id":"$q_id",
+                                            AvgScore :{$avg : "$v_rating"}
+                                        }},
+                                        {$project:{q_id : "$_id", avgR : "$AvgScore",_id : 0}}
+                                    ],function (ser,sd){
+                                        if(ser){
+                                            console.log('Subject Add error       ',ser)
+                                            res.end();
+                                        }
+                                        else {
+                                            var subject = {
+                                                "sub_id": sub.sub_id,
+                                                "sub_name": sub.sub_name,
+                                                "sem": sub.sem,
+                                                "reports":   sd
+                                            };
+
+                                            //console.log('subject :    ',subject);
+                                            //console.log('this is subjects   ',subjects);
+                                            console.log('Subject Array  ',subject);
+                                            collectionc.update({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id,"prof_name": item.prof_name},
+                                                {$push:{subjects: subject}},
+
+                                                function (e,done) {
+                                                    if(e) {
+                                                        console.log('last    ',e);
+                                                        res.end();
+                                                    }
+                                                    console.log('done');
+
+                                                });
+                                        }
+                                    })
+                                });
+
+                                /*setTimeout(function(){*/
+
+
+
+                                /*},2500);*/
+                                /*
+                                 collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id,"prof_name": item.prof_name,"report":d},function (e,done) {
+                                 if(e) {
+                                 show(e);
+                                 res.end();
+                                 }
+                                 console.log('done');
+                                 })*/
+                            }
+                        });
+                    }
+                })
+
+                // we can add survey id here by passing it in this function and puting that constraint on $match in aggregate
+
+            });
+            setTimeout(function(){res.end();},15000);
+        }
+
+
+
+    })
+
+});
+
+
+
+router.post('/lab_rep',function (req ,res,next) {
+    var db = req.db;
+    var col_id = "1";
+    var dept_id = "1001";
+    var survey_id = "survey-2017-1-even";
+    const collection = db.get('labs');
+    const collectionb = db.get('subject');
+    const collectiond = db.get('test_rating_'+ req.year);
+    const collectionc = db.get('lab_report');
+    collection.aggregate([{$match:{"col_id":col_id,"dept_id":dept_id}} ,
+        {$group :{"_id":"$lab_id","lab_name":{"$first":"$lab_name"}}},
+        {$project:{lab_id :"$_id",lab_name : 1}}
+    ],function (err,data) {
+        if (err) {
+            console.log('FIRST      ',err);
+            res.end();
+        }
+        else {
+            //console.log(data);
+            data.forEach(function (item) {
+
+                console.log(item.lab_id);
+                collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"lab_id":item.lab_id,"lab_name": item.lab_name,"subjects":[]},function (e,done) {
+                    if(e) {
+                        console.log(e);
+                        res.end();
+                    }
+                    else {
+                        console.log('lab added');
+                        collectionb.aggregate([{$match:{"lab_id" : item.lab_id,"col_id":col_id,"dept_id":dept_id}} ,
+                            /*{$group :{"_id":"$q_id"
+                             /!*AvgScore :{$avg : "$v_rating"}*!/
+                             }}*/
+                            {$project:{lab_id : 1 , sub_id : 1 , sub_name : 1}}
+                        ],function (er,d) {
+                            if (er) {
+                                console.log('SECOND            ',er);
+                                res.end();
+                            }
+                            else {
+
+                                //console.log(d);
+                                d.forEach(function(sub) {
+                                    collectiond.aggregate([{$match:{"lab_id" : item.lab_id,"col_id":col_id,"dept_id":dept_id,"sub_id":sub.sub_id}} ,
+                                        {$group :{"_id":"$q_id",
+                                            AvgScore :{$avg : "$v_rating"}
+                                        }},
+                                        {$project:{q_id : "$_id", avgR : "$AvgScore",_id : 0}}
+                                    ],function (ser,sd){
+                                        if(ser){
+                                            console.log('Subject Add error       ',ser)
+                                            res.end();
+                                        }
+                                        else {
+                                            var subject = {
+                                                "sub_id": sub.sub_id,
+                                                "sub_name": sub.sub_name,
+                                                "reports":   sd
+                                            };
+
+                                            //console.log('subject :    ',subject);
+                                            //console.log('this is subjects   ',subjects);
+                                            console.log('Subject Array  ',JSON.stringify(subject));
+                                            collectionc.update({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"lab_id":item.lab_id,"lab_name": item.lab_name},
+                                                {$push:{subjects: subject}},
+
+                                                function (e,done) {
+                                                    if(e) {
+                                                        console.log('last    ',e);
+                                                        res.end();
+                                                    }
+                                                    console.log('done');
+
+                                                });
+                                        }
+                                    })
+                                });
+
+                                /*setTimeout(function(){*/
+
+
+
+                                /*},2500);*/
+                                /*
+                                 collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id,"prof_name": item.prof_name,"report":d},function (e,done) {
+                                 if(e) {
+                                 show(e);
+                                 res.end();
+                                 }
+                                 console.log('done');
+                                 })*/
+                            }
+                        });
+                    }
+                })
+
+                // we can add survey id here by passing it in this function and puting that constraint on $match in aggregate
+
+            });
+            setTimeout(function(){res.end();},15000);
+        }
+
+
+
+    })
+
+});
+
+
+router.get('/overall_rep',function (req,res) {
+    var db = req.db;
+    var col_id = "1";
+    var dept_id = "1001";
+    var survey_id = "survey-2017-1-even";
+    var collection = db.get('test_rating_'+req.year);
+    var collectionb = db.get('overall_report');
+
+    collectionb.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"report":[]},function(err,done){
+        if(err){
+            console.log('1ST    ',err);
+            res.end();
+        }
+        else {
+            console.log('done');
+            collection.aggregate([{$match:{"studentOver":"overall"}},
+                    {$group:{"_id":"$q_id",
+                        AvgScore : {$avg: "$v_rating"}
+                    }},
+                    {$project : {q_id : "$_id", avgR : "$AvgScore" ,_id: 0} }
+                ],
+                function (er,data) {
+                    if(er){
+                        console.log(er);
+                        res.end();
+                    }
+                    else {
+                        console.log(data);
+                        data.forEach(function(rate) {
+                            console.log(rate);
+                            collectionb.update({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},{$push:{report:rate}},function(err,done){
+                                if(err){
+                                    console.log('2nd    ',err);
+                                    res.end();
+                                }
+                                else {
+                                    console.log('done');
+                                }
+                            });
+                        })
+                    }
+
+                })
+            setTimeout(function(){res.end();},15000);
+
+        }
+    });
+
+
+
+});
+
+
+router.get('/studentS_rep',function (req,res) {
+    var db = req.db;
+    var col_id = "1";
+    var dept_id = "1001";
+    var survey_id = "survey-2017-1-even";
+    var collection = db.get('test_rating_'+req.year);
+    var collectionb = db.get('studentS_report');
+
+    collectionb.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"report":[]},function(err,done){
+        if(err){
+            console.log('1ST    ',err);
+            res.end();
+        }
+        else {
+            console.log('done');
+            collection.aggregate([{$match:{"studentOver":"studentS"}},
+                    {$group:{"_id":"$q_id",
+                        AvgScore : {$avg: "$v_rating"}
+                    }},
+                    {$project : {q_id : "$_id", avgR : "$AvgScore" ,_id: 0} }
+                ],
+                function (er,data) {
+                    if(er){
+                        console.log(er);
+                        res.end();
+                    }
+                    else {
+                        console.log(data);
+                        data.forEach(function(rate) {
+                            console.log(rate);
+                            collectionb.update({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},{$push:{report:rate}},function(err,done){
+                                if(err){
+                                    console.log('2nd    ',err);
+                                    res.end();
+                                }
+                                else {
+                                    console.log('done');
+                                }
+                            });
+                        })
+                    }
+
+                })
+            setTimeout(function(){res.end();},15000);
+
+        }
+    });
+
+
+
+});
+
+
+
 router.get('/get_sub_reports',function (req,res) {
     var db = req.db;
     var survey_id = req.query['survey_id'];
@@ -1070,7 +1376,7 @@ router.post('/getlabs',function (req,res) {
         else {
             console.log('lab Added');
             res.writeHead(200,'Content-Type','application/json');
-            res.end(JSON.stringify(data));
+            res.end('{"data" : '+JSON.stringify(data)+'}');
         }
     });
 });
@@ -1094,7 +1400,7 @@ router.post('/getlab',function (req,res) {
 });
 
 
-router.post('/fetchlabs',function (req,res) {
+router.post('/fetchlab',function (req,res) {
 
     var db = req.db;
     const collection = db.get('subject');
@@ -1129,12 +1435,12 @@ router.post('/fetchlabs',function (req,res) {
 
 });// preassign
 
-router.post('/updatesublab',function(req,res){
+router.post('/updateSubLab',function(req,res){
 
     var db = req.db;
     const collection = db.get('subject');
 
-    collection.update({"col_id":req.body.col_id,"dept_id":req.body.dept_id,"sub_id":req.body.sub_id},{"$set":{"lab_id":req.body.prof_id}},function(e,data) {
+    collection.update({"col_id":req.body.col_id,"dept_id":req.body.dept_id,"sub_id":req.body.sub_id},{"$set":{"lab_id":req.body.lab_id}},function(e,data) {
         if (e) throw e;
         else {
             console.log('subject updated');

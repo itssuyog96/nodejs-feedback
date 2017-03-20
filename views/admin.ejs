@@ -419,7 +419,7 @@
         $("#<%= lab.name %>").DataTable().destroy();
         $("#<%= lab.name %>").DataTable({
             ajax: {
-                url: '../ajax/load_lab',
+                url: '../ajax/getlabs',
                 data: {dept_id: id, col_id: colg_id},
                 method: 'POST'
             },
@@ -432,7 +432,7 @@
                 <% }) %>
                 {
                     data: function (data) {
-                        var del_btn = '<a class="btn red btn-outline" href="javascript:del_subj(' + data.<%= lab.column_data[0] %>+ ', '+id+ ', '+colg_id+ ')" target="_blank">DELETE</a>';
+                        var del_btn = '<a class="btn red btn-outline" href="javascript:del_lab(' + data.<%= lab.column_data[0] %>+ ', '+id+ ', '+colg_id+ ')" target="_blank">DELETE</a>';
 
                         var btns = del_btn;
 
@@ -647,7 +647,7 @@
         hide_error_span('span-m_lab');
 
         $.ajax({
-            url: '../ajax/add_lab',
+            url: '../ajax/addlab',
             data: $('#form-m_lab').serialize(),
             method: 'POST',
             success: function(data){
