@@ -874,7 +874,7 @@ router.get('/sub_rep',function (req ,res,next) {
     const collectionc = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_report');
     collectionc.drop();
     const collectiond = db.get('professor');
-    collection.find({"sem":sem,"dept_id":dept_id,"col_id": col_id,"prof_id":{$ne: "NA" }},function (err,data) {
+    collection.find({"dept_id":dept_id,"col_id": col_id,"prof_id":{$ne: "NA" }},function (err,data) {
         if (err) {
             console.log(err);
             res.end();
@@ -1029,6 +1029,7 @@ router.get('/profR_rep',function (req ,res,next) {
                                         {$group :{"_id":"$q_id",
                                             AvgScore :{$avg : "$v_rating"}
                                         }},
+                                        {$sort:{_id : 1}},
                                         {$project:{q_id : "$_id", avgR : "$AvgScore",_id : 0}}
                                     ],function (ser,sd){
                                         if(ser){
@@ -1128,6 +1129,7 @@ router.post('/lab_rep',function (req ,res,next) {
                                         {$group :{"_id":"$q_id",
                                             AvgScore :{$avg : "$v_rating"}
                                         }},
+                                        {$sort:{_id : 1}},
                                         {$project:{q_id : "$_id", avgR : "$AvgScore",_id : 0}}
                                     ],function (ser,sd){
                                         if(ser){
@@ -1210,6 +1212,7 @@ router.get('/overall_rep',function (req,res) {
                     {$group:{"_id":"$q_id",
                         AvgScore : {$avg: "$v_rating"}
                     }},
+                    {$sort:{_id : 1}},
                     {$project : {q_id : "$_id", avgR : "$AvgScore" ,_id: 0} }
                 ],
                 function (er,data) {
@@ -1264,6 +1267,7 @@ router.get('/studentS_rep',function (req,res) {
                     {$group:{"_id":"$q_id",
                         AvgScore : {$avg: "$v_rating"}
                     }},
+                    {$sort:{_id : 1}},
                     {$project : {q_id : "$_id", avgR : "$AvgScore" ,_id: 0} }
                 ],
                 function (er,data) {
@@ -1296,6 +1300,66 @@ router.get('/studentS_rep',function (req,res) {
 
 
 });
+
+router.get('/remark_rep',function (req,res) {
+    var db = req.db;
+    var col_id = "1";
+    var dept_id = "1001";
+    var survey_id = "survey-2017-1-even";
+    var collection = db.get('test_rating_'+req.year);
+    var collectionb = db.get(survey_id+'_'+col_id+'_'+dept_id+'_remark_report');
+    collectionb.drop();
+    collectionb.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"report":[]},function(err,done){
+        if(err){
+            console.log('1ST    ',err);
+            res.end();
+        }
+        else {
+            console.log('done');
+            collection.aggregate([{$match:{"studentOver":"overall"}},
+                    {$group:{"_id":"$q_id",
+                        remarks: { $addToSet: "$remark"}
+                    }},
+                    {$sort:{_id : 1}},
+                    {$project : {q_id : "$_id", remarks : "$remarks" ,_id: 0} }
+                ],
+                function (er,data) {
+                    if(er){
+                        console.log(er);
+                        res.end();
+                    }
+                    else {
+                        data.forEach(function(rate) {
+                            console.log(rate);
+                            question.forEach(function(que){
+                               if(que.qid == rate.q_id){
+                                   rate.qname = que.question;
+                               }
+                            });
+                            console.log(rate);
+
+                            collectionb.update({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},{$push:{report:rate}},function(err,done){
+                                if(err){
+                                    console.log('2nd    ',err);
+                                    res.end();
+                                }
+                                else {
+                                    console.log('done');
+                                }
+                            });
+                        })
+                    }
+
+                })
+            setTimeout(function(){res.end();},15000);
+
+        }
+    });
+
+
+
+});
+
 
 
 
@@ -1336,7 +1400,7 @@ router.get('/get_lab_reports',function (req,res) {
     const collection = db.get(/*survey_id+*/'lab_report');
     collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},function (e,done) {
         if(e) {
-            show(e);
+            console.log(e);
             res.end();
         }
         else {
@@ -1362,7 +1426,7 @@ router.get('/get_prof_reports',function (req,res) {
     const collection = db.get(/*survey_id+*/'profR_report');
     collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},function (e,done) {
         if(e) {
-            show(e);
+            console.log(e);
             res.end();
         }
         else {
