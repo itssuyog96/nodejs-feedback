@@ -73,5 +73,24 @@ router.get('/profile', function (req, res) {
     }
 });
 
+router.get('/settings', function(req, res, next) {
+
+    if(req.session.login) {
+        if(req.session.passport.user.role == 'admin'){
+            res.render('settings', {dash : tiles, menu : menu, user : req.session.passport.user});
+        }
+        else{
+            delete req.session.redirectTo;
+            res.redirect('/login');
+        }
+
+    }
+    else {
+        req.session.redirectTo = '/admin/';
+        res.redirect('/login');
+    }
+
+});
+
 
 module.exports = router;
