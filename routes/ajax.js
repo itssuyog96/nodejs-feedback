@@ -862,12 +862,11 @@ router.post('/done', function (req, res, next) {
     });
 });
 
-router.get('/sub_rep',function (req ,res,next) {
+router.post('/sub_rep',function (req ,res,next) {
     var db = req.db;
-    var sem = "6";
-    var col_id = "1";
-    var dept_id = "1001";
-    var survey_id = "survey-2017-1-even";
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+    var survey_id = req.body.survey_id;
     var prof_name;
     const collection = db.get('subject');
     const collectionb = db.get('test_rating_'+req.year);
@@ -930,11 +929,11 @@ router.get('/sub_rep',function (req ,res,next) {
 });
 
 
-router.get('/prof_rep',function (req ,res,next) {
+router.post('/prof_rep',function (req ,res,next) {
     var db = req.db;
-    var col_id = "1";
-    var dept_id = "1001";
-    var survey_id = "survey-2017-1-even";
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+    var survey_id = req.body.survey_id;
     const collection = db.get('professor');
     const collectionc = db.get(survey_id+'_'+col_id+'_'+dept_id+'_prof_report_strict');
     collectionc.drop();
@@ -981,11 +980,11 @@ router.get('/prof_rep',function (req ,res,next) {
 
 });
 
-router.get('/profR_rep',function (req ,res,next) {
+router.post('/profR_rep',function (req ,res,next) {
     var db = req.db;
-    var col_id = "1";
-    var dept_id = "1001";
-    var survey_id = "survey-2017-1-even";
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+    var survey_id = req.body.survey_id;
     const collection = db.get('professor');
     const collectionb = db.get('subject');
     const collectiond = db.get('test_rating_'+ req.year);
@@ -1079,13 +1078,11 @@ router.get('/profR_rep',function (req ,res,next) {
 
 });
 
-
-
 router.post('/lab_rep',function (req ,res,next) {
     var db = req.db;
-    var col_id = "1";
-    var dept_id = "1001";
-    var survey_id = "survey-2017-1-even";
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+    var survey_id = req.body.survey_id;
     const collection = db.get('labs');
     const collectionb = db.get('subject');
     const collectiond = db.get('test_rating_'+ req.year);
@@ -1192,11 +1189,11 @@ router.post('/lab_rep',function (req ,res,next) {
 });
 
 
-router.get('/overall_rep',function (req,res) {
+router.post('/overall_rep',function (req,res) {
     var db = req.db;
-    var col_id = "1";
-    var dept_id = "1001";
-    var survey_id = "survey-2017-1-even";
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+    var survey_id = req.body.survey_id;
     var collection = db.get('test_rating_'+req.year);
     var collectionb = db.get(survey_id+'_'+col_id+'_'+dept_id+'_overall_report');
     collectionb.drop();
@@ -1247,11 +1244,11 @@ router.get('/overall_rep',function (req,res) {
 });
 
 
-router.get('/studentS_rep',function (req,res) {
+router.post('/studentS_rep',function (req,res) {
     var db = req.db;
-    var col_id = "1";
-    var dept_id = "1001";
-    var survey_id = "survey-2017-1-even";
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+    var survey_id = req.body.survey_id;
     var collection = db.get('test_rating_'+req.year);
     var collectionb = db.get(survey_id+'_'+col_id+'_'+dept_id+'_studentSec_report');
     collectionb.drop();
@@ -1301,11 +1298,11 @@ router.get('/studentS_rep',function (req,res) {
 
 });
 
-router.get('/remark_rep',function (req,res) {
+router.post('/remark_rep',function (req,res) {
     var db = req.db;
-    var col_id = "1";
-    var dept_id = "1001";
-    var survey_id = "survey-2017-1-even";
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+    var survey_id = req.body.survey_id;
     var collection = db.get('test_rating_'+req.year);
     var collectionb = db.get(survey_id+'_'+col_id+'_'+dept_id+'_remark_report');
     collectionb.drop();
@@ -1359,9 +1356,6 @@ router.get('/remark_rep',function (req,res) {
 
 
 });
-
-
-
 
 router.get('/get_sub_reports',function (req,res) {
     var db = req.db;
@@ -1442,7 +1436,7 @@ router.get('/get_prof_reports',function (req,res) {
 });
 
 
-router.post('/get_sub_reports_excel',function (req,res) {
+router.get('/get_sub_reports_excel',function (req,res) {
     //var db = req.db;
     var survey_id = req.body.survey_id;
     var col_id = req.body.col_id;
