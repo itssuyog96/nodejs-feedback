@@ -971,7 +971,7 @@ router.post('/prof_rep',function (req ,res,next) {
                     }
                 });
             });
-            setTimeout(function(){res.end();},15000);
+            setTimeout(function(){res.end();},5000);
         }
 
 
@@ -1069,7 +1069,7 @@ router.post('/profR_rep',function (req ,res,next) {
                 // we can add survey id here by passing it in this function and puting that constraint on $match in aggregate
 
             });
-            setTimeout(function(){res.end();},15000);
+            setTimeout(function(){res.end();},5000);
         }
 
 
@@ -1179,7 +1179,7 @@ router.post('/lab_rep',function (req ,res,next) {
                 // we can add survey id here by passing it in this function and puting that constraint on $match in aggregate
 
             });
-            setTimeout(function(){res.end();},15000);
+            setTimeout(function(){res.end();},5000);
         }
 
 
@@ -1234,7 +1234,7 @@ router.post('/overall_rep',function (req,res) {
                     }
 
                 })
-            setTimeout(function(){res.end();},15000);
+            setTimeout(function(){res.end();},5000);
 
         }
     });
@@ -1289,7 +1289,7 @@ router.post('/studentS_rep',function (req,res) {
                     }
 
                 })
-            setTimeout(function(){res.end();},15000);
+            setTimeout(function(){res.end();},5000);
 
         }
     });
@@ -1348,7 +1348,7 @@ router.post('/remark_rep',function (req,res) {
                     }
 
                 })
-            setTimeout(function(){res.end();},15000);
+            setTimeout(function(){res.end();},5000);
 
         }
     });
