@@ -1,29 +1,29 @@
 {
   "admin":{
-    "tiles" : ["COLLEGES", "DEPARTMENTS", "PROFESSORS", "SUBJECTS", "SURVEY", "REPORTS", "MANAGE LOGIN", "SETTINGS"],
-    "fa_icons" : ["fa-institution", "fa-users", "fa-user", "fa-book", "fa-check-square-o", "fa-line-chart", "fa-lock", "fa-cogs"],
-    "bg_style" : ["bg-blue", "bg-red", "bg-yellow", "bg-green", "bg-red", "bg-purple", "bg-red", "bg-dark"],
-    "url" : ["../../../admin/manage", "../../../admin/manage", "../../../admin/manage", "../../../admin/manage", "../../../admin/survey", "../../../admin/reports", "../../../admin/manage_login", "../../../admin/settings"]
+    "tiles" : ["COLLEGES", "DEPARTMENTS", "PROFESSORS", "SUBJECTS", "SURVEY", "REPORTS", "MANAGE LOGIN", "SETTINGS", "PROFILE"],
+    "fa_icons" : ["fa-institution", "fa-users", "fa-user", "fa-book", "fa-check-square-o", "fa-line-chart", "fa-lock", "fa-cogs", "fa-user"],
+    "bg_style" : ["bg-blue", "bg-red", "bg-yellow", "bg-green", "bg-red", "bg-purple", "bg-red", "bg-dark", "bg-blue"],
+    "url" : ["../../../admin/manage", "../../../admin/manage", "../../../admin/manage", "../../../admin/manage", "../../../admin/survey", "../../../admin/reports", "../../../admin/manage_login", "../../../admin/settings", "../../../admin/profile"]
   },
 
   "feeder":{
-    "tiles" : ["PROFESSORS", "SUBJECTS", "SUBJECT - PROFESSOR ASSIGN", "QUESTIONS", "SURVEY", "REPORTS", "SETTINGS"],
-    "fa_icons" : ["fa-user", "fa-book", "fa-question", "fa-exchange", "fa-check-square-o", "fa-line-chart", "fa-cogs"],
-    "bg_style" : ["bg-blue", "bg-red", "bg-green-sharp", "bg-light", "bg-yellow", "bg-green", "bg-dark"],
-    "url" : ["../../../feed_analyzer/professor", "../../../feed_analyzer/subjects", "../../../feed_analyzer/prof_assign", "../../../feed_analyzer/questions", "../../../feed_analyzer/survey", "../../../feed_analyzer/reports", "../../../feed_analyzer/settings"]
+    "tiles" : ["PROFESSORS", "SUBJECTS", "SUB - PROF ASSIGN", "QUESTIONS", "SURVEY", "REPORTS", "SETTINGS", "PROFILE"],
+    "fa_icons" : ["fa-users", "fa-book", "fa-exchange", "fa-question", "fa-check-square-o", "fa-line-chart", "fa-cogs", "fa-user"],
+    "bg_style" : ["bg-blue", "bg-red", "bg-green-sharp", "bg-red", "bg-yellow", "bg-green", "bg-dark", "bg-blue"],
+    "url" : ["../../../feed_analyzer/professor", "../../../feed_analyzer/subjects", "../../../feed_analyzer/prof_assign", "../../../feed_analyzer/questions", "../../../feed_analyzer/survey", "../../../feed_analyzer/reports", "../../../feed_analyzer/settings", "../../../feed_analyzer/profile"]
   },
 
   "principal":{
-    "tiles" : ["DEPARTMENT REPORTS", "PROFESSOR REPORTS", "SUBJECT REPORTS", "EXCEL REPORTS", "SETTINGS"],
-    "fa_icons" : ["fa-user", "fa-book", "fa-question", "fa-file-excel-o", "fa-check-square-o"],
-    "bg_style" : ["bg-blue", "bg-red", "bg-green-sharp", "bg-green", "bg-yellow"],
-    "url" : ["../../../principal/departmentreports", "../../../principal/professorreports", "../../../principal/subjectreports", "../../../principal/excelreports", "../../../principal/settings"]
+    "tiles" : ["DEPARTMENT REPORTS", "PROFESSOR REPORTS", "SUBJECT REPORTS", "EXCEL REPORTS", "SETTINGS", "PROFILE"],
+    "fa_icons" : ["fa-user", "fa-book", "fa-question", "fa-file-excel-o", "fa-check-square-o", "fa-user"],
+    "bg_style" : ["bg-blue", "bg-red", "bg-green-sharp", "bg-green", "bg-yellow", "bg-blue"],
+    "url" : ["../../../principal/departmentreports", "../../../principal/professorreports", "../../../principal/subjectreports", "../../../principal/excelreports", "../../../principal/settings", "../../../principal/profile"]
   },
 
   "hod":{
-    "tiles" : ["UPLOAD DETAILS", "SURVEY STATUS", "DEPARTMENT REPORTS", "PROFESSOR REPORTS", "SUBJECT REPORTS", "SETTINGS"],
-    "fa_icons" : ["fa-upload", "fa-check-square-o", "fa-line-chart", "fa-line-chart", "fa-cogs"],
-    "bg_style" : ["bg-blue", "bg-red", "bg-green-sharp", "bg-green", "bg-yellow"],
-    "url" : ["../../../headofdepartment/upload", "../../../headofdepartment/hodsurvey", "../../../headofdepartment/department", "../../../headofdepartment/professor", "../../../", "../../../headofdepartment/settings"]
+    "tiles" : ["UPLOAD DETAILS", "SURVEY STATUS", "DEPARTMENT REPORTS", "PROFESSOR REPORTS", "SUBJECT REPORTS", "SETTINGS", "PROFILE"],
+    "fa_icons" : ["fa-upload", "fa-check-square-o", "fa-line-chart", "fa-line-chart", "fa-line-chart", "fa-cogs", "fa-user"],
+    "bg_style" : ["bg-blue", "bg-red", "bg-green-sharp", "bg-green", "bg-blue-sharp", "bg-yellow", "bg-blue"],
+    "url" : ["../../../headofdepartment/upload", "../../../headofdepartment/hodsurvey", "../../../headofdepartment/department", "../../../headofdepartment/professor", "../../../", "../../../headofdepartment/settings", "../../../headofdepartment/profile"]
   }
 }

@@ -47,19 +47,10 @@ router.get('/hodsurvey', function(req, res, next) {
 });
  //--------------------------------------------------------------------
 router.get('/profile', function (req, res) {
-    if(req.session.login) {
-        if(req.session.passport.user.role == 'hod'){
-            res.render('profilepage', {dash : tiles, menu : menu, user : req.session.passport.user, name: "XYZ", role: "HOD", email: "xyz@gmail.com", contact: "1234567890"});
-
-        }
-        else{
-            delete req.session.redirectTo;
-            res.redirect('/login');
-        }
-
+    if(req.session.login == 1){
+        res.render("profilepage", {dash : tiles, menu : menu, user : req.session.passport.user});
     }
     else {
-        req.session.redirectTo = '/headofdepartment/';
         res.redirect('/login');
     }
 });

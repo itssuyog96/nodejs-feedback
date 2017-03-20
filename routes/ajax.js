@@ -1127,7 +1127,7 @@ router.post('/fetchlabs',function (req,res) {
 
     });
 
-})// preassign
+});// preassign
 
 router.post('/updatesublab',function(req,res){
 
@@ -1145,12 +1145,42 @@ router.post('/updatesublab',function(req,res){
 
 }); // update lab
 
+////////////////////////////////////////////// MAIL AND CONTACT UPDATE /////////////////////////////////////////////////////////
 
+router.post('/change_mail', function (req, res) {
 
+    var db = req.db;
+    const collection = db.get('users');
 
+    /*console.log(req.body.new_email);
+    console.log(req.body.name);
+    console.log(req.body.role);*/
 
+    collection.update({"nickname": req.body.name, "role": req.body.role}, {"$set":{"email_id": req.body.new_email}}, function (e, data) {
+        if(e) throw e;
+        else {
+            console.log("email updated");
+        }
+    });
+    res.end();
+});
 
+router.post('/change_contact', function (req, res) {
 
+    var db = req.db;
+    const collection = db.get('users');
 
+    /*console.log(req.body.new_contact);
+    console.log(req.body.name);
+    console.log(req.body.role);*/
+
+    collection.update({"nickname": req.body.name, "role": req.body.role}, {"$set":{"contact": req.body.new_contact}}, function (e, data) {
+        if(e) throw e;
+        else {
+            console.log("contact updated");
+        }
+    });
+    res.end();
+});
 
 module.exports = router;

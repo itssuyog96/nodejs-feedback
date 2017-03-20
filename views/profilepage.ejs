@@ -40,39 +40,75 @@
 
             <div>
                 <div class="jumbotron" style="background: transparent" align="center">
-                    <!--<h1>Welcome, XYZ (HOD) !</h1>-->
                     <h1>Profile page</h1>
-                    <hr>
                 </div>
             </div>
             <div>
                 <div class="col-md-6" style="background-color: #d0d1cc">
-                    <h3><b>Name:</b> <%= name %></h3>
+                    <h3 id="users_name" data-name="<%= user.nickname %>"><b>Name:</b> <%= user.nickname %></h3>
                     <br>
-                    <h3><b>Role:</b> <%= role %></h3>
+                    <h3 id="users_role" data-role="<%= user.role %>"><b>Role:</b> <%= user.role %></h3>
                     <br>
-                    <h3><b>Email ID:</b> <%= email %></h3>
+                    <h3 id="users_dept_id" data-deptid="<%= user.dep_id %>"><b>Dept ID:</b>
+                        <% if(user.dep_id == ""){ %>
+                        <%= "----" %>
+                        <% } else {%>
+                        <%= user.dep_id %>
+                        <% } %>
+                    </h3>
                     <br>
-                    <h3><b>Contact:</b> <%= contact %></h3>
+                    <h3 id="users_email" data-email="<%= user.email_id %>"><b>Email ID:</b> <%= user.email_id %></h3>
+                    <br>
+                    <h3 id="users_contact" data-contact="<%= user.contact %>"><b>Contact:</b> <%= user.contact %></h3>
+
+                    <h3 id="users_col_id" data-colid="<%= user.col_id %>" hidden><b>Col ID:</b> <%= user.col_id %></h3>
                 </div>
                 <div class="col-md-1">
-                    <div style="border-left:2px solid #000;height:280px"></div>
+                    <div style="border-left:2px solid #000;height:360px"></div>
                 </div>
                 <div class="col-md-5">
-                    <div style="margin-top: 8%">
+                    <div>
                         <button type="button" class="btn btn-primary btn-lg btn-block" id="change_email">Change Email ID</button>
-                        <br><br>
+                        <br>
+                        <div class="alert alert-info" id="mail" hidden>
+                            <div class="input-group" id="mail_form">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button" id="close" onclick="close_form('mail')"><i class="fa fa-times-circle"></i></button>
+                                </span>
+                                <input type="text" id="new_mail" class="form-control" placeholder="Enter Email ID" required/>
+                                <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="button" id="accept_mail">Confirm</button>
+                                </span>
+                            </div>
+                        </div>
+                        <div id="mail_message">
+
+                        </div>
+                        <br>
                         <button type="button" class="btn btn-primary btn-lg btn-block" id="change_contact">Change Contact</button>
-                        <br><br>
+                        <br>
+                        <div class="alert alert-info" id="contact" hidden>
+                            <div class="input-group" id="contact_form">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button" id="close" onclick="close_form('contact')"><i class="fa fa-times-circle"></i></button>
+                                </span>
+                                <input type="tel" id="new_contact" class="form-control" placeholder="Enter Contact" required/>
+                                <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="button" id="accept_contact">Confirm</button>
+                                </span>
+                            </div>
+                        </div>
+                        <div id="contact_message">
+
+                        </div>
+                        <br>
                         <div class="alert alert-info">
                             <strong>Info!</strong> Go to setting to change your password
                         </div>
                     </div>
                 </div>
             </div>
-
             <!--STOP EDITING HERE-->
-
         </div>
         <!-- END CONTENT BODY -->
     </div>
@@ -86,12 +122,104 @@
 </body>
 <script type="text/javascript">
     $("#change_email").click(function () {
-        
+        $("#mail_message").text('');
+        $("#mail").show();
+    })
+
+    $("#change_contact").click(function () {
+        $("#contact_message").text('');
+        $("#contact").show();
     })
     
-    $("#change_contact").click(function () {
-        
+    $("#accept_mail").click(function () {
+        if($("#new_mail").val() != null){
+            if(validateEmail($("#new_mail").val())){
+                $.ajax({
+                    url: "../../ajax/change_mail",
+                    data: {new_email: $("#new_mail").val(), name: $("#users_name").attr("data-name"), role: $("#users_role").attr("data-role")},
+                    method: 'POST',
+                    success: function () {
+                        $("#mail").hide();
+                        $("#mail_message").text('');
+                        $("#mail_message").html(
+                            '<div class="alert alert-info alert-dismissable">'+
+                                '<a href="#" class="close" data-dismiss="alert"><i class="fa fa-times-circle"></i></a>'+
+                                '<h3>Email changed successfully!</h3>'+
+                            '</div>'
+                        );
+                    },
+                    error: function () {
+                        $("#mail").hide();
+                        $("#mail_message").text('');
+                        $("#mail_message").html(
+                            '<div class="alert alert-info alert-dismissable">'+
+                                '<a href="#" class="close" data-dismiss="alert"><i class="fa fa-times-circle"></i></a>'+
+                                '<h3>An error occured. Please try again</h3>'+
+                            '</div>'
+                        );
+                    }
+                });
+            }else {
+                $("#new_mail").attr("placeholder", "Please enter a valid email id");
+            }
+        }
+        else {
+            $("#new_mail").attr("placeholder", "Please enter a valid email id");
+        }
+    });
+
+    $("#accept_contact").click(function () {
+        if($("#new_contact").val() != null){
+            if(validateContact($("#new_contact").val())){
+                $.ajax({
+                    url: "../../ajax/change_contact",
+                    data: {new_contact: $("#new_contact").val(), name: $("#users_name").attr("data-name"), role: $("#users_role").attr("data-role")},
+                    method: 'POST',
+                    success: function () {
+                        $("#contact").hide();
+                        $("#contact_message").text('');
+                        $("#contact_message").html(
+                            '<div class="alert alert-info alert-dismissable">'+
+                            '<a href="#" class="close" data-dismiss="alert"><i class="fa fa-times-circle"></i></a>'+
+                            '<h3>Contact number changed successfully!</h3>'+
+                            '</div>'
+                        );
+                    },
+                    error: function () {
+                        $("#contact").hide();
+                        $("#contact_message").text('');
+                        $("#contact_message").html(
+                            '<div class="alert alert-info alert-dismissable">'+
+                            '<a href="#" class="close" data-dismiss="alert"><i class="fa fa-times-circle"></i></a>'+
+                            '<h3>An error occured. Please try again</h3>'+
+                            '</div>'
+                        );
+                    }
+                });
+            }else {
+                $("#new_contact").attr("placeholder", "Please enter a valid contact number");
+            }
+        }
+        else {
+            $("#new_contact").attr("placeholder", "Please enter a valid contact number");
+        }
     })
+
+    function close_form(id) {
+        $("#" + id).hide();
+    }
+
+    function validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        console.log(re.test(email));
+        return re.test(email);
+    }
+
+    function validateContact(contact) {
+        var re = /^\d{10}$/;
+        console.log(re.test(contact));
+        return re.test(contact);
+    }
 </script>
 
 </html>

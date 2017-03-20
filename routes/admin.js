@@ -64,5 +64,14 @@ router.get('/manage_login', function(req, res, next){
     }
 });
 
+router.get('/profile', function (req, res) {
+    if(req.session.login == 1){
+        res.render("profilepage", {dash : tiles, menu : menu, user : req.session.passport.user});
+    }
+    else {
+        res.redirect('/login');
+    }
+});
+
 
 module.exports = router;

@@ -8,7 +8,8 @@
       {"id" : 5, "name" : "Survey", "url" : "../../../admin/survey", "icon" : "icon-feed"},
       {"id" : 6, "name" : "Reports", "url" : "../../../admin/reports", "icon" : "icon-bar-chart"},
       {"id" : 7, "name" : "Manage Login", "url" : "../../../admin/manage_login", "icon" : "icon-lock"},
-      {"id" : 8, "name" : "Settings", "url" : "../../../admin/settings", "icon" : "icon-settings"}
+      {"id" : 8, "name" : "Settings", "url" : "../../../admin/settings", "icon" : "icon-settings"},
+      {"id" : 9, "name" : "Profile", "url" : "../../../admin/profile", "icon" : "fa fa-user"}
     ],
     "child" : [
       {"id" : 1, "name" : "Create Survey", "url" : "../../../feed_analyzer/create_survey", "parent_id" : 5, "icon" : "icon-pencil"},
@@ -24,7 +25,8 @@
       {"id" : 4, "name" : "Questions", "url" : "../../../feed_analyzer/questions", "icon" : "icon-question"},
       {"id" : 5, "name" : "Survey", "url" : "../../../feed_analyzer/survey", "icon" : "icon-feed"},
       {"id" : 6, "name" : "Reports", "url" : "../../../feed_analyzer/reports", "icon" : "icon-bar-chart"},
-      {"id" : 7, "name" : "Settings", "url" : "../../../feed_analyzer/settings", "icon" : "icon-settings"}
+      {"id" : 7, "name" : "Settings", "url" : "../../../feed_analyzer/settings", "icon" : "icon-settings"},
+      {"id" : 8, "name" : "Profile", "url" : "../../../feed_analyzer/profile", "icon" : "fa fa-user"}
     ],
     "child" : [
       {"id" : 1, "name" : "Create Survey", "url" : "../../../feed_analyzer/create_survey", "parent_id" : 5, "icon" : "icon-pencil"},
@@ -36,7 +38,8 @@
     "parent" : [
       {"id" : 1, "name" : "Dashboard", "url" : "../../../principal", "icon" : "icon-home"},
       {"id" : 2, "name" : "Reports", "url" : "../../../principal/reports", "icon" : "icon-bar-chart"},
-      {"id" : 3, "name" : "Settings", "url" : "../../../principal/settings", "icon" : "icon-settings"}
+      {"id" : 3, "name" : "Settings", "url" : "../../../principal/settings", "icon" : "icon-settings"},
+      {"id" : 4, "name" : "Profile", "url" : "../../../principal/profile", "icon" : "fa fa-user"}
     ],
     "child":[]
   },
@@ -46,7 +49,8 @@
       {"id" : 1, "name" : "Dashboard", "url" : "../../../headofdepartment", "icon" : "icon-home"},
       {"id" : 2, "name" : "Upload", "url" : "../../../headofdepartment/upload", "icon" : "fa fa-upload"},
       {"id" : 3, "name" : "Reports", "url" : "../../../headofdepartment/reports", "icon" : "icon-bar-chart"},
-      {"id" : 4, "name" : "Settings", "url" : "../../../headofdepartment/settings", "icon" : "icon-settings"}
+      {"id" : 4, "name" : "Settings", "url" : "../../../headofdepartment/settings", "icon" : "icon-settings"},
+      {"id" : 5, "name" : "Profile", "url" : "../../../headofdepartment/profile", "icon" : "fa fa-user"}
     ],
     "child":[
       {"id" : 1, "name" : "Department", "url" : "../../../headofdepartment/reports/department", "parent_id" : 3, "icon" : "icon-pencil"},
