@@ -8,6 +8,7 @@ var express = require('express');
 var router = express.Router();
 var tiles = require('../dashmeta.json').hod;
 var menu = require('../menu.json').hod;
+var questions = require('../questions.json');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -97,6 +98,24 @@ router.get('/settings', function(req, res, next) {
 router.get('/manage', function(req, res, next){
 
     res.render('feed_analyzer');
+});
+
+router.get('/professor', function (req, res) {
+    if(req.session.login == 1){
+        res.render("professorreports", {dash : tiles, menu : menu, user : req.session.passport.user, questions: questions});
+    }
+    else {
+        res.redirect('/login');
+    }
+});
+
+router.get('/subject', function (req, res) {
+    if(req.session.login == 1){
+        res.render("subjectreports", {dash : tiles, menu : menu, user : req.session.passport.user, questions: questions});
+    }
+    else {
+        res.redirect('/login');
+    }
 });
 
 module.exports = router;
