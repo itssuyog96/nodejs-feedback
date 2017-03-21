@@ -110,7 +110,9 @@ app.post('/', function(req, res) {
                     //pysms.sendsms(contact, name, password, uid, "0bfb331611cbcf420b38f73e1936f836", "057829fa5a65fc1ace408f490be486ac");
                 }
             });
-            res.end();
+            setTimeout(function () {
+                res.end();
+            }, 15000)
         }
     });
 });
