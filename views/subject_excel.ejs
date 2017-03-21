@@ -48,26 +48,109 @@
                         <div class="portlet-title">
                             <div class="caption">
                                 <i class="icon-social-dribbble font-green hide"></i>
-                                <span class="caption-subject font-dark bold uppercase">Survey Details</span>
+                                <span class="caption-subject font-dark bold uppercase">Survey Reports</span>
                             </div>
                         </div>
                         <div class="portlet-body">
                             <div>
-                                <div class="tiles tiles-subject">
+                                <!--<div class="tiles tiles-subject">-->
+
+                                    <!--<a href="#">-->
+                                        <!--<div class="tile bg-red">-->
+                                            <!--<div class="tile-body">-->
+                                                <!--<i class="fa fa-database"></i>-->
+                                            <!--</div>-->
+                                            <!--<div class="tile-object">-->
+                                                <!--<div class="name"> SUBJECT WISE </div>-->
+                                                <!--<div class="number"> # </div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</a>-->
+
+                                <!--</div>-->
+
+                                <div class="tiles tiles-department">
 
                                     <a href="#">
-                                        <div class="tile bg-red">
+                                        <div class="tile bg-blue">
                                             <div class="tile-body">
                                                 <i class="fa fa-database"></i>
                                             </div>
                                             <div class="tile-object">
-                                                <div class="name"> SUBJECT WISE </div>
+                                                <div class="name"> DEPARTMENT WISE </div>
                                                 <div class="number"> # </div>
                                             </div>
                                         </div>
                                     </a>
 
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="customize" style="display:none;">
+                <div class="col-md-12">
+                    <div class="portlet light ">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="icon-social-dribbble font-green hide"></i>
+                                <span class="caption-subject font-dark bold uppercase">Customize</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="row">
+                                <div class="form-group selectSurvey">
+                                    <input type="hidden" name="col_id" value="<%= user.col_id %>" />
+
+                                    <div class="form-group col-md-12">
+                                        <div class="form-group col-md-2 col-md-offset-2">
+                                            <label class="form-control" for="survey_id">Select Survey</label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <select class="form-control" id="survey_id"  name="survey_id">
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group col-md-12">
+                                        <div class="form-group col-md-2 col-md-offset-2">
+                                            <label class="form-control" for="dept_id">Select Department</label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <select class="form-control" id="dept_id" name="dept_id">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <input type="submit" class="btn btn-default submitFormBtn" value="Submit"/><i id="loader" style="margin-left:20px; display:none;" class="fa fa-lg fa-cog fa-spin"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="error-div" align="center" style="display:none; margin-top:10px;">
+                                <span class="note note-warning">Something went wrong!&nbsp;<small>Try Again or Contact Administrator</small></span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="download_div" style="display:none">
+                <div class="col-md-12">
+                    <div class="portlet light ">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="icon-social-dribbble font-green hide"></i>
+                                <span class="caption-subject font-dark bold uppercase">Download File</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="well download-div" align="center">
+                                <a class="download-excel" href="#" ><img height="10%" width="10%" src="../../logo/excel.ico" /></a>
                             </div>
                         </div>
                     </div>
@@ -90,6 +173,33 @@
 </body>
 
 <script>
+
+    (load_departments = function(){
+        $.ajax({
+            url: '../../ajax/getDeptList',
+            data: {col_id: '<%= user.col_id %>'},
+            method: 'POST',
+            success: function(data){
+                data.forEach(function(d){
+                    $('#dept_id').append('<option value="'+d.dept_id+'">'+d.dept_name+'</option>')
+                });
+            }
+        });
+    })();
+
+    (load_surveys = function(){
+        $.ajax({
+            url: '../../ajax/getSurveyList',
+            data: {col_id: '<%= user.col_id %>'},
+            method: 'POST',
+            success: function(data){
+                data.forEach(function(d){
+                    $('#survey_id').append('<option value="'+d.survey_id+'">'+d.survey_id+'</option>')
+                });
+            }
+        });
+    })();
+
     $('.portlet-body').on('click', '.tiles-subject', function(){
         $.ajax({
             url: '../../../ajax/get_sub_reports_excel',
@@ -100,6 +210,34 @@
             },
             error: function(error){
                 console.log(error.statusText);
+            }
+        })
+    })
+
+    $('.download-div').on('click', '.download-excel', function(){
+        window.location.replace('../../downloads/' + $('#survey_id option:selected').val() + '_' + $('#dept_id option:selected').val() + '.xlsx')
+    })
+
+    $('.portlet-body').on('click', '.tiles-department', function(){
+        $('#customize').fadeIn();
+    })
+
+    $('.selectSurvey').on('click', '.submitFormBtn', function (e) {
+        $('#error-div').fadeOut();
+        $('#download_div').fadeOut();
+        $('#loader').fadeIn();
+        $.ajax({
+            url: '../../ajax/get_dept_report_excel',
+            method: 'POST',
+            data: {col_id: '<%= user.col_id %>', dept_id: $('#dept_id option:selected').val(), survey_id: $('#survey_id option:selected').val()},
+            success: function(data){
+                $('#download_div').fadeIn();
+                $('#loader').fadeOut();
+            },
+            error: function(error){
+                $('#error-div').fadeIn();
+                console.log(JSON.stringify(error));
+                $('#loader').fadeOut();
             }
         })
     })

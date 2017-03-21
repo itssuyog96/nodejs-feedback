@@ -127,7 +127,7 @@ router.get('/reports', function(req, res){
     if(req.session.login) {
         if(req.session.passport.user.role == 'feed_analyzer'){
 
-            res.render('graphsurvey', {menu : menu, user : req.session.passport.user});
+            res.render('reports', {menu : menu, user : req.session.passport.user});
 
         }
         else{
@@ -244,9 +244,16 @@ router.get('/settings', function(req, res, next){
 
 router.get('/profile', function (req, res) {
     if(req.session.login == 1){
-        res.render("profilepage", {dash : tiles, menu : menu, user : req.session.passport.user});
+        if(req.session.passport.user.role == 'feed_analyzer'){
+            res.render("profilepage", {dash : tiles, menu : menu, user : req.session.passport.user});
+        }
+        else{
+            delete req.session.redirectTo;
+            res.redirect('/login');
+        }
     }
     else {
+        req.session.redirectTo = '/feed_analyzer/profile';
         res.redirect('/login');
     }
 });

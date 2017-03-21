@@ -17,7 +17,7 @@
     "tiles" : ["DEPARTMENT REPORTS", "PROFESSOR REPORTS", "SUBJECT REPORTS", "EXCEL REPORTS", "SETTINGS", "PROFILE"],
     "fa_icons" : ["fa-building", "fa-users", "fa-book", "fa-file-excel-o", "fa-cogs", "fa-user"],
     "bg_style" : ["bg-blue", "bg-red", "bg-green-sharp", "bg-green", "bg-yellow", "bg-blue"],
-    "url" : ["../../../", "../../../principal/professorreports", "../../../principal/subjectreports", "../../../principal/excelreports", "../../../principal/settings", "../../../principal/profile"]
+    "url" : ["../../../principal/departmentreports", "../../../principal/professorreports", "../../../principal/subjectreports", "../../../principal/excelreports", "../../../principal/settings", "../../../principal/profile"]
   },
 
   "hod":{

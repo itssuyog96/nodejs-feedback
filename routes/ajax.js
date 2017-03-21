@@ -1437,7 +1437,7 @@ router.get('/get_prof_reports',function (req,res) {
 });
 
 
-router.get('/get_sub_reports_excel',function (req,res) {
+router.post('/get_sub_reports_excel',function (req,res) {
     //var db = req.db;
     var survey_id = req.body.survey_id;
     var col_id = req.body.col_id;
@@ -1455,6 +1455,42 @@ router.get('/get_sub_reports_excel',function (req,res) {
         console.log(textChunk)
     });
 });
+
+router.post('/get_dept_report_excel',function (req,res) {
+    //var db = req.db;
+    var survey_id = req.body.survey_id;
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+
+    console.log(survey_id, col_id, dept_id);
+
+    //questions = require('../questions.json');
+
+    var proc = spawn('python3',["python-files/department_excel.py", survey_id, col_id, dept_id]);
+    console.log("Spawned!!!");
+
+    proc.stdout.on('data', function (chunk){
+        var textChunk = chunk.toString();
+        console.log("-" + textChunk)
+        if(textChunk === "Omkar"){
+            console.log("-------- Completed --------")
+
+        }
+
+    });
+
+    proc.stderr.on('data', function(data){
+        console.log(data.toString())
+        res.writeHead(500, JSON.stringify(data.toString()))
+    })
+
+    setTimeout(function(){
+        res.end()
+    }, 3000);
+
+
+});
+
 
 router.post('/dummy',function (req,res) {
     setTimeout(function(){

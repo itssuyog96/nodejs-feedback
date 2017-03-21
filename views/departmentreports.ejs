@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<% include tpl/header.ejs %>
+
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
+<!-- BEGIN HEADER -->
+
+<% include tpl/menu.ejs %>
+
+<!-- END HEADER -->
+
+
+<!-- BEGIN HEADER & CONTENT DIVIDER -->
+<div class="clearfix"> </div>
+<!-- END HEADER & CONTENT DIVIDER -->
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <% include tpl/sidebar.ejs %>
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+
+            <!--h3 class="page-title"> Blank Page Layout
+                <small>blank page layout</small>        To be resolved
+            </h3-->
+
+            <!-- END PAGE HEADER-->
+
+
+            <!--START EDITING FROM HERE-->
+
+            <div class="note note-info">
+                <p> Department reports are only available through excel currently &nbsp;&nbsp;<button id="dept_btn" class="btn btn-primary btn-sm">GO TO EXCEL REPORTS PAGE</button></p>
+            </div>
+
+
+            <!--STOP EDITING HERE-->
+
+        </div>
+        <!-- END CONTENT BODY -->
+    </div>
+    <!-- END CONTENT -->
+    <% include tpl/quicksidebar.ejs %>
+</div>
+
+<!-- END CONTAINER -->
+
+<% include tpl/footer.ejs %>
+</body>
+
+<script>
+    $('.note').on('click', '.btn-primary', function(){
+        window.location.replace('../../principal/excelreports');
+    })
+</script>
+
+
+</html>
