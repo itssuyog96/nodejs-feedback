@@ -1392,7 +1392,7 @@ router.get('/get_lab_reports',function (req,res) {
 
     console.log(survey_id, col_id, dept_id);
 
-    const collection = db.get(/*survey_id+*/'lab_report');
+    const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_lab_report');
     collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},function (e,done) {
         if(e) {
             console.log(e);
@@ -1418,7 +1418,7 @@ router.get('/get_prof_reports',function (req,res) {
 
     console.log(survey_id, col_id, dept_id);
 
-    const collection = db.get(/*survey_id+*/'profR_report');
+    const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_prof_report');
     collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},function (e,done) {
         if(e) {
             console.log(e);
@@ -1437,7 +1437,7 @@ router.get('/get_prof_reports',function (req,res) {
 });
 
 
-router.get('/get_sub_reports_excel',function (req,res) {
+router.post('/get_sub_reports_excel',function (req,res) {
     //var db = req.db;
     var survey_id = req.body.survey_id;
     var col_id = req.body.col_id;
@@ -1447,7 +1447,7 @@ router.get('/get_sub_reports_excel',function (req,res) {
 
     //questions = require('../questions.json');
 
-    var proc = spawn('python',["python-files/subject_excel.py", survey_id, col_id, dept_id, sem]);
+    var proc = spawn('python3',["python-files/subject_excel.py", survey_id, col_id, dept_id, sem]);
     console.log("Spawned!!!");
 
     proc.stdout.on('data', function (chunk){
@@ -1455,6 +1455,42 @@ router.get('/get_sub_reports_excel',function (req,res) {
         console.log(textChunk)
     });
 });
+
+router.post('/get_dept_report_excel',function (req,res) {
+    //var db = req.db;
+    var survey_id = req.body.survey_id;
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+
+    console.log(survey_id, col_id, dept_id);
+
+    //questions = require('../questions.json');
+
+    var proc = spawn('python3',["python-files/department_excel.py", survey_id, col_id, dept_id]);
+    console.log("Spawned!!!");
+
+    proc.stdout.on('data', function (chunk){
+        var textChunk = chunk.toString();
+        console.log("-" + textChunk)
+        if(textChunk === "Omkar"){
+            console.log("-------- Completed --------")
+
+        }
+
+    });
+
+    proc.stderr.on('data', function(data){
+        console.log(data.toString())
+        res.writeHead(500, JSON.stringify(data.toString()))
+    })
+
+    setTimeout(function(){
+        res.end()
+    }, 3000);
+
+    
+});
+
 
 router.post('/dummy',function (req,res) {
     setTimeout(function(){

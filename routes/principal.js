@@ -27,6 +27,24 @@ router.get('/', function(req, res, next) {
 
 });
 
+ router.get('/departmentreports', function(req, res, next) {
+
+     if(req.session.login) {
+         if(req.session.passport.user.role == 'principal'){
+             res.render('departmentreports', {dash : tiles, menu : menu, user : req.session.passport.user, questions: questions});
+         }
+         else{
+             delete req.session.redirectTo;
+             res.redirect('/login');
+         }
+
+     }
+     else {
+         req.session.redirectTo = '/principal/departmentreports';
+         res.redirect('/login');
+     }
+
+ });
 
  router.get('/subjectreports', function(req, res, next) {
 
@@ -41,7 +59,7 @@ router.get('/', function(req, res, next) {
 
      }
      else {
-         req.session.redirectTo = '/principal/';
+         req.session.redirectTo = '/principal/subjectreports';
          res.redirect('/login');
      }
 
@@ -60,7 +78,7 @@ router.get('/', function(req, res, next) {
 
      }
      else {
-         req.session.redirectTo = '/principal/';
+         req.session.redirectTo = '/principal/professorreports';
          res.redirect('/login');
      }
 
@@ -98,7 +116,7 @@ router.get('/', function(req, res, next) {
 
      }
      else {
-         req.session.redirectTo = '/principal/';
+         req.session.redirectTo = '/principal/settings';
          res.redirect('/login');
      }
 
