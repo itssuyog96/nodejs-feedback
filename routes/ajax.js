@@ -1366,7 +1366,7 @@ router.get('/get_sub_reports',function (req,res) {
     var sem = req.query['sem'];
     console.log(survey_id, col_id, dept_id, sem);
 
-    const collection = db.get(survey_id+'_sub_report');
+    const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_subject_report');
     collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"sem":sem},function (e,done) {
         if(e) {
             console.log(e);
@@ -1392,7 +1392,7 @@ router.get('/get_lab_reports',function (req,res) {
 
     console.log(survey_id, col_id, dept_id);
 
-    const collection = db.get(/*survey_id+*/'lab_report');
+    const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_lab_report');
     collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},function (e,done) {
         if(e) {
             console.log(e);
@@ -1418,7 +1418,7 @@ router.get('/get_prof_reports',function (req,res) {
 
     console.log(survey_id, col_id, dept_id);
 
-    const collection = db.get(/*survey_id+*/'profR_report');
+    const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_remark_report');
     collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},function (e,done) {
         if(e) {
             console.log(e);
