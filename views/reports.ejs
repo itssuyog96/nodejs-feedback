@@ -100,6 +100,8 @@
                             <div class="col-md-6">
                                 <ul class="list-group">
                                     <li class="list-group-item"><i id="prof_icon" class="fa fa-times" style="margin-right:2em"></i>Professor Reports</li>
+                                    <li class="list-group-item"><i id="prof_plot_icon" class="fa fa-times" style="margin-right:2em"></i>Professor Reports Plots</li>
+                                    <li class="list-group-item"><i id="sub_plot_icon" class="fa fa-times" style="margin-right:2em"></i>Subject Reports Plots</li>
                                     <li class="list-group-item"><i id="lab_icon" class="fa fa-times" style="margin-right:2em"></i>Laboratory Reports</li>
                                     <li class="list-group-item"><i id="stud_sec_icon" class="fa fa-times" style="margin-right:2em"></i>Student Section Reports</li>
                                     <li class="list-group-item"><i id="overall_icon" class="fa fa-times" style="margin-right:2em"></i>Overall Reports</li>
@@ -233,7 +235,7 @@
         start_loader()
 
       $.ajax({
-            url:'../../ajax/prof_rep',
+            url:'../../ajax/profR_rep', //frontend
             method: 'POST',
             data: {col_id: '<%= user.col_id %>', dept_id: $('#dept_id option:selected').val(), survey_id: $('#survey_id option:selected').val()},
             success: function(data){
@@ -245,7 +247,31 @@
         })
 
         $.ajax({
-            url:'../../ajax/lab_rep',
+            url:'../../ajax/sub_rep', //frontend
+            method: 'POST',
+            data: {col_id: '<%= user.col_id %>', dept_id: $('#dept_id option:selected').val(), survey_id: $('#survey_id option:selected').val()},
+            success: function(data){
+                success_icons('#prof_plot_icon')
+            },
+            error: function(error){
+                error_icons('#prof_plot_icon')
+            }
+        })
+
+        $.ajax({
+            url:'../../ajax/prof_rep', //frontend
+            method: 'POST',
+            data: {col_id: '<%= user.col_id %>', dept_id: $('#dept_id option:selected').val(), survey_id: $('#survey_id option:selected').val()},
+            success: function(data){
+                success_icons('#sub_plot_icon')
+            },
+            error: function(error){
+                error_icons('#sub_plot_icon')
+            }
+        })
+
+        $.ajax({
+            url:'../../ajax/lab_rep', //excel
             method: 'POST',
             data: {col_id: '<%= user.col_id %>', dept_id: $('#dept_id option:selected').val(), survey_id: $('#survey_id option:selected').val()},
             success: function(data){
@@ -257,7 +283,7 @@
         })
 
         $.ajax({
-            url:'../../ajax/studentS_rep',
+            url:'../../ajax/studentS_rep', //excel
             method: 'POST',
             data: {col_id: '<%= user.col_id %>', dept_id: $('#dept_id option:selected').val(), survey_id: $('#survey_id option:selected').val()},
             success: function(data){
@@ -269,7 +295,7 @@
         })
 
         $.ajax({
-            url:'../../ajax/overall_rep',
+            url:'../../ajax/overall_rep', //excel
             method: 'POST',
             data: {col_id: '<%= user.col_id %>', dept_id: $('#dept_id option:selected').val(), survey_id: $('#survey_id option:selected').val()},
             success: function(data){
@@ -281,7 +307,7 @@
         })
 
         $.ajax({
-            url:'../../ajax/remark_rep',
+            url:'../../ajax/remark_rep', //excel
             method: 'POST',
             data: {col_id: '<%= user.col_id %>', dept_id: $('#dept_id option:selected').val(), survey_id: $('#survey_id option:selected').val()},
             success: function(data){
