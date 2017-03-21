@@ -935,6 +935,7 @@ router.post('/prof_rep',function (req ,res,next) {
     var dept_id = req.body.dept_id;
     var survey_id = req.body.survey_id;
     const collection = db.get('professor');
+    const collectionb = db.get('test_rating_' + req.year);
     const collectionc = db.get(survey_id+'_'+col_id+'_'+dept_id+'_prof_report_strict');
     collectionc.drop();
     collection.find({"dept_id":dept_id,"col_id": col_id},function (err,data) {
@@ -947,9 +948,9 @@ router.post('/prof_rep',function (req ,res,next) {
 
                 console.log(item.prof_id);
                 //var db = req.db;
-                const collectionb = db.get('test_rating_' + req.year);
+
                 // we can add survey id here by passing it in this function and puting that constraint on $match in aggregate
-                collectionb.aggregate([{$match:{"prof_id" : item.prof_id,"col_id":col_id,"dept_id":dept_id}} ,
+                collectionb.aggregate([{$match:{"survey_id":survey_id,"prof_id" : item.prof_id,"col_id":col_id,"dept_id":dept_id}} ,
                     {$group :{"_id":"$q_id" ,
                         AvgScore :{$avg : "$v_rating"}
                     }},
@@ -1024,7 +1025,7 @@ router.post('/profR_rep',function (req ,res,next) {
 
                                 //console.log(d);
                                 d.forEach(function(sub) {
-                                    collectiond.aggregate([{$match:{"prof_id" : item.prof_id,"col_id":col_id,"dept_id":dept_id,"sub_id":sub.sub_id}} ,
+                                    collectiond.aggregate([{$match:{"survey_id":survey_id,"prof_id" : item.prof_id,"col_id":col_id,"dept_id":dept_id,"sub_id":sub.sub_id}} ,
                                         {$group :{"_id":"$q_id",
                                             AvgScore :{$avg : "$v_rating"}
                                         }},
@@ -1122,7 +1123,7 @@ router.post('/lab_rep',function (req ,res,next) {
 
                                 //console.log(d);
                                 d.forEach(function(sub) {
-                                    collectiond.aggregate([{$match:{"lab_id" : item.lab_id,"col_id":col_id,"dept_id":dept_id,"sub_id":sub.sub_id}} ,
+                                    collectiond.aggregate([{$match:{"survey_id":survey_id,"lab_id" : item.lab_id,"col_id":col_id,"dept_id":dept_id,"sub_id":sub.sub_id}} ,
                                         {$group :{"_id":"$q_id",
                                             AvgScore :{$avg : "$v_rating"}
                                         }},
@@ -1205,7 +1206,7 @@ router.post('/overall_rep',function (req,res) {
         }
         else {
             console.log('done');
-            collection.aggregate([{$match:{"studentOver":"overall"}},
+            collection.aggregate([{$match:{"survey_id":survey_id,"studentOver":"overall"}},
                     {$group:{"_id":"$q_id",
                         AvgScore : {$avg: "$v_rating"}
                     }},
@@ -1260,7 +1261,7 @@ router.post('/studentS_rep',function (req,res) {
         }
         else {
             console.log('done');
-            collection.aggregate([{$match:{"studentOver":"studentS"}},
+            collection.aggregate([{$match:{"survey_id":survey_id,"studentOver":"studentS"}},
                     {$group:{"_id":"$q_id",
                         AvgScore : {$avg: "$v_rating"}
                     }},
@@ -1313,7 +1314,7 @@ router.post('/remark_rep',function (req,res) {
         }
         else {
             console.log('done');
-            collection.aggregate([{$match:{"studentOver":"overall"}},
+            collection.aggregate([{$match:{"survey_id":survey_id,"studentOver":"overall"}},
                     {$group:{"_id":"$q_id",
                         remarks: { $addToSet: "$remark"}
                     }},
