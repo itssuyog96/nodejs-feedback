@@ -251,4 +251,13 @@ router.get('/profile', function (req, res) {
     }
 });
 
+router.get('/lab_assign', function (req, res) {
+    if(req.session.login == 1){
+        res.render("lab_assign", {dash : tiles, menu : menu, user : req.session.passport.user});
+    }
+    else {
+        res.redirect('/login');
+    }
+});
+
 module.exports = router;
