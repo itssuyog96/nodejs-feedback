@@ -45,7 +45,7 @@ module.exports.generateSend = function (contact,email_id,username,key,id,survey_
     //console.log(contact+' '+username+' '+nameH+' '+key);
 
     //var url = 'http://172.18.1.50/stud?access_token='+token;
-    var url = 'https://bvcoe-feedback.herokuapp.com/stud?access_token='+token;
+    var url = 'http://172.18.1.50/stud?access_token='+token;
 
     //var proc = spawn('python',["python-files/SMSMessage.py", contact, username, nameH, key]);
 

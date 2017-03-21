@@ -1466,7 +1466,7 @@ router.post('/get_dept_report_excel',function (req,res) {
 
     //questions = require('../questions.json');
 
-    var proc = spawn('python3',["python-files/department_excel.py", survey_id, col_id, dept_id]);
+    var proc = spawn('python',["python-files/department_excel.py", survey_id, col_id, dept_id]);
     console.log("Spawned!!!");
 
     proc.stdout.on('data', function (chunk){
