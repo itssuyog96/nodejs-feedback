@@ -204,7 +204,7 @@
             }
             else {
                 $("#sent_message").text('');
-                $("#sent_message").append('sending...')
+                $("#sent_message").html('sending...');
                 $.ajax({
                     url: '../../ajax/sendAll',
                     data: {"id[]":ids, "length":ids.length, "surveyid":surveyid},

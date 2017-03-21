@@ -257,6 +257,8 @@
 <% include tpl/footer.ejs %>
 <script type="text/javascript">
     $("#upload").click(function (e) {
+        $("#upl_message").text('')
+        $("#upl_message").html("Sending. Please wait");
         //window.alert("POST");
         $.ajax({
             type: "POST",
