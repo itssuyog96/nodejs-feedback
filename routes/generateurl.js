@@ -9,6 +9,7 @@ var mail = require('../functions/py_mail');
 var jwt  = require('jwt-simple');
 var GoogleURL = require('google-url');
 googleUrl = new GoogleURL({key:'AIzaSyCGV2e7uvykKEnYr68QFZQyWxC1vWFy9O4'});
+const nodemailer = require('nodemailer');
 
 
 router.get('/', function (req, res, next){
@@ -52,18 +53,48 @@ router.get('/', function (req, res, next){
 
         //var proc = spawn('python',["python-files/SMSMessage.py", contact, username, nameH, key]);
 
-        googleUrl.shorten( url, function(err, shortUrl ) {
-            console.log(shortUrl);
-            var proc = spawn('python',["python-files/mailer_v3.py", email_id, username,shortUrl]);
-            console.log("Spawned!!!");
+        /*var proc = spawn('python',["python-files/mailer_v3.py", email_id, username,url]);
+        console.log("Spawned!!!");
 
-            proc.stdout.on('data', function (chunk){
-                var textChunk = chunk.toString();
-                console.log(textChunk)
-            });
-
-            console.log("Process finished");
+        proc.stdout.on('data', function (chunk){
+            var textChunk = chunk.toString();
+            console.log(textChunk)
         });
+
+        console.log("Process finished");*/
+
+        var transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            /*port: 25,
+             tls:{
+             rejectUnauthorized: false
+             },*/
+            auth: {
+                user: 'thewirecoy@gmail.com',
+                pass: 'Success@2020'
+            }
+        });
+
+        var mailOptions = {
+            from: 'thewirecoy@gmail.com',
+            to: email_id,
+            subject: 'BVCOENM Feedback Link',
+            html: "Hi " + username + ", Click on the following link to login into feedback system. Link -> " + url,
+            cc: "sheetal.thakare@gmail.com"
+        };
+        transporter.sendMail(mailOptions, function (err, info) {
+            if(err) console.log(err);
+            else {
+                console.log("Message " + info.messageId + " sent: " + info.response);
+                //console.log("----------------------------" + survey_id);
+                res.end();
+            }
+        });
+
+        /*googleUrl.shorten( url, function(err, shortUrl ) {
+            console.log(shortUrl);
+
+        });*/
 
 
 

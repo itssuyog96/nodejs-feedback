@@ -66,8 +66,7 @@ module.exports.generateSend = function (contact,email_id,username,key,id,survey_
             from: 'thewirecoy@gmail.com',
             to: email_id,
             subject: 'BVCOENM Feedback Link',
-            html: "Hi " + username + ", Click on the following link to login into feedback system. Link -> " + url,
-            cc: "sheetal.thakare@gmail.com"
+            html: "Hi " + username + ", Click on the following link to login into feedback system. Link -> " + url
         };
         transporter.sendMail(mailOptions, function (err, info) {
             if(err) console.log(err);

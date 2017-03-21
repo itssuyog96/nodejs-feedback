@@ -1418,7 +1418,7 @@ router.get('/get_prof_reports',function (req,res) {
 
     console.log(survey_id, col_id, dept_id);
 
-    const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_remark_report');
+    const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_prof_report');
     collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},function (e,done) {
         if(e) {
             console.log(e);
