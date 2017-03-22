@@ -381,7 +381,7 @@ router.post('/submit', function (req, res, next) {
         if (key.length == 17) {
             a = key.split('_');
 
-            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":parseInt(req.body[key]), "prof_id" : a[3],"studentOver":""},
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":parseFloat(req.body[key]), "prof_id" : a[3],"studentOver":""},
                 function (er2,result) {
                     if (er2) console.log(er2);
                     else {
@@ -393,7 +393,7 @@ router.post('/submit', function (req, res, next) {
 
             a = key.split('_');
 
-            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":parseInt(req.body[key]), "lab_id" : a[3],"studentOver":""},
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":parseFloat(req.body[key]), "lab_id" : a[3],"studentOver":""},
                 function (er2,result) {
                     if (er2) console.log(er2);
                     else {
@@ -415,7 +415,7 @@ router.post('/submit', function (req, res, next) {
                 judge == null;
             }
 
-            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id, "q_id":b[1],"v_rating":parseInt(req.body[key]),"remark":req.body[str],"studentOver":judge},
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id, "q_id":b[1],"v_rating":parseFloat(req.body[key]),"remark":req.body[str],"studentOver":judge},
                 function (er,result) {
                     if (er) console.log(er);
                     else {
@@ -843,7 +843,8 @@ router.post('/sub_rep',function (req ,res,next) {
     var col_id = req.body.col_id;
     var dept_id = req.body.dept_id;
     var survey_id = req.body.survey_id;
-    var prof_name;
+    var i = 0;
+    var j = 0;
     const collection = db.get('subject');
     const collectionb = db.get('test_rating_'+req.year);
     const collectionc = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_report');
@@ -855,7 +856,7 @@ router.post('/sub_rep',function (req ,res,next) {
             res.end();
         }
         else {
-
+            i = data.length;
             data.forEach(function (item) {
                 console.log(item.prof_id);
                 collectiond.find({"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id},function(perr,pdata){
@@ -878,15 +879,20 @@ router.post('/sub_rep',function (req ,res,next) {
                                 res.end();
                             }
                             else {
-                                    prof_name = pdata[0]?pdata[0].prof_name:"";
+
                                     console.log('value odf d:  ',d);
-                                collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"sem":item.sem,"sub_id":item.sub_id,"sub_name": item.sub_name,"prof_id": item.prof_id,"prof_name":prof_name,"report":d},function (e,done) {
+                                collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"sem":item.sem,"sub_id":item.sub_id,"sub_name": item.sub_name,"prof_id": item.prof_id,"prof_name":pdata[0].prof_name,"report":d},function (e,done) {
                                     if(e){
                                         console.log(e);
                                         res.end();
                                     }
                                     else{
                                     console.log('done');
+                                        j++;
+                                    }
+                                    if(j == i){
+                                        res.writeHead(200,'Everything is done');
+                                        res.end();
                                     }
                                 });
                             }
@@ -898,11 +904,162 @@ router.post('/sub_rep',function (req ,res,next) {
                 // we can add survey id here by passing it in this function and puting that constraint on $match in aggregate
 
             });
-            setTimeout(function(){res.end();},10000);
+
         }
     })
 
 });
+
+router.get('/sub_whole_rep',function (req ,res,next) {
+    var db = req.db;
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+    var survey_id = req.body.survey_id;
+    /*var prof_name;*/
+    var i =0;
+    var j = 0;
+    const collection = db.get('subject');
+    const collectionb = db.get('test_rating_'+req.year);
+    const collectionc = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_whole_report');
+    collectionc.drop();
+    const collectiond = db.get('professor');
+    collectionb.aggregate([{$match:{"col_id":col_id,"dept_id":dept_id,"prof_id":{"$exists":true,"$ne": ""}}},
+
+        {$group:{"_id":"$q_id"}},
+        {$project:{q_id:"$_id",_id:0}}
+    ],function (err,data) {
+        if (err) {
+            console.log(err);
+            res.end();
+        }
+        else {
+            i= data.length;
+            console.log(i);
+            data.forEach(function (item) {
+                collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"q_id":item.q_id,"reports":[]},function (quer,qudata) {
+                    if(quer){
+                        console.log(quer);
+                        res.end();
+                    }
+                    else {
+                        console.log(item.q_id);
+                        collectionb.aggregate([{$match:{"q_id":item.q_id,"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id}},
+                            {$group:{"_id":"$sub_id"}},
+                            {$project:{sub_id : "$_id",_id : 0}}
+
+                        ],function(serr,sdata){
+                            if(serr){
+                                console.log(serr);
+                                res.end();
+                            }
+                            else {
+                                console.log('subject data:  ',sdata);
+                                sdata.forEach(function (subject) {
+                                   if(subject.sub_id != null){
+                                       collection.find({"col_id":col_id,"dept_id":dept_id,"sub_id":subject.sub_id},function (suber,subjdata){
+                                           var subject = {
+                                               sub_id : subjdata[0].sub_id,
+                                               sub_name : subjdata[0].sub_name,
+                                               sem : subjdata[0].sem,
+                                               ratings : []
+                                           };
+
+                                           if(suber){
+                                               console.log(suber);
+                                               res.end();
+                                           }
+                                           else {
+                                               if(subjdata){
+                                                   collectionb.aggregate([{$match:{"q_id": item.q_id,"sub_id":subjdata[0].sub_id}},
+                                                       {$group:{"_id":"$q_id",
+                                                        reports :{$push: "$v_rating"}
+                                                       }},
+                                                       {$project:{reports:"$reports",_id:0}}
+                                                            ],function (rerr,rdata) {
+                                                       if(rerr){
+                                                           console.log(rerr);
+                                                           res.end();
+                                                       }
+                                                       else{
+                                                           subject.ratings = rdata[0].reports.slice(0);
+                                                           console.log('this is a subject   :   ',subject);
+                                                           console.log('update to Database: ....................',item.q_id)
+                                                           collectionc.update({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"q_id":item.q_id},{$push:{reports : subject}},
+                                                           function (der,done) {
+                                                               if(der){
+                                                                   console.log(der);
+                                                                   res.end()
+                                                               }
+                                                               else {
+                                                                   console.log('LAST done.................');
+                                                                   j++
+                                                               }
+                                                               if(j == i){
+                                                                   res.writeHead(200,'Everything is Done');
+                                                                   res.end();
+                                                               }
+
+                                                           }
+                                                           )
+
+                                                       }
+                                                   })
+                                               }
+
+                                           }
+                                       })
+                                   }
+
+
+                                })
+
+
+
+                                /*collectionb.aggregate([{$match:{"survey_id":survey_id,"sub_id" : item.sub_id,"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id}},
+
+                                    {$sort:{q_id : 1}},
+                                    {$project:{q_id : 1, v_rating : 1}}
+                                ],function (er,d) {
+                                    if (er) {
+                                        console.log(er);
+                                        res.end();
+                                    }
+                                    else {
+                                        /!*prof_name = pdata[0]?pdata[0].prof_name:"";*!/
+                                        console.log('value odf d:  ',d);
+                                        collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"sem":item.sem,"sub_id":item.sub_id,"sub_name": item.sub_name,"prof_id": item.prof_id,"prof_name":pdata[0].prof_name,"report":d},function (e,done) {
+                                            if(e){
+                                                console.log(e);
+                                                res.end();
+                                            }
+                                            else{
+                                                j++;
+                                                console.log('done');
+                                            }
+                                            if(j == i){
+                                                res.writeHead(200,'everything is done');
+                                                res.end();
+                                            }
+
+                                        });
+                                    }
+                                });*/
+                            }
+                        });
+
+                    }
+                })
+                  //var db = req.db;
+
+                // we can add survey id here by passing it in this function and puting that constraint on $match in aggregate
+
+            });
+            //setTimeout(function(){res.end();},3000);
+        }
+    })
+
+});
+
 
 
 router.post('/prof_rep',function (req ,res,next) {
@@ -957,7 +1114,7 @@ router.post('/prof_rep',function (req ,res,next) {
 
 });
 
-router.post('/profR_rep',function (req ,res,next) {
+router.post('/profR_rep',function (req,res,next) {
     var db = req.db;
     var col_id = req.body.col_id;
     var dept_id = req.body.dept_id;
