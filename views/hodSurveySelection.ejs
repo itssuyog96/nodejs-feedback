@@ -162,9 +162,7 @@
                         <div id="sent_alert">
                             <h3 id="sent_message"></h3>
                         </div>
-                    </div>
-
--->
+                    </div>-->
                     <!--STOP EDITING HERE-->
 
                 </div>
@@ -204,7 +202,7 @@
             }
             else {
                 $("#sent_message").text('');
-                $("#sent_message").html('sending...');
+                $("#sent_message").html('<img style="transform: scale(0.3, 0.3)" src="https://www.unbound.org/Images/Unbound/spinner.gif"/>Sending Emails. This may take a minute or two.');
                 $.ajax({
                     url: '../../ajax/sendAll',
                     data: {"id[]":ids, "length":ids.length, "surveyid":surveyid},
@@ -212,6 +210,7 @@
                     success: function () {
                         $("#sent_message").text('');
                         $("#sent_message").append('URL sent to above students');
+                        location.reload();
                     },
                     error: function () {
                         $("#sent_message").text('');

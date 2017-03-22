@@ -18,7 +18,6 @@ module.exports.generatePassword = function () {
 };
 
 
-
 module.exports.generateuid = function(col_id,dep_id,sem,roll_no){
     var uid = col_id + dep_id + sem + roll_no ;
     return uid
@@ -61,7 +60,6 @@ module.exports.generateSend = function (contact,email_id,username,key,id,survey_
             console.log(textChunk)
         });*/
 
-        //console.log("Process finished");
         var mailOptions = {
             from: 'thewirecoy@gmail.com',
             to: email_id,

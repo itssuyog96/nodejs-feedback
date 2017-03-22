@@ -30,11 +30,28 @@ var generateurl = require('./routes/generateurl');
 
 var mongo = require('mongodb');
 var monk = require('monk');
+var nodemailer = require("nodemailer");
 var db = monk('mongodb://the-wire:Success%401996@ds061076.mlab.com:61076/feed-db');
+var MailDev = require('maildev');
+
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'thewirecoy@gmail.com',
+        pass: 'Success@2020'
+    }
+    /*port: 1025,
+    ignoreTLS: true*/
+});
 
 //db connector
 app.use(function(req,res,next){
   req.db = db;
+  next();
+});
+
+app.use(function (req, res, next) {
+  req.transporter = transporter;
   next();
 });
 

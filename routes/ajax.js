@@ -575,7 +575,7 @@ router.post('/changePassword', function (req, res, next) {
                     if(e2) throw e2;
 
                     console.log('key deleted');
-                })
+                });
                 res.end();
             }
 
@@ -763,18 +763,7 @@ router.post('/sendAll', function (req, res, next) {
     var leng = parseInt(req.body.length, 10);
     var db = req.db;
     var collection = db.get('student');
-    var transporter = nodemailer.createTransport({
-        service: 'Gmail',
-        /*port: 25,
-        tls:{
-            rejectUnauthorized: false
-        },*/
-        auth: {
-            user: 'thewirecoy@gmail.com',
-            pass: 'Success@2020'
-        }
-    });
-    console.log(leng);
+    //var timeout = (leng + 10) * 1000;
     if(req.body.length == 1){
 
         collection.find({"_id": req.body['id[]']},function(e,docs){
@@ -792,7 +781,8 @@ router.post('/sendAll', function (req, res, next) {
                         clearInterval();
                     }
                 }, 1000);*/
-                generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id,req.body.surveyid, transporter);
+                //console.log("AJAX : " + req.transporter);
+                generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id,req.body.surveyid, req.transporter);
                 setTimeout(function () {
                     res.writeHead(200, {'Content-Type': 'application/json'});
                     res.write(docs[0].status);
@@ -801,31 +791,35 @@ router.post('/sendAll', function (req, res, next) {
             }
         });
     }else{
-        var i;
-        /*setInterval(function () {
-            console.log("i : " + i);
+        /*var mail_timeout = setTimeout(function () {
+
+        }, 300000);*/
+        var i=0;
+        var mail_timersetInterval = setInterval(function () {
+            //console.log("start");
             if(i < leng){
                 collection.find({"_id": req.body['id[]'][i]},function(e,docs){
                     if (e) throw e;
                     else {
-                        //console.log(JSON.stringify(docs));
-                        console.log(docs[0].name);
-                        generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id,req.body.surveyid, transporter);
+                        if(docs[0].status != "2"){
+                            generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id,req.body.surveyid, req.transporter);
+                            console.log(docs[0].name + " : " + i);
+                        }
                     }
                 });
                 i++;
             }else {
-                console.log("clear interval");
-                clearInterval();
+                //console.log("clear interval");
+                clearInterval(mail_timersetInterval);
+                setTimeout(function () {
+                    //console.log("timeout");
+                    res.writeHead(200, 'Sent Successfully!');
+                    res.end();
+                }, 5000);
             }
-        }, 1000);
-        setTimeout(function () {
-            console.log("timeout");
-            res.writeHead(200, 'Sent Successfully!');
-            res.end();
-        }, 15000);*/
+        }, 1500);
 
-        for(i=0; i<leng; i++){
+        /*for(i=0; i<leng; i++){
             (function (a) {
                 console.log(a);
                 setTimeout(function () {
@@ -833,7 +827,7 @@ router.post('/sendAll', function (req, res, next) {
                         if (e) throw e;
                         else {
                             //console.log(JSON.stringify(docs));
-                            generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id,req.body.surveyid, transporter);
+                            generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id,req.body.surveyid, req.body.transporter);
                         }
                     });
                 }, 1000);
@@ -844,7 +838,7 @@ router.post('/sendAll', function (req, res, next) {
             console.log("timeout");
             res.writeHead(200, 'Sent Successfully!');
             res.end();
-        }, (leng+5)*1000);
+        }, (leng+5)*1000);*/
     }
 });
 
@@ -1175,7 +1169,7 @@ router.post('/lab_rep',function (req ,res,next) {
                             }
                         });
                     }
-                })
+                });
 
                 // we can add survey id here by passing it in this function and puting that constraint on $match in aggregate
 
@@ -1234,7 +1228,7 @@ router.post('/overall_rep',function (req,res) {
                         })
                     }
 
-                })
+                });
             setTimeout(function(){res.end();},5000);
 
         }
@@ -1400,7 +1394,7 @@ router.get('/get_lab_reports',function (req,res) {
         }
         else {
             console.log(JSON.stringify(done))
-            res.writeHead(200,'Context-Type','application/json')
+            //res.writeHead(200,'Context-Type','application/json')
             res.end(JSON.stringify(done));
         }
 
@@ -1426,7 +1420,7 @@ router.get('/get_prof_reports',function (req,res) {
         }
         else {
             console.log(JSON.stringify(done))
-            res.writeHead(200,'Context-Type','application/json')
+            //res.writeHead(200,'Context-Type','application/json')
             res.end(JSON.stringify(done));
         }
 
