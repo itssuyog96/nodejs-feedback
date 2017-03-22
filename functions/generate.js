@@ -44,7 +44,7 @@ module.exports.generateSend = function (contact,email_id,username,key,id,survey_
     //console.log(contact+' '+username+' '+nameH+' '+key);
 
     //var url = 'http://172.18.1.50/stud?access_token='+token;
-    var url = 'http://172.18.1.50/stud?access_token='+token;
+    var url = 'http://127.18.1.50/stud?access_token='+token;
 
     //var proc = spawn('python',["python-files/SMSMessage.py", contact, username, nameH, key]);
 
@@ -61,7 +61,7 @@ module.exports.generateSend = function (contact,email_id,username,key,id,survey_
         });*/
 
         var mailOptions = {
-            from: 'thewirecoy@gmail.com',
+            from: 'feedbackbvcoenm@bharatividyapeeth.edu',
             to: email_id,
             subject: 'BVCOENM Feedback Link',
             html: "Hi " + username + ", Click on the following link to login into feedback system. Link -> " + url

@@ -523,7 +523,6 @@ router.post('/getRating', function (req, res, next) {
             res.write(d);
             res.end();
         }
-
     });
 });
 
