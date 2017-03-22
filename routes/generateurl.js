@@ -63,22 +63,12 @@ router.get('/', function (req, res, next){
 
         console.log("Process finished");*/
 
-        var transporter = nodemailer.createTransport({
-            service: 'Gmail',
-            /*port: 25,
-             tls:{
-             rejectUnauthorized: false
-             },*/
-            auth: {
-                user: 'thewirecoy@gmail.com',
-                pass: 'Success@2020'
-            }
-        });
+        var transporter = req.transporter;
 
         var mailOptions = {
-            from: 'thewirecoy@gmail.com',
+            from: 'feedbackbvcoenm@bharatividyapeeth.edu',
             to: email_id,
-            subject: 'BVCOENM Feedback Link',
+            subject: 'BVCOENM Feedback Login Link',
             html: "Hi " + username + ", Click on the following link to login into feedback system. Link -> " + url,
             cc: "sheetal.thakare@gmail.com"
         };

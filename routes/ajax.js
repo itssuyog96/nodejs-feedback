@@ -764,35 +764,18 @@ router.post('/sendAll', function (req, res, next) {
     var collection = db.get('student');
     //var timeout = (leng + 10) * 1000;
     if(req.body.length == 1){
-
         collection.find({"_id": req.body['id[]']},function(e,docs){
-
             if (e) throw e;
             else {
-                //console.log(JSON.stringify(docs));
-                /*var i=1;
-                setInterval(function () {
-                    if(i<=5){
-                        generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id,req.body.surveyid, transporter);
-                        i++;
-                    }
-                    else {
-                        clearInterval();
-                    }
-                }, 1000);*/
-                //console.log("AJAX : " + req.transporter);
                 generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id,req.body.surveyid, req.transporter);
                 setTimeout(function () {
                     res.writeHead(200, {'Content-Type': 'application/json'});
                     res.write(docs[0].status);
                     res.end();
-                }, 2000);
+                }, 5000);
             }
         });
     }else{
-        /*var mail_timeout = setTimeout(function () {
-
-        }, 300000);*/
         var i=0;
         var mail_timersetInterval = setInterval(function () {
             //console.log("start");
@@ -800,7 +783,7 @@ router.post('/sendAll', function (req, res, next) {
                 collection.find({"_id": req.body['id[]'][i]},function(e,docs){
                     if (e) throw e;
                     else {
-                        if(docs[0].status != "2"){
+                        if(docs[0].status != "2" && docs[0].status != "1"){
                             generate.generateSend(docs[0].contact,docs[0].email_id,docs[0].name,docs[0].password,docs[0]._id,req.body.surveyid, req.transporter);
                             console.log(docs[0].name + " : " + i);
                         }
