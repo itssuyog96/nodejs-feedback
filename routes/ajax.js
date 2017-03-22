@@ -381,7 +381,7 @@ router.post('/submit', function (req, res, next) {
         if (key.length == 17) {
             a = key.split('_');
 
-            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":parseFloat(req.body[key]), "prof_id" : a[3],"studentOver":""},
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":parseInt(req.body[key]), "prof_id" : a[3],"studentOver":""},
                 function (er2,result) {
                     if (er2) console.log(er2);
                     else {
@@ -393,7 +393,7 @@ router.post('/submit', function (req, res, next) {
 
             a = key.split('_');
 
-            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":parseFloat(req.body[key]), "lab_id" : a[3],"studentOver":""},
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":parseInt(req.body[key]), "lab_id" : a[3],"studentOver":""},
                 function (er2,result) {
                     if (er2) console.log(er2);
                     else {
@@ -415,7 +415,7 @@ router.post('/submit', function (req, res, next) {
                 judge == null;
             }
 
-            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id, "q_id":b[1],"v_rating":parseFloat(req.body[key]),"remark":req.body[str],"studentOver":judge},
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id, "q_id":b[1],"v_rating":parseInt(req.body[key]),"remark":req.body[str],"studentOver":judge},
                 function (er,result) {
                     if (er) console.log(er);
                     else {
@@ -910,7 +910,7 @@ router.post('/sub_rep',function (req ,res,next) {
 
 });
 
-router.get('/sub_whole_rep',function (req ,res,next) {
+router.post('/sub_whole_rep',function (req ,res,next) {
     var db = req.db;
     var col_id = req.body.col_id;
     var dept_id = req.body.dept_id;
