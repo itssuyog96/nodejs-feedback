@@ -7,10 +7,10 @@
   },
 
   "feeder":{
-    "tiles" : ["PROFESSORS", "SUBJECTS", "SUB - PROF ASSIGN", "LAB ASSIGN", "QUESTIONS", "SURVEY", "REPORTS", "SETTINGS", "PROFILE"],
-    "fa_icons" : ["fa-users", "fa-book", "fa-exchange", "fa-flask", "fa-question", "fa-check-square-o", "fa-line-chart", "fa-cogs", "fa-user"],
-    "bg_style" : ["bg-blue", "bg-red", "bg-green-sharp", "bg-blue", "bg-red", "bg-yellow", "bg-green", "bg-dark", "bg-blue"],
-    "url" : ["../../../feed_analyzer/professor", "../../../", "../../../feed_analyzer/prof_assign", "../../../feed_analyzer/lab_assign", "../../../feed_analyzer/questions", "../../../feed_analyzer/survey", "../../../feed_analyzer/reports", "../../../feed_analyzer/settings", "../../../feed_analyzer/profile"]
+    "tiles" : ["PROFESSORS", "SUB - PROF ASSIGN", "LAB ASSIGN", "QUESTIONS", "SURVEY", "REPORTS", "SETTINGS", "PROFILE"],
+    "fa_icons" : ["fa-users", "fa-exchange", "fa-flask", "fa-question", "fa-check-square-o", "fa-line-chart", "fa-cogs", "fa-user"],
+    "bg_style" : ["bg-blue", "bg-green-sharp", "bg-blue", "bg-red", "bg-yellow", "bg-green", "bg-dark", "bg-blue"],
+    "url" : ["../../../feed_analyzer/professor", "../../../feed_analyzer/prof_assign", "../../../feed_analyzer/lab_assign", "../../../feed_analyzer/questions", "../../../feed_analyzer/survey", "../../../feed_analyzer/reports", "../../../feed_analyzer/settings", "../../../feed_analyzer/profile"]
   },
 
   "principal":{

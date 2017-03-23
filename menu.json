@@ -19,18 +19,17 @@
     "parent" : [
       {"id" : 1, "name" : "Dashboard", "url" : "../../../feed_analyzer", "icon" : "icon-home"},
       {"id" : 2, "name" : "Professor", "url" : "../../../feed_analyzer/professor", "icon" : "icon-graduation"},
-      {"id" : 3, "name" : "Subjects", "url" : "../../../", "icon" : "icon-notebook"},
-      {"id" : 4, "name" : "Sub-Prof Assign", "url" : "../../../feed_analyzer/prof_assign", "icon" : "fa fa-exchange"},
-      {"id" : 5, "name" : "Lab Assign", "url" : "../../../feed_analyzer/lab_assign", "icon" : "fa fa-flask"},
-      {"id" : 6, "name" : "Questions", "url" : "../../../feed_analyzer/questions", "icon" : "icon-question"},
-      {"id" : 7, "name" : "Survey", "url" : "../../../", "icon" : "icon-feed"},
-      {"id" : 8, "name" : "Reports", "url" : "../../../feed_analyzer/reports", "icon" : "icon-bar-chart"},
-      {"id" : 9, "name" : "Settings", "url" : "../../../feed_analyzer/settings", "icon" : "icon-settings"},
-      {"id" : 10, "name" : "Profile", "url" : "../../../feed_analyzer/profile", "icon" : "fa fa-user"}
+      {"id" : 3, "name" : "Sub-Prof Assign", "url" : "../../../feed_analyzer/prof_assign", "icon" : "fa fa-exchange"},
+      {"id" : 4, "name" : "Lab Assign", "url" : "../../../feed_analyzer/lab_assign", "icon" : "fa fa-flask"},
+      {"id" : 5, "name" : "Questions", "url" : "../../../feed_analyzer/questions", "icon" : "icon-question"},
+      {"id" : 6, "name" : "Survey", "url" : "../../../", "icon" : "icon-feed"},
+      {"id" : 7, "name" : "Reports", "url" : "../../../feed_analyzer/reports", "icon" : "icon-bar-chart"},
+      {"id" : 8, "name" : "Settings", "url" : "../../../feed_analyzer/settings", "icon" : "icon-settings"},
+      {"id" : 9, "name" : "Profile", "url" : "../../../feed_analyzer/profile", "icon" : "fa fa-user"}
     ],
     "child" : [
-      {"id" : 1, "name" : "Create Survey", "url" : "../../../feed_analyzer/survey", "parent_id" : 7, "icon" : "icon-pencil"},
-      {"id" : 2, "name" : "View All Surveys", "url" : "../../../feed_analyzer/survey_list", "parent_id" : 7, "icon" : "icon-layers"}
+      {"id" : 1, "name" : "Create Survey", "url" : "../../../feed_analyzer/survey", "parent_id" : 6, "icon" : "icon-pencil"},
+      {"id" : 2, "name" : "View All Surveys", "url" : "../../../feed_analyzer/survey_list", "parent_id" : 6, "icon" : "icon-layers"}
     ]
   },
 
