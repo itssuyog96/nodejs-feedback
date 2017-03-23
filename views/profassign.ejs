@@ -108,13 +108,14 @@
                 <div class="portlet-body assign_prof-div">
 
                         <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 dep_select">
                             <table id="prof_assign_entry"
                                    class="table table-striped table-bordered table-hover table-checkable order-column">
                                 <thead>
                                 <tr>
                                     <th>SUBJECT ID</th>
                                     <th>SUBJECT NAME</th>
+                                    <th>SELECT DEPARTMENT</th>
                                     <th>SELECT PROFESSOR</th>
                                 </tr>
                                 </thead>
@@ -162,6 +163,8 @@
                 data : {'col_id' : '<%= user.col_id %>', 'dept_id': '<%= user.dep_id %>', 'sub_id' : sub.sub_id },
                 method : 'POST',
                 success : function(data){
+                    $('#'+sub.sub_id).val(data.prof_dept_id);
+                    getProfessors('subject'+sub.sub_id, data.prof_dept_id);
                     $('.subject'+sub.sub_id).val(data.id);
                     console.log("Subject : "+sub.sub_id+" set to "+data.id);
                 },
@@ -171,7 +174,7 @@
 
         $('.div-sem_select').on('click', '.btn-default', function(e){
             e.preventDefault();
-console.log($('#selectSem').serialize());
+            console.log($('#selectSem').serialize());
             $.ajax({
                 url : '../../ajax/getSubject',
                 data : $('#selectSem').serialize(),
@@ -188,26 +191,31 @@ console.log($('#selectSem').serialize());
                                 '<tr>' +
                                     '<td>'+sub.sub_id+'</td>' +
                                     '<td>'+sub.sub_name+'</td>' +
-                                    '<td>' +
+                                    '<td><div class="col-md-12>' +
                                 '<form id="assign_prof_form_'+$('#form-counter').text()+'">' +
                                 '<input name = "col_id" type="hidden" value="<%= user.col_id %>"/>' +
-                                '<input name = "dept_id" type="hidden" value="<%= user.dep_id %>"/>'+
+                                '<input name = "dept_id" class="dept_id" type="hidden" value="'+ sub.dept_id +'"/>'+
                                 '<input name = "sem" type="hidden" value="'+sub.sem+'"/>'+
                                 '<input name="sub_id" type="hidden" value="'+sub.sub_id+'" />'+
+                                '       <div class="form-group col-md-6">' +
+                                '           <select onchange="getProfessors(\'subject'+sub.sub_id+'\','+ sub.sub_id +')" name="prof_dept_id" id="'+sub.sub_id+'" class="dept" form-control">' +
+                                '           </select>' +
+                                '       </div>' +
+                                '</div>' +
+                                '<div class="col-md-6">' +
                                 '       <div class="form-group">' +
-                                '           <select name="prof_id" class="subject'+sub.sub_id+' form-control">' +
-                                '<option value="NA" selected = "true">Not Assigned</option>' +
-                                <% prof.forEach(function(item){ %>
-                                '<option value="<%= item.prof_id %>"><%= item.prof_name %></option>' +
-                                <% }); %>
+                                '           <select name="prof_id" id="subject'+sub.sub_id+'" class="subjects subject'+sub.sub_id+' form-control">' +
+
                                 '           </select>' +
                                 '       </div>' +
                                 '</form>'+
-                                '   </td>' +
+                                '</div></div></td>' +
                                 '</tr>'
 
                         );
                     });
+
+                    load_departments();
 
                     function preassign() {
                         data.forEach(function (sub) {
@@ -215,7 +223,7 @@ console.log($('#selectSem').serialize());
                         });
                     }
 
-                    preassign();
+                    //preassign();
                     //setTimeOut(preassign, 2000);
 
                 }
@@ -228,6 +236,45 @@ console.log($('#selectSem').serialize());
         });
 
     });
+
+    getProfessors = function(sub_sel_id, dept_id){
+
+        console.log('#'+sub_sel_id);
+
+        $('#'+sub_sel_id).html('<option value="NA" selected = "true">Not Assigned</option>');
+
+        $.ajax({
+            url: '../../ajax/getProfForDept',
+            data: {col_id: '<%= user.col_id %>', dept_id: $('#'+dept_id).val()},
+            method: 'POST',
+            success: function(data){
+                console.log(data)
+                data.forEach(function(item){
+                    $('#'+sub_sel_id).append('<option value="'+ item.prof_id +'">'+ item.prof_name +'</option>')
+                })
+            },
+            error: function(error){
+                    console.log(error.statusText);
+            }
+        })
+    }
+
+    load_departments = function(){
+        $('.dept').html('<option selected">Select Department</option>');
+        $.ajax({
+            url: '../../ajax/getDeptList',
+            data: {col_id: '<%= user.col_id %>'},
+            method: 'POST',
+            success: function(data){
+                data.forEach(function(item){
+                    $('.dept').append('<option value="'+item.dept_id+'">'+item.dept_name+'</option>')
+                });
+
+            }
+        });
+    }
+
+
 
 </script>
 

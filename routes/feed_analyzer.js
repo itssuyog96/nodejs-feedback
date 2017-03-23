@@ -55,21 +55,11 @@ router.get('/prof_assign', function(req, res){
         if(req.session.passport.user.role == 'feed_analyzer'){
 
             var db = req.db;
-            const collection = db.get('professor');
-            collection.find({col_id : req.user.col_id}, function(e, docs){
 
-                if(e){
-                    console.log("Error occured while fetching professors information");
-                }
-                else{
-                    const collectionb = db.get('department');
-                    collectionb.find({col_id: req.user.col_id}, function(e2, docsb){
-                        if(e2) throw e2;
-                        res.render('profassign', {menu : menu, user : req.session.passport.user, prof : docs, departments: docsb});
-                    });
-
-                }
-
+            const collectionb = db.get('department');
+            collectionb.find({col_id: req.user.col_id}, function(e2, docsb){
+                if(e2) throw e2;
+                res.render('profassign', {menu : menu, user : req.session.passport.user, departments: docsb});
             });
 
         }

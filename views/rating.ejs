@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<% include tpl/header.ejs %>
+
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
+<!-- BEGIN HEADER -->
+
+<% include tpl/menu.ejs %>
+
+<!-- END HEADER -->
+
+
+<!-- BEGIN HEADER & CONTENT DIVIDER -->
+<div class="clearfix"> </div>
+<!-- END HEADER & CONTENT DIVIDER -->
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <% include tpl/sidebar.ejs %>
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+
+            <!--h3 class="page-title"> Blank Page Layout
+                <small>blank page layout</small>        To be resolved
+            </h3-->
+
+            <!-- END PAGE HEADER-->
+
+
+            <!--START EDITING FROM HERE-->
+
+            <div class="note note-info">
+                <p> Reports need to be generated before they can be viewed. Contact feedback analyzer if reports are not available. </p>
+            </div>
+
+            <div class="portlet light div-survey_select">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-list font-dark"></i>
+                        <span class="caption-subject bold uppercase">Select Survey</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form id="selectSurveyDept">
+                                <div class="form-group selectSurvey">
+                                    <input type="hidden" name="col_id" value="<%= user.col_id %>" />
+
+                                    <div class="form-group col-md-12">
+                                        <div class="form-group col-md-2 col-md-offset-2">
+                                            <label class="form-control" for="survey_id">Select Survey</label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <select class="form-control" id="survey_id"  name="survey_id">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <input type="submit" class="btn btn-default submitFormBtn" value="Submit"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-list font-dark"></i>
+                        <span class="caption-subject bold uppercase">Question - Wise Rating</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="panel-group col-md-12">
+                            <% i = 0;   questions.forEach(function(item) {  %>
+                            <%if(item.qid >= 301 && item.qid <= 312){ i++; %>
+                            <div class="panel">
+                                        <div class="panel-heading">
+                                        <a class="accordion-toggle <% if(i > 1){ %> <%= "collapsed" %> <% } %>" data-toggle="collapse" data-parent="#" href="#collapse<%= i %>">
+                                        <%= item.question %>
+                                </a>
+                                </div>
+                                <div id="collapse<%= i %>" class="panel-collapse <% if(i == 1){ %> <%= "in" %> <% } %> collapse" style="height: auto">
+                                        <div class="panel-body">
+
+                                </div>
+                                </div>
+                                </div>
+                           <% }  }); %>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--STOP EDITING HERE-->
+
+        </div>
+        <!-- END CONTENT BODY -->
+    </div>
+    <!-- END CONTENT -->
+    <% include tpl/quicksidebar.ejs %>
+</div>
+
+<!-- END CONTAINER -->
+
+<% include tpl/footer.ejs %>
+
+<script>
+    (load_surveys = function(){
+        $.ajax({
+            url: '../../ajax/getSurveyList',
+            data: {col_id: '<%= user.col_id %>'},
+            method: 'POST',
+            success: function(data){
+
+                data.forEach(function(d){
+                    $('#survey_id').append('<option value="'+d.survey_id+'">'+d.survey_id+'</option>')
+                });
+            }
+        });
+    })();
+
+    $('.portlet-body').on('click', '.submitFormBtn', function(e){
+        e.preventDefault()
+
+        $.ajax({
+            url: '../../ajax/get_comments',
+            data: {col_id: '<%= user.col_id %>', 'survey_id': $('#survey_id option:selected').val()},
+            method: 'POST',
+            success: function(data){
+                console.log(data);
+                data.report.forEach(function(item){
+                    item.remarks.forEach(function(x){
+
+                            if(x != ''){
+                                $('#collapse' + item.q_id[2]).append('<li>'+x+'</li>')
+                            }
+
+                    })
+                })
+            },
+            error: function(err){
+                console.log(err);
+            }
+        })
+
+    })
+
+</script>
+
+</body>
+
+</html>

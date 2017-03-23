@@ -434,7 +434,7 @@ router.post('/updateSub', function (req, res, next) {
 
     var db = req.db;
     var collection = db.get('subject');
-    collection.update({"col_id":req.body.col_id,"dept_id":req.body.dept_id,"sub_id":req.body.sub_id},{"$set":{"prof_id":req.body.prof_id}},function(e,docs){
+    collection.update({"col_id":req.body.col_id,"dept_id":req.body.dept_id,"sub_id":req.body.sub_id},{"$set":{"prof_id":req.body.prof_id, "prof_dept_id": req.body.prof_dept_id}},function(e,docs){
         var d = JSON.stringify(docs);
         if (e) throw e;
         else {
@@ -1499,7 +1499,7 @@ router.get('/get_sub_reports',function (req,res) {
     var sem = req.query['sem'];
     console.log(survey_id, col_id, dept_id, sem);
 
-    const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_subject_report');
+    const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_report');
     collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"sem":sem},function (e,done) {
         if(e) {
             console.log(e);
@@ -1543,6 +1543,30 @@ router.get('/get_lab_reports',function (req,res) {
 
 });
 
+router.get('/get_whole_reports',function (req,res) {
+    var db = req.db;
+    var survey_id = req.query['survey_id'];
+    var col_id = req.query['col_id'];
+    var dept_id = req.query['dept_id'];
+    var sem = req.query['sem']
+
+    console.log(survey_id, col_id, dept_id);
+
+    const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_whole_report_sem_' + sem);
+    collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},function (e,done) {
+        if(e) {
+            console.log(e);
+            res.end();
+        }
+        else {
+            console.log(JSON.stringify(done))
+            res.writeHead(200,'Context-Type','application/json')
+            res.end(JSON.stringify(done));
+        }
+
+    })
+});
+
 router.get('/get_prof_reports',function (req,res) {
     var db = req.db;
     var survey_id = req.query['survey_id'];
@@ -1562,11 +1586,7 @@ router.get('/get_prof_reports',function (req,res) {
             //res.writeHead(200,'Context-Type','application/json')
             res.end(JSON.stringify(done));
         }
-
     })
-
-
-
 });
 
 
@@ -1624,6 +1644,76 @@ router.post('/get_dept_report_excel',function (req,res) {
 
 });
 
+
+router.post('/get_dept_whole_report_excel',function (req,res) {
+    //var db = req.db;
+    var survey_id = req.body.survey_id;
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+
+    console.log(survey_id, col_id, dept_id);
+
+    //questions = require('../questions.json');
+
+    var proc = spawn('python3',["python-files/dept_whole.py", survey_id, col_id, dept_id]);
+    console.log("Spawned!!!");
+
+    proc.stdout.on('data', function (chunk){
+        var textChunk = chunk.toString();
+        console.log("-" + textChunk)
+        if(textChunk === "Omkar"){
+            console.log("-------- Completed --------")
+
+        }
+
+    });
+
+    proc.stderr.on('data', function(data){
+        console.log(data.toString())
+        res.writeHead(500, JSON.stringify(data.toString()))
+    })
+
+    setTimeout(function(){
+        res.end()
+    }, 3000);
+
+
+});
+
+router.post('/get_dept_whole_extended_report_excel',function (req,res) {
+    //var db = req.db;
+    var survey_id = req.body.survey_id;
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+
+    console.log(survey_id, col_id, dept_id);
+
+    //questions = require('../questions.json');
+
+    var proc = spawn('python3',["python-files/extended.py", survey_id, col_id, dept_id]);
+    console.log("Spawned!!!");
+
+    proc.stdout.on('data', function (chunk){
+        var textChunk = chunk.toString();
+        console.log("-" + textChunk)
+        if(textChunk === "Omkar"){
+            console.log("-------- Completed --------")
+
+        }
+
+    });
+
+    proc.stderr.on('data', function(data){
+        console.log(data.toString())
+        res.writeHead(500, JSON.stringify(data.toString()))
+    })
+
+    setTimeout(function(){
+        res.end()
+    }, 3000);
+
+
+});
 
 router.post('/dummy',function (req,res) {
     setTimeout(function(){
@@ -1827,5 +1917,45 @@ router.post('/getProfReports', function (req, res) {
         }
     })
 });
+
+
+router.post('/get_comments', function (req, res) {
+
+    var db = req.db;
+    var survey_id = req.body.survey_id;
+    var col_id = req.body.col_id;
+    var dept_id = '1001';
+    var collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_remark_report');
+
+    collection.find({"col_id": col_id, "dept_id" : dept_id, "survey_id": survey_id}, function(e, data){
+        if(e) {
+            console.log(e)
+        }
+        else{
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify(data[0]));
+        }
+    })
+});
+
+router.post('/getProfForDept', function (req, res) {
+
+    var db = req.db;
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+    var collection = db.get('professor');
+
+    collection.find({"col_id": col_id, "dept_id" : dept_id}, function(e, data){
+        if(e) {
+            console.log(e)
+        }
+        else{
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify(data));
+        }
+    })
+});
+
+
 
 module.exports = router;

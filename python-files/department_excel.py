@@ -41,7 +41,7 @@ final_rating_format.set_bg_color('#BFFCC3')
 bold = workbook.add_format({'bold': True})
 
 ############################# PROFESSOR REPORTS #############################
-url = "http://localhost/ajax/get_prof_reports?survey_id="+str(survey_id)+"&col_id="+str(col_id)+"&dept_id="+str(dept_id)
+url = "http://localhost:3000/ajax/get_prof_reports?survey_id="+str(survey_id)+"&col_id="+str(col_id)+"&dept_id="+str(dept_id)
 print(url)
 
 data = response(url)
