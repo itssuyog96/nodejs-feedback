@@ -52,37 +52,54 @@
                             </div>
                         </div>
                         <div class="portlet-body">
-                            <div>
-                                <!--<div class="tiles tiles-subject">-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!--<div class="tiles tiles-subject">-->
 
-                                    <!--<a href="#">-->
-                                        <!--<div class="tile bg-red">-->
-                                            <!--<div class="tile-body">-->
-                                                <!--<i class="fa fa-database"></i>-->
+                                        <!--<a href="#">-->
+                                            <!--<div class="tile bg-red">-->
+                                                <!--<div class="tile-body">-->
+                                                    <!--<i class="fa fa-database"></i>-->
+                                                <!--</div>-->
+                                                <!--<div class="tile-object">-->
+                                                    <!--<div class="name"> SUBJECT WISE </div>-->
+                                                    <!--<div class="number"> # </div>-->
+                                                <!--</div>-->
                                             <!--</div>-->
-                                            <!--<div class="tile-object">-->
-                                                <!--<div class="name"> SUBJECT WISE </div>-->
-                                                <!--<div class="number"> # </div>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                    <!--</a>-->
+                                        <!--</a>-->
 
-                                <!--</div>-->
+                                    <!--</div>-->
 
-                                <div class="tiles tiles-department">
+                                    <div class="tiles tiles-department col-md-2">
 
-                                    <a href="#">
-                                        <div class="tile bg-blue">
-                                            <div class="tile-body">
-                                                <i class="fa fa-database"></i>
+                                        <a href="#">
+                                            <div class="tile bg-blue">
+                                                <div class="tile-body">
+                                                    <i class="fa fa-database"></i>
+                                                </div>
+                                                <div class="tile-object">
+                                                    <div class="name"> DEPARTMENT WISE </div>
+                                                    <div class="number"> # </div>
+                                                </div>
                                             </div>
-                                            <div class="tile-object">
-                                                <div class="name"> DEPARTMENT WISE </div>
-                                                <div class="number"> # </div>
-                                            </div>
-                                        </div>
-                                    </a>
+                                        </a>
 
+                                    </div>
+                                    <div class="tiles tiles-sem col-md-2">
+
+                                        <a href="#">
+                                            <div class="tile bg-red">
+                                                <div class="tile-body">
+                                                    <i class="fa fa-database"></i>
+                                                </div>
+                                                <div class="tile-object">
+                                                    <div class="name"> SEMESTER WISE </div>
+                                                    <div class="number"> # </div>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -127,6 +144,55 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                         <input type="submit" class="btn btn-default submitFormBtn" value="Submit"/><i id="loader" style="margin-left:20px; display:none;" class="fa fa-lg fa-cog fa-spin"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="error-div" align="center" style="display:none; margin-top:10px;">
+                                <span class="note note-warning">Something went wrong!&nbsp;<small>Try Again or Contact Administrator</small></span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="customize1" style="display:none;">
+                <div class="col-md-12">
+                    <div class="portlet light ">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="icon-social-dribbble font-green hide"></i>
+                                <span class="caption-subject font-dark bold uppercase">Customize</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="row">
+                                <div class="form-group selectSurvey">
+                                    <input type="hidden" name="col_id" value="<%= user.col_id %>" />
+
+                                    <div class="form-group col-md-12">
+                                        <div class="form-group col-md-2 col-md-offset-2">
+                                            <label class="form-control" for="survey_id">Select Survey</label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <select class="form-control" id="survey_id"  name="survey_id">
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group col-md-12">
+                                        <div class="form-group col-md-2 col-md-offset-2">
+                                            <label class="form-control" for="dept_id">Select Department</label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <select class="form-control" id="dept_id" name="dept_id">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <input type="submit" class="btn btn-default submitFormBtn1" value="Submit"/><i id="loader" style="margin-left:20px; display:none;" class="fa fa-lg fa-cog fa-spin"></i>
                                     </div>
                                 </div>
                             </div>
@@ -200,6 +266,19 @@
         });
     })();
 
+   /* (load_sem = function () {
+        $.ajax({
+            url: '../../ajax/getSemList',
+            data: {col_id: '<%= user.col_id%>'},
+            method: 'POST',
+            success: function (data) {
+                data.forEach(function (s) {
+                    $('#sem').append('<option value="'+s.sem+'">'+s.sem+'</option>')
+                })
+            }
+        })
+    })*/
+
     $('.portlet-body').on('click', '.tiles-subject', function(){
         $.ajax({
             url: '../../../ajax/get_sub_reports_excel',
@@ -220,6 +299,12 @@
 
     $('.portlet-body').on('click', '.tiles-department', function(){
         $('#customize').fadeIn();
+        $('#customize1').fadeOut();
+    })
+
+    $('.portlet-body').on('click', '.tiles-sem', function () {
+        $('#customize1').fadeIn();
+        $('#customize').fadeOut();
     })
 
     $('.selectSurvey').on('click', '.submitFormBtn', function (e) {
@@ -241,6 +326,26 @@
             }
         })
     })
+    $('.selectSurvey').on('click', '.submitFormBtn1', function (e) {
+        $('#error-div').fadeOut();
+        $('#download_div').fadeOut();
+        $('#loader').fadeIn();
+        $.ajax({
+            url: '../../ajax/get_dept_report_excel',
+            method: 'POST',
+            data: {col_id: '<%= user.col_id %>', survey_id: $('#survey_id option:selected').val(), dept_id: $('#dept_id option:selected').val()},
+            success: function (data) {
+                $('#download_div').fadeIn();
+                $('#loader').fadeOut();
+            },
+            error: function (error) {
+                $('#error-div').fadeIn();
+                console.log(JSON.stringify(error));
+                $('#loader').fadeOut();
+            }
+        })
+    })
+
 </script>
 
 </html>
