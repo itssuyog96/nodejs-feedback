@@ -331,6 +331,7 @@
                 method: 'POST',
                 success: function () {
                     $("#sent_message").text('');
+                    getStudents();
                     $("#sent_message").append('URL sent to Sr No.' + id);
                     /*setTimeout(function () {
                         location.reload();
