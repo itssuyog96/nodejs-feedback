@@ -37,12 +37,12 @@
   "principal" : {
     "parent" : [
       {"id" : 1, "name" : "Dashboard", "url" : "../../../principal", "icon" : "icon-home"},
-      {"id" : 2, "name" : "Reports", "url" : "../../../principal/reports", "icon" : "icon-bar-chart"},
+      {"id" : 2, "name" : "Reports", "url" : "../../../", "icon" : "icon-bar-chart"},
       {"id" : 3, "name" : "Settings", "url" : "../../../principal/settings", "icon" : "icon-settings"},
       {"id" : 4, "name" : "Profile", "url" : "../../../principal/profile", "icon" : "fa fa-user"}
     ],
     "child":[
-      {"id" : 1, "name" : "Department Reports", "url" : "../../../", "parent_id" : 2, "icon" : "fa fa-building"},
+      {"id" : 1, "name" : "Department Reports", "url" : "../../../principal/departmentreports", "parent_id" : 2, "icon" : "fa fa-building"},
       {"id" : 2, "name" : "Professor Reports", "url" : "../../../principal/professorreports", "parent_id" : 2, "icon" : "fa fa-users"},
       {"id" : 3, "name" : "Subject Reports", "url" : "../../../principal/subjectreports", "parent_id" : 2, "icon" : "fa fa-book"},
       {"id" : 4, "name" : "Excel Reports", "url" : "../../../principal/excelreports", "parent_id" : 2, "icon" : "fa fa-file-excel-o"}
@@ -53,14 +53,15 @@
     "parent" : [
       {"id" : 1, "name" : "Dashboard", "url" : "../../../headofdepartment", "icon" : "icon-home"},
       {"id" : 2, "name" : "Upload", "url" : "../../../headofdepartment/upload", "icon" : "fa fa-upload"},
-      {"id" : 3, "name" : "Reports", "url" : "../../../", "icon" : "icon-bar-chart"},
-      {"id" : 4, "name" : "Settings", "url" : "../../../headofdepartment/settings", "icon" : "icon-settings"},
-      {"id" : 5, "name" : "Profile", "url" : "../../../headofdepartment/profile", "icon" : "fa fa-user"}
+      {"id" : 3, "name" : "Survey Status", "url" : "../../../headofdepartment/hodsurvey", "icon" : "fa fa-check-square-o"},
+      {"id" : 4, "name" : "Reports", "url" : "../../../", "icon" : "icon-bar-chart"},
+      {"id" : 5, "name" : "Settings", "url" : "../../../headofdepartment/settings", "icon" : "icon-settings"},
+      {"id" : 6, "name" : "Profile", "url" : "../../../headofdepartment/profile", "icon" : "fa fa-user"}
     ],
     "child":[
-      {"id" : 1, "name" : "Department", "url" : "../../../", "parent_id" : 3, "icon" : "icon-pencil"},
-      {"id" : 2, "name" : "Professor", "url" : "../../../headofdepartment/professor", "parent_id" : 3, "icon" : "icon-layers"},
-      {"id" : 3, "name" : "Subject", "url" : "../../../headofdepartment/subject", "parent_id" : 3, "icon" : "fa fa-book"}
+      {"id" : 1, "name" : "Department", "url" : "../../../", "parent_id" : 4, "icon" : "icon-pencil"},
+      {"id" : 2, "name" : "Professor", "url" : "../../../headofdepartment/professor", "parent_id" : 4, "icon" : "icon-layers"},
+      {"id" : 3, "name" : "Subject", "url" : "../../../headofdepartment/subject", "parent_id" : 4, "icon" : "fa fa-book"}
     ]
   }
 }
