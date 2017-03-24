@@ -1337,7 +1337,8 @@ router.post('/overall_rep',function (req,res) {
             console.log('1ST    ',err);
             res.end();
         }
-        else {
+        else
+        {
             console.log('done');
             collection.aggregate([{$match:{"survey_id":survey_id,"studentOver":"overall"}},
                     {$group:{"_id":"$q_id",
@@ -1366,15 +1367,10 @@ router.post('/overall_rep',function (req,res) {
                             });
                         })
                     }
-
                 });
             setTimeout(function(){res.end();},5000);
-
         }
     });
-
-
-
 });
 
 
@@ -1512,9 +1508,29 @@ router.get('/get_sub_reports',function (req,res) {
         }
 
     })
+});
 
+router.get('/get_sub_excel_reports',function (req,res) {
+    var db = req.db;
+    var survey_id = req.query['survey_id'];
+    var col_id = req.query['col_id'];
+    var dept_id = req.query['dept_id'];
+    var sem = req.query['sem'];
+    console.log(survey_id, col_id, dept_id, sem);
 
+    const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_excel_report');
+    collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"sem":sem},function (e,done) {
+        if(e) {
+            console.log(e);
+            res.end();
+        }
+        else {
+            console.log(JSON.stringify(done))
+            res.writeHead(200,'Context-Type','application/json')
+            res.end(JSON.stringify(done));
+        }
 
+    })
 });
 
 router.get('/get_lab_reports',function (req,res) {
@@ -1552,7 +1568,7 @@ router.get('/get_whole_reports',function (req,res) {
 
     console.log(survey_id, col_id, dept_id);
 
-    const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_whole_report_sem_' + sem);
+    const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_whole_report');
     collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},function (e,done) {
         if(e) {
             console.log(e);
@@ -1600,7 +1616,7 @@ router.post('/get_sub_reports_excel',function (req,res) {
 
     //questions = require('../questions.json');
 
-    var proc = spawn('python',["python-files/subject_excel.py", survey_id, col_id, dept_id, sem]);
+    var proc = spawn('python3',["python-files/subject_excel.py", survey_id, col_id, dept_id, sem]);
     console.log("Spawned!!!");
 
     proc.stdout.on('data', function (chunk){
@@ -1619,7 +1635,7 @@ router.post('/get_dept_report_excel',function (req,res) {
 
     //questions = require('../questions.json');
 
-    var proc = spawn('python',["python-files/department_excel.py", survey_id, col_id, dept_id]);
+    var proc = spawn('python3',["python-files/department_excel.py", survey_id, col_id, dept_id]);
     console.log("Spawned!!!");
 
     proc.stdout.on('data', function (chunk){

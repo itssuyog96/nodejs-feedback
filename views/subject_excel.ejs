@@ -93,7 +93,7 @@
                                                     <i class="fa fa-database"></i>
                                                 </div>
                                                 <div class="tile-object">
-                                                    <div class="name"> SEMESTER WISE </div>
+                                                    <div class="name"> PRINT FORMAT </div>
 
                                                 </div>
                                             </div>
@@ -104,12 +104,12 @@
                                     <div class="tiles tiles-whole col-md-2">
 
                                         <a href="#">
-                                            <div class="tile bg-red">
+                                            <div class="tile bg-green">
                                                 <div class="tile-body">
                                                     <i class="fa fa-database"></i>
                                                 </div>
                                                 <div class="tile-object">
-                                                    <div class="name"> EXTENDED DEPARTMENT </div>
+                                                    <div class="name"> EXTENDED REPORT </div>
 
                                                 </div>
                                             </div>
@@ -270,7 +270,7 @@
                 </div>
             </div>
 
-            <div class="row" id="download_div" style="display:none">
+            <div class="row" id="download_div_port" style="display:none">
                 <div class="col-md-12">
                     <div class="portlet light ">
                         <div class="portlet-title">
@@ -288,7 +288,7 @@
                 </div>
             </div>
 
-            <div class="row" id="download_div1" style="display:none">
+            <div class="row" id="download_div_port1" style="display:none">
                 <div class="col-md-12">
                     <div class="portlet light ">
                         <div class="portlet-title">
@@ -299,19 +299,25 @@
                         </div>
                         <div class="portlet-body">
                             <div class="col-md-12 well download-div1" align="center">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <div class="col-md-12">
+                                        <a class="download-excel3" href="#" ><img height="10%" width="50%" src="../../logo/excel.ico" /></a>
+                                    </div>
+                                    <div class="col-md-12">Semester 4</div>
+                                </div>
+                                <div class="col-md-3">
                                     <div class="col-md-12">
                                         <a class="download-excel" href="#" ><img height="10%" width="50%" src="../../logo/excel.ico" /></a>
                                     </div>
                                     <div class="col-md-12">Semester 4</div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="col-md-12">
                                         <a class="download-excel1" href="#" ><img height="10%" width="50%" src="../../logo/excel.ico" /></a>
                                     </div>
                                     <div class="col-md-12">Semester 6</div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="col-md-12">
                                         <a class="download-excel2" href="#" ><img height="10%" width="50%" src="../../logo/excel.ico" /></a>
                                     </div>
@@ -323,7 +329,7 @@
                 </div>
             </div>
 
-            <div class="row" id="download_div2" style="display:none">
+            <div class="row" id="download_div_port2" style="display:none">
                 <div class="col-md-12">
                     <div class="portlet light ">
                         <div class="portlet-title">
@@ -388,24 +394,13 @@
         });
     })();
 
-   /* (load_sem = function () {
-        $.ajax({
-            url: '../../ajax/getSemList',
-            data: {col_id: '<%= user.col_id%>'},
-            method: 'POST',
-            success: function (data) {
-                data.forEach(function (s) {
-                    $('#sem').append('<option value="'+s.sem+'">'+s.sem+'</option>')
-                })
-            }
-        })
-    })*/
 
     $('.portlet-body').on('click', '.tiles-subject', function(){
+        fadeAllDownloads();
         $.ajax({
             url: '../../../ajax/get_sub_reports_excel',
             method: 'POST',
-            data: {col_id: 1, dept_id: '1001', sem: 6, survey_id: 'survey-2017-1-even'},
+            data: {col_id: 1, dept_id: $(), sem: 6, survey_id: $('#survey_id option:selected')},
             success: function(data){
                 console.log(data);
             },
@@ -415,20 +410,30 @@
         })
     })
 
+    fadeAllDownloads = function(){
+        $('#download_div_port').fadeOut();
+        $('#download_div_port1').fadeOut();
+        $('#download_div_port2').fadeOut();
+    }
+
     $('.download-div').on('click', '.download-excel', function(){
         window.location.replace('../../downloads/' + $('#survey_id option:selected').val() + '_' + $('#dept_id option:selected').val() + '.xlsx')
     })
 
-    $('.download-div1').on('click', '.download-excel', function(){
-        window.location.replace('../../downloads/' + $('#survey_id1 option:selected').val() + '_' + $('#dept_id1 option:selected').val() + '_sem_4.xlsx')
+    $('.download-div1').on('click', '.download-excel2', function(){
+        window.location.replace('../../downloads/' + $('#survey_id1 option:selected').val() + '_' + $('#dept_id1 option:selected').val() + '.xlsx')
+    })
+
+    $('.download-div1').on('click', '.download-excel3', function(){
+        window.location.replace('../../downloads/' + $('#survey_id1 option:selected').val() + '_' + $('#dept_id1 option:selected').val() + '_SE.xlsx')
     })
 
     $('.download-div1').on('click', '.download-excel1', function(){
-        window.location.replace('../../downloads/' + $('#survey_id1 option:selected').val() + '_' + $('#dept_id1 option:selected').val() + '_sem_6.xlsx')
+        window.location.replace('../../downloads/' + $('#survey_id1 option:selected').val() + '_' + $('#dept_id1 option:selected').val() + '_TE.xlsx')
     })
 
     $('.download-div1').on('click', '.download-excel2', function(){
-        window.location.replace('../../downloads/' + $('#survey_id1 option:selected').val() + '_' + $('#dept_id1 option:selected').val() + '_sem_8.xlsx')
+        window.location.replace('../../downloads/' + $('#survey_id1 option:selected').val() + '_' + $('#dept_id1 option:selected').val() + '_BE.xlsx')
     })
 
     $('.download-div2').on('click', '.download-excel', function(){
@@ -436,12 +441,14 @@
     })
 
     $('.portlet-body').on('click', '.tiles-department', function(){
+        fadeAllDownloads();
         $('#customize').fadeIn();
         $('#customize1').fadeOut();
         $('#customize2').fadeOut();
     })
 
     $('.portlet-body').on('click', '.tiles-sem', function () {
+        fadeAllDownloads();
         $('#customize1').fadeIn();
         $('#customize').fadeOut();
         $('#customize2').fadeOut();
@@ -449,21 +456,22 @@
     })
 
     $('.portlet-body').on('click', '.tiles-whole', function () {
+        fadeAllDownloads();
         $('#customize1').fadeOut();
         $('#customize').fadeOut()
         $('#customize2').fadeIn();
     })
 
     $('.selectSurvey').on('click', '.submitFormBtn', function (e) {
+        fadeAllDownloads();
         $('#error-div').fadeOut();
-        $('#download_div').fadeOut();
         $('#loader').fadeIn();
         $.ajax({
             url: '../../ajax/get_dept_report_excel',
             method: 'POST',
             data: {col_id: '<%= user.col_id %>', dept_id: $('#dept_id option:selected').val(), survey_id: $('#survey_id option:selected').val()},
             success: function(data){
-                $('#download_div').fadeIn();
+                $('#download_div_port').fadeIn();
                 $('#loader').fadeOut();
             },
             error: function(error){
@@ -475,15 +483,15 @@
     })
 
     $('.selectSurvey2').on('click', '.submitFormBtn2', function (e) {
+        fadeAllDownloads();
         $('#error-div2').fadeOut();
-        $('#download_div2').fadeOut();
         $('#loader2').fadeIn();
         $.ajax({
             url: '../../ajax/get_dept_whole_report_excel',
             method: 'POST',
             data: {col_id: '<%= user.col_id %>', survey_id: $('#survey_id2 option:selected').val(), dept_id: $('#dept_id2 option:selected').val()},
             success: function (data) {
-                $('#download_div2').fadeIn();
+                $('#download_div_port2').fadeIn();
                 $('#loader2').fadeOut();
             },
             error: function (error) {
@@ -495,15 +503,15 @@
     })
 
     $('.selectSurvey1').on('click', '.submitFormBtn1', function (e) {
+        fadeAllDownloads();
         $('#error-div1').fadeOut();
-        $('#download_div1').fadeOut();
         $('#loader1').fadeIn();
         $.ajax({
             url: '../../ajax/get_dept_whole_extended_report_excel',
             method: 'POST',
             data: {col_id: '<%= user.col_id %>', survey_id: $('#survey_id1 option:selected').val(), dept_id: $('#dept_id1 option:selected').val()},
             success: function (data) {
-                $('#download_div1').fadeIn();
+                $('#download_div_port1').fadeIn();
                 $('#loader1').fadeOut();
             },
             error: function (error) {

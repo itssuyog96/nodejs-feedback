@@ -137,7 +137,7 @@ worksheet.write_formula((height * prof_count) + sub_count + height, 4, formula, 
 
 
 ############################# LABOARTORY REPORTS #############################
-url = "http://localhost/ajax/get_lab_reports?survey_id="+str(survey_id)+"&col_id="+str(col_id)+"&dept_id="+str(dept_id)
+url = "http://localhost:3000/ajax/get_lab_reports?survey_id="+str(survey_id)+"&col_id="+str(col_id)+"&dept_id="+str(dept_id)
 print(url)
 
 data = response(url)
