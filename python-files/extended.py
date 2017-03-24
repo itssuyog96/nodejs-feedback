@@ -106,7 +106,7 @@ for sem in sems:
             if(j == 'col_id'):
                 worksheet.write('A1', clas, class_format)
                 worksheet.merge_range('B2:N2', 'BHARATI VIDYAPEETH COLLEGE OF ENGINEERING', title_format)
-                worksheet.merge_range('C4:F4', 'DEPARTMENT : " + dept_id + "', title_format)
+                worksheet.merge_range('C4:F4', 'DEPARTMENT : COMPUTER', title_format)
 
                 chart = workbook.add_chart({'type': 'column'})
                 chart.set_legend({'position': 'right'})
