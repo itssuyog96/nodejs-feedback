@@ -838,7 +838,7 @@ router.post('/done', function (req, res, next) {
     });
 });
 
-router.post('/sub_rep',function (req ,res,next) {
+router.get('/sub_rep',function (req ,res,next) {
     var db = req.db;
     var col_id = req.body.col_id;
     var dept_id = req.body.dept_id;
@@ -910,7 +910,82 @@ router.post('/sub_rep',function (req ,res,next) {
 
 });
 
-router.post('/sub_whole_rep',function (req ,res,next) {
+
+router.post('/sub_excel_rep',function (req ,res,next) {
+    var db = req.db;
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+    var survey_id = req.body.survey_id;
+    var i = 0;
+    var j = 0;
+    const collection = db.get('subject');
+    const collectionb = db.get('test_rating_'+req.year);
+    const collectionc = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_excel_report');
+    collectionc.drop();
+    const collectiond = db.get('professor');
+    collection.find({"dept_id":dept_id,"col_id": col_id,"prof_id":{$ne: "NA" }},function (err,data) {
+        if (err) {
+            console.log(err);
+            res.end();
+        }
+        else {
+            i = data.length;
+            data.forEach(function (item) {
+                console.log(item.prof_id);
+                collectiond.find({"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id},function(perr,pdata){
+                    if(perr){
+                        console.log(perr);
+                        res.end();
+                    }
+                    else {
+                        console.log(pdata);
+
+                        collectionb.aggregate([{$match:{"survey_id":survey_id,"sub_id" : item.sub_id,"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id}} ,
+                            {$group :{"_id":"$q_id" ,
+                                reports :{$push : "$v_rating"}
+                            }},
+                            {$sort:{_id : 1}},
+                            {$project:{q_id :"$_id",reports :"$reports",_id:0}}
+                        ],function (er,d) {
+                            if (er) {
+                                console.log(er);
+                                res.end();
+                            }
+                            else {
+
+                                console.log('value odf d:  ',d);
+                                collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"sem":item.sem,"sub_id":item.sub_id,"sub_name": item.sub_name,"prof_id": item.prof_id,"prof_name":pdata[0].prof_name,"report":d},function (e,done) {
+                                    if(e){
+                                        console.log(e);
+                                        res.end();
+                                    }
+                                    else{
+                                        console.log('done');
+                                        j++;
+                                    }
+                                    if(j == i){
+                                        res.writeHead(200,'Everything is done');
+                                        res.end();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+                //var db = req.db;
+
+                // we can add survey id here by passing it in this function and puting that constraint on $match in aggregate
+
+            });
+
+        }
+    })
+
+});
+
+
+
+router.get('/sub_whole_rep',function (req ,res,next) {
     var db = req.db;
     var col_id = req.body.col_id;
     var dept_id = req.body.dept_id;
@@ -955,12 +1030,138 @@ router.post('/sub_whole_rep',function (req ,res,next) {
                             else {
                                 console.log('subject data:  ',sdata);
                                 sdata.forEach(function (subject) {
+                                    if(subject.sub_id != null){
+                                        collection.find({"col_id":col_id,"dept_id":dept_id,"sub_id":subject.sub_id},function (suber,subjdata){
+                                            var subject = {
+                                                sub_id : subjdata[0].sub_id,
+                                                sub_name : subjdata[0].sub_name,
+                                                sem : subjdata[0].sem,
+                                                ratings : []
+                                            };
+
+                                            if(suber){
+                                                console.log(suber);
+                                                res.end();
+                                            }
+                                            else {
+                                                if(subjdata){
+                                                    collectionb.aggregate([{$match:{"q_id": item.q_id,"sub_id":subjdata[0].sub_id}},
+                                                        {$group:{"_id":"$q_id",
+                                                            reports :{$push: "$v_rating"}
+                                                        }},
+                                                        {$project:{reports:"$reports",_id:0}}
+                                                    ],function (rerr,rdata) {
+                                                        if(rerr){
+                                                            console.log(rerr);
+                                                            res.end();
+                                                        }
+                                                        else{
+                                                            subject.ratings = rdata[0].reports.slice(0);
+                                                            console.log('this is a subject   :   ',subject);
+                                                            console.log('update to Database: ....................',item.q_id)
+                                                            collectionc.update({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"q_id":item.q_id},{$push:{reports : subject}},
+                                                                function (der,done) {
+                                                                    if(der){
+                                                                        console.log(der);
+                                                                        res.end()
+                                                                    }
+                                                                    else {
+                                                                        console.log('LAST done.................');
+                                                                        j++
+                                                                    }
+                                                                    if(j == i){
+                                                                        res.writeHead(200,'Everything is Done');
+                                                                        res.end();
+                                                                    }
+
+                                                                }
+                                                            )
+
+                                                        }
+                                                    })
+                                                }
+
+                                            }
+                                        })
+                                    }
+
+
+                                })
+
+
+
+                            }
+                        });
+
+                    }
+                })
+                //var db = req.db;
+
+                // we can add survey id here by passing it in this function and puting that constraint on $match in aggregate
+
+            });
+            //setTimeout(function(){res.end();},3000);
+        }
+    })
+
+});
+
+
+
+
+router.get('/sub_whole_rep_sem',function (req ,res,next) {
+    var db = req.db;
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+    var survey_id = req.body.survey_id;
+    var sem = req.body.sem;
+    /*var prof_name;*/
+    var i =0;
+    var j = 0;
+    const collection = db.get('subject');
+    const collectionb = db.get('test_rating_'+req.year);
+    const collectionc = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_whole_report_sem_'+sem);
+    collectionc.drop();
+    //const collectiond = db.get('professor');
+    collectionb.aggregate([{$match:{"col_id":col_id,"dept_id":dept_id,"sem":sem,"prof_id":{"$exists":true,"$ne": ""}}},
+
+        {$group:{"_id":"$q_id"}},
+        {$sort : {_id : 1}},
+        {$project:{q_id:"$_id",_id:0}}
+    ],function (err,data) {
+        if (err) {
+            console.log(err);
+            res.end();
+        }
+        else {
+            i= data.length;
+            console.log(i);
+            data.forEach(function (item) {
+                collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"q_id":item.q_id,sem:sem,"reports":[]},function (quer,qudata) {
+                    if(quer){
+                        console.log(quer);
+                        res.end();
+                    }
+                    else {
+                        console.log(item.q_id);
+                        collectionb.aggregate([{$match:{"q_id":item.q_id,"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"sem":sem}},
+                            {$group:{"_id":"$sub_id"}},
+                            {$sort:{_id : 1}},
+                            {$project:{sub_id : "$_id",_id : 0}}
+
+                        ],function(serr,sdata){
+                            if(serr){
+                                console.log(serr);
+                                res.end();
+                            }
+                            else {
+                                console.log('subject data:  ',sdata);
+                                sdata.forEach(function (subject) {
                                    if(subject.sub_id != null){
-                                       collection.find({"col_id":col_id,"dept_id":dept_id,"sub_id":subject.sub_id},function (suber,subjdata){
+                                       collection.find({"col_id":col_id,"dept_id":dept_id,"sub_id":subject.sub_id,sem:sem},function (suber,subjdata){
                                            var subject = {
                                                sub_id : subjdata[0].sub_id,
                                                sub_name : subjdata[0].sub_name,
-                                               sem : subjdata[0].sem,
                                                ratings : []
                                            };
 
@@ -970,7 +1171,7 @@ router.post('/sub_whole_rep',function (req ,res,next) {
                                            }
                                            else {
                                                if(subjdata){
-                                                   collectionb.aggregate([{$match:{"q_id": item.q_id,"sub_id":subjdata[0].sub_id}},
+                                                   collectionb.aggregate([{$match:{"q_id": item.q_id,"sub_id":subjdata[0].sub_id,"sem":sem}},
                                                        {$group:{"_id":"$q_id",
                                                         reports :{$push: "$v_rating"}
                                                        }},
@@ -983,8 +1184,8 @@ router.post('/sub_whole_rep',function (req ,res,next) {
                                                        else{
                                                            subject.ratings = rdata[0].reports.slice(0);
                                                            console.log('this is a subject   :   ',subject);
-                                                           console.log('update to Database: ....................',item.q_id)
-                                                           collectionc.update({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"q_id":item.q_id},{$push:{reports : subject}},
+                                                           console.log('update to Database: ....................',item.q_id);
+                                                           collectionc.update({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"q_id":item.q_id,"sem":sem},{$push:{reports : subject}},
                                                            function (der,done) {
                                                                if(der){
                                                                    console.log(der);
@@ -1012,38 +1213,6 @@ router.post('/sub_whole_rep',function (req ,res,next) {
 
 
                                 })
-
-
-
-                                /*collectionb.aggregate([{$match:{"survey_id":survey_id,"sub_id" : item.sub_id,"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id}},
-
-                                    {$sort:{q_id : 1}},
-                                    {$project:{q_id : 1, v_rating : 1}}
-                                ],function (er,d) {
-                                    if (er) {
-                                        console.log(er);
-                                        res.end();
-                                    }
-                                    else {
-                                        /!*prof_name = pdata[0]?pdata[0].prof_name:"";*!/
-                                        console.log('value odf d:  ',d);
-                                        collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"sem":item.sem,"sub_id":item.sub_id,"sub_name": item.sub_name,"prof_id": item.prof_id,"prof_name":pdata[0].prof_name,"report":d},function (e,done) {
-                                            if(e){
-                                                console.log(e);
-                                                res.end();
-                                            }
-                                            else{
-                                                j++;
-                                                console.log('done');
-                                            }
-                                            if(j == i){
-                                                res.writeHead(200,'everything is done');
-                                                res.end();
-                                            }
-
-                                        });
-                                    }
-                                });*/
                             }
                         });
 
@@ -1059,6 +1228,9 @@ router.post('/sub_whole_rep',function (req ,res,next) {
     })
 
 });
+
+
+
 
 
 
@@ -1322,6 +1494,78 @@ router.post('/lab_rep',function (req ,res,next) {
 
 });
 
+router.get('/lab_excel_rep',function (req ,res,next) {
+    var db = req.db;
+    var col_id = "1";
+    var dept_id = "1001";
+    var survey_id = "survey-2017-1-even";
+    var i = 0;
+    var j = 0;
+    const collection = db.get('subject');
+    const collectionb = db.get('test_rating_'+req.year);
+    const collectionc = db.get(survey_id+'_'+col_id+'_'+dept_id+'_lab_excel_report');
+    collectionc.drop();
+    collection.find({"dept_id":dept_id,"col_id": col_id,"prof_id":{$ne: "NA" }},function (err,data) {
+        if (err) {
+            console.log(err);
+            res.end();
+        }
+        else {
+            i = data.length;
+            data.forEach(function (item) {
+                console.log(item.prof_id);
+                collectiond.find({"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id},function(perr,pdata){
+                    if(perr){
+                        console.log(perr);
+                        res.end();
+                    }
+                    else {
+                        console.log(pdata);
+
+                        collectionb.aggregate([{$match:{"survey_id":survey_id,"sub_id" : item.sub_id,"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id}} ,
+                            {$group :{"_id":"$q_id" ,
+                                reports :{$push : "$v_rating"}
+                            }},
+                            {$sort:{_id : 1}},
+                            {$project:{q_id :"$_id",reports :"$reports",_id:0}}
+                        ],function (er,d) {
+                            if (er) {
+                                console.log(er);
+                                res.end();
+                            }
+                            else {
+
+                                console.log('value odf d:  ',d);
+                                collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"sem":item.sem,"sub_id":item.sub_id,"sub_name": item.sub_name,"prof_id": item.prof_id,"prof_name":pdata[0].prof_name,"report":d},function (e,done) {
+                                    if(e){
+                                        console.log(e);
+                                        res.end();
+                                    }
+                                    else{
+                                        console.log('done');
+                                        j++;
+                                    }
+                                    if(j == i){
+                                        res.writeHead(200,'Everything is done');
+                                        res.end();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+                //var db = req.db;
+
+                // we can add survey id here by passing it in this function and puting that constraint on $match in aggregate
+
+            });
+
+        }
+    })
+
+});
+
+
 
 router.post('/overall_rep',function (req,res) {
     var db = req.db;
@@ -1561,23 +1805,34 @@ router.get('/get_lab_reports',function (req,res) {
 
 router.get('/get_whole_reports',function (req,res) {
     var db = req.db;
-    var survey_id = req.query['survey_id'];
-    var col_id = req.query['col_id'];
-    var dept_id = req.query['dept_id'];
-    var sem = req.query['sem']
+    var survey_id = "survey-2017-1-even";
+    var col_id = "1";
+    var dept_id = "1001";
+    var sem = "6";
 
     console.log(survey_id, col_id, dept_id);
 
-    const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_whole_report');
-    collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},function (e,done) {
+    const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_whole_report_sem_' + sem);
+    collection.aggregate([{$match : {"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id}},
+        {$unwind : "$reports"},
+        {$sort :{"reports.sub_id":1}},
+        {$group : {_id: "$q_id" ,
+            reports:{$push : "$reports"},
+            survey_id : {"$first":"$survey_id"},
+            col_id : {"$first":"$col_id"},
+            dept_id : {"$first":"$dept_id"}
+        }},
+        {$project:{survey_id: 1,col_id :1,dept_id:1,q_id:"$_id",reports:1,_id:0}}
+
+    ],function (e,done) {
         if(e) {
             console.log(e);
             res.end();
         }
         else {
-            console.log(JSON.stringify(done))
-            res.writeHead(200,'Context-Type','application/json')
-            res.end(JSON.stringify(done));
+            console.log(JSON.stringify(done));
+            //res.writeHead(200,'Context-Type','application/json')
+            //res.end(JSON.stringify(done));
         }
 
     })
@@ -1616,7 +1871,7 @@ router.post('/get_sub_reports_excel',function (req,res) {
 
     //questions = require('../questions.json');
 
-    var proc = spawn('python3',["python-files/subject_excel.py", survey_id, col_id, dept_id, sem]);
+    var proc = spawn('python',["python-files/subject_excel.py", survey_id, col_id, dept_id, sem]);
     console.log("Spawned!!!");
 
     proc.stdout.on('data', function (chunk){
@@ -1635,7 +1890,7 @@ router.post('/get_dept_report_excel',function (req,res) {
 
     //questions = require('../questions.json');
 
-    var proc = spawn('python3',["python-files/department_excel.py", survey_id, col_id, dept_id]);
+    var proc = spawn('python',["python-files/department_excel.py", survey_id, col_id, dept_id]);
     console.log("Spawned!!!");
 
     proc.stdout.on('data', function (chunk){
