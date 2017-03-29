@@ -183,6 +183,7 @@
                     $('.div-prof_assign').css('display', 'block');
                     $('#form-counter').text(0);
                     $('#prof_assign_entry tbody').text('');
+                    var i = 0;
                     data.forEach(function(sub){
 
                         $('#form-counter').text(parseInt($('#form-counter').text()) + 1);
@@ -193,18 +194,18 @@
                                     '<td>'+sub.sub_name+'</td>' +
                                     '<td><div class="col-md-12>' +
                                 '<form id="assign_prof_form_'+$('#form-counter').text()+'">' +
-                                '<input name = "col_id" type="hidden" value="<%= user.col_id %>"/>' +
-                                '<input name = "dept_id" class="dept_id" type="hidden" value="'+ sub.dept_id +'"/>'+
-                                '<input name = "sem" type="hidden" value="'+sub.sem+'"/>'+
-                                '<input name="sub_id" type="hidden" value="'+sub.sub_id+'" />'+
+                                '<input name = "col_id'+ (i++) +'" id = "col_id'+ i +'" type="hidden" value="<%= user.col_id %>"/>' +
+                                '<input name = "dept_id'+ i +'" id = "dept_id'+ i +'" class="dept_id" type="hidden" value="'+ sub.dept_id +'"/>'+
+                                '<input name = "sem'+ i +'" id = "sem'+ i +'" type="hidden" value="'+sub.sem+'"/>'+
+                                '<input name="sub_id'+ i +'" id="sub_id'+ i +'" type="hidden" value="'+sub.sub_id+'" />'+
                                 '       <div class="form-group col-md-6">' +
-                                '           <select onchange="getProfessors(\'subject'+sub.sub_id+'\','+ sub.sub_id +')" name="prof_dept_id" id="'+sub.sub_id+'" class="dept" form-control">' +
+                                '           <select onchange="getProfessors(\'subject'+sub.sub_id+'\','+ sub.sub_id +')" name="prof_dept_id'+ i +'" id="'+sub.sub_id+'" class="dept" form-control">' +
                                 '           </select>' +
                                 '       </div>' +
-                                '</div>' +
+                                '</div></td><td>' +
                                 '<div class="col-md-6">' +
                                 '       <div class="form-group">' +
-                                '           <select name="prof_id" id="subject'+sub.sub_id+'" class="subjects subject'+sub.sub_id+' form-control">' +
+                                '           <select name="prof_id'+ i +'" id="subject'+sub.sub_id+'" class="subjects subject'+sub.sub_id+' form-control">' +
 
                                 '           </select>' +
                                 '       </div>' +
@@ -224,7 +225,7 @@
                     }
 
                     //preassign();
-                    //setTimeOut(preassign, 2000);
+                    //setTimeout(preassign, 2000);
 
                 }
                 ,
@@ -285,10 +286,15 @@
             e.preventDefault();
 
             for(i = 1; i <= $('#form-counter').text(); i++){
-                console.log($('#assign_prof_form_'+i).serialize());
+
+                sub_id = $('#sub_id'+i).val()
+
+                var data = {'col_id':$('#col_id'+i).val(), 'sem':$('#sem'+i).val(), 'dept_id':$('#dept_id'+i).val(),'prof_id':$('#subject'+sub_id).val(), 'sub_id':sub_id, 'prof_dept_id':$('#'+sub_id).val()}
+                console.log(data)
+
                 $.ajax({
                    url : '../../ajax/updateSub',
-                    data : $('#assign_prof_form_'+i).serialize(),
+                    data : data,
                     method : 'POST',
                     success : function(data){
                         console.log("Success"+i);
