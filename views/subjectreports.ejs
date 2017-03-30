@@ -255,6 +255,10 @@
                     $('#dept_id').append('<option value="'+d.dept_id+'">'+d.dept_name+'</option>')
                 });
 
+                <% if(user.role == 'hod'){%>
+                $('#dept_id').val(<%= user.dep_id %>)
+                $('#dept_id').prop('disabled', true)
+                <%}%>
 
                 $('#dept_id_span').text($('#dept_id option:selected').val());
 

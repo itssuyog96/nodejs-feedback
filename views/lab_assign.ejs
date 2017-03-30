@@ -59,7 +59,7 @@
                                             <label class="form-control" for="sem">Select Dept</label>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <select class="form-control" name="dept_id">
+                                            <select id="dept_id_x" class="form-control" name="dept_id">
                                                 <% departments.forEach(function(data){ %>
                                                 <option value="<%= data.dept_id %>"><%= data.dept_name %></option>
                                                 <% }); %>
@@ -191,7 +191,7 @@
                             '<td>' +
                             '<form id="assign_lab_form_'+$('#form-counter').text()+'">' +
                             '<input name = "col_id" type="hidden" value="<%= user.col_id %>"/>' +
-                            '<input name = "dept_id" type="hidden" value="<%= user.dep_id %>"/>'+
+                            '<input name = "dept_id" class="dept_id" type="hidden" value=""/>'+
                             '<input name = "sem" type="hidden" value="'+sub.sem+'"/>'+
                             '<input name="sub_id" type="hidden" value="'+sub.sub_id+'" />'+
                             '       <div class="form-group">' +
@@ -215,7 +215,7 @@
                         });
                     }
 
-                    preassign();
+                    //preassign();
                     //setTimeOut(preassign, 2000);
 
                 }
@@ -234,8 +234,13 @@
 <script>
     $(document).ready(function(){
 
+
+
         $('.assign_lab-div').on('click', '.btn-outline', function(e){
+
             e.preventDefault();
+
+            $('.dept_id').val($('#dept_id_x').val());
 
             for(i = 1; i <= $('#form-counter').text(); i++){
                 console.log($('#assign_lab_form_'+i).serialize());

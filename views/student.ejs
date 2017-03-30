@@ -236,6 +236,7 @@
                                 <div class="feedForm form-group table-responsive" style="overflow-x: scroll;" >
                                     <table class="table table-striped table-hover">
                                         <thead>
+                                        <% var omkar = 0;  subject.forEach(function(item){ if(item.lab_id != 'NA' && item.lab_id){ omkar++; } }) %>
                                         <% subject.forEach(function(item){%>
                                         <% if(item.lab_id != 'NA' && item.lab_id){ %>
                                         <th><%= item.sub_name %></th>
@@ -244,10 +245,10 @@
                                         </thead>
                                         <tbody>
                                         <% particulars.laboratory.questions.forEach(function(ques){ %>
-                                        <tr><td colspan="<%= subject.length %>"><div class="col-md-12 col-sm-4 col-xs-3" align="center"><h5 style="font-weight: bolder;"><%= ques.question %></h5></div></td></tr>
+                                        <tr><td colspan="<%= omkar %>"><div class="col-md-12 col-sm-4 col-xs-3" align="center"><h5 style="font-weight: bolder;"><%= ques.question %></h5></div></td></tr>
                                         <tr>
                                             <% subject.forEach(function(item){ if(item.lab_id != 'NA' && item.lab_id){ %>
-                                            <td style="width: <%= 100 / subject.length %>%;">
+                                            <td style="width: <%= 100 / (omkar - 0.4) %>%;">
                                                 <div class="col-md-6 row margin-bottom text-align-center">
                                                     <div class="col-md-12">
                                                         <input id="rate_<%= item.sub_id %>_<%= ques.qid %>_<%= item.lab_id %>" name="rate_<%= item.sub_id %>_<%= ques.qid %>_<%= item.lab_id %>" data-show-clear="false" class="rating rating-loading star-rating-input" data-size="xs" required>

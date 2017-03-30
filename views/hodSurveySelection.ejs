@@ -84,7 +84,7 @@
                                 </div>
                                 <div class="portlet-body">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-checkable" id="datatable_students">
+                                        <table class="table table-bordered table-hover table-checkable table-responsive" id="datatable_students">
                                             <thead>
                                             <tr role="row" class="heading">
                                                 <th> SRN </th>
@@ -245,7 +245,7 @@
                                 '<td style="text-align: center; font-weight: bold">' + (++i) + '</td>' +
                                 '<td style="text-align: center">' + item.roll_no + '</td>' +
                                 '<td style="text-align: center">' + item.name + '</td>' +
-                                '<td align="center"> <button style="width:50%" type="button" class="btn red-mint btn-outline sbold uppercase no-click">URL not sent</button> '+'</td>' +
+                                '<td align="center"> <button type="button" class="btn red-mint btn-outline sbold uppercase no-click">URL not sent</button> '+'</td>' +
                                 '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_0" onclick="send_0_1(this)">' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
                                 '</tr>'
                             );
@@ -256,7 +256,7 @@
                                 '<td style="text-align: center; font-weight: bold">' + (++i) + '</td>' +
                                 '<td style="text-align: center">' + item.roll_no + '</td>' +
                                 '<td style="text-align: center">' + item.name + '</td>' +
-                                '<td align="center"><button style="width:50%" type="button" class="btn yellow-mint btn-outline sbold uppercase no-click">URL sent</button>' +  '</td>' +
+                                '<td align="center"><button  type="button" class="btn yellow-mint btn-outline sbold uppercase no-click">URL sent</button>' +  '</td>' +
                                 '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_1" onclick="send_0_1(this)">' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
                                 '</tr>'
                             );
@@ -267,7 +267,7 @@
                                 '<td style="text-align: center; font-weight: bold">' + (++i) + '</td>' +
                                 '<td style="text-align: center">' + item.roll_no + '</td>' +
                                 '<td style="text-align: center">' + item.name + '</td>' +
-                                '<td align="center"><button style="width:50%" type="button" class="btn green-haze btn-outline sbold uppercase no-click">Feedback done</button>'  + '</td>' +
+                                '<td align="center"><button type="button" class="btn green-haze btn-outline sbold uppercase no-click">Feedback done</button>'  + '</td>' +
                                 '<td><button class="btn btn-primary" style="display: block; margin: auto" id="'+i+'_single_send_2" disabled>' + 'GENERATE & SEND URL' + '</button><p id="'+i+'" data-id="'+item._id+'" hidden></p></td>' +
                                 '</tr>'
                             );
