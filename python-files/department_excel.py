@@ -21,7 +21,15 @@ def check_if_not_done(i):
             return False
     return True
 
-workbook = xlsxwriter.Workbook('public/downloads/' + str(survey_id)+"_"+str(dept_id)+".xlsx")
+url = "http://localhost:3000/ajax/getDepartmentName?col_id="+str(col_id)+"&dept_id="+str(dept_id)
+print(url)
+
+data = response(url)
+jsondata = json.loads(data)
+
+dept_name = jsondata.dept_name
+
+workbook = xlsxwriter.Workbook('public/downloads/' + str(survey_id)+"_"+str(dept_name)+".xlsx")
 
 header_format = workbook.add_format()
 header_format.set_align('center')
@@ -48,6 +56,7 @@ data = response(url)
 jsondata = json.loads(data)
 
 worksheet = workbook.add_worksheet('PROFESSOR REPORTS')
+worksheet.protect()
 worksheet.set_column(2, 3, 23)
 worksheet.set_column(3, 3, 55)
 
@@ -164,7 +173,7 @@ title_format.set_align('center')
 title_format.set_align('vcenter')
 
 worksheet.merge_range('B1:E1', 'BHARATI VIDYAPEETH COLLEGE OF ENGINEERING', title_format)
-worksheet.merge_range('B3:E3', 'DEPARTMENT : COMPUTER', title_format)
+worksheet.merge_range('B3:E3', 'DEPARTMENT : ' + str(dept_name), title_format)
 
 for i in jsondata:
     for j in i:

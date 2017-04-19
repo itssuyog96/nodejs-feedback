@@ -278,8 +278,11 @@
 
     $('#survey_id').on('change', function(){
         $('#survey_id_span').text($('#survey_id option:selected').text());
-    })
+    });
 
+    $('#dept_id').on('change', function(){
+        $('#dept_id_span').text($('#dept_id option:selected').val());
+    });
 
     var plotted = new Array();
 

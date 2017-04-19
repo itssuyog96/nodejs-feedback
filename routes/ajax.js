@@ -838,13 +838,13 @@ router.post('/done', function (req, res, next) {
     });
 });
 
-router.get('/sub_rep',function (req ,res,next) {
-    var db = req.db;
-    var col_id = "1";
-    var dept_id = "1008";
-    var survey_id = "survey-2017-1-even";
-    var i = 0;
-    var j = 0;
+router.post('/sub_rep',function (req ,res,next) {
+    let db = req.db;
+    let col_id = req.body.col_id;
+    let dept_id = req.body.dept_id;
+    let survey_id = req.body.survey_id;
+    let i = 0;
+    let j = 0;
     const collection = db.get('subject');
     const collectionb = db.get('test_rating_'+req.year);
     const collectionc = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_report');
@@ -911,11 +911,11 @@ router.get('/sub_rep',function (req ,res,next) {
 });
 
 
-router.get('/sub_excel_rep',function (req ,res,next) {
+router.post('/sub_excel_rep',function (req ,res,next) {
     var db = req.db;
-    var col_id = "1";
-    var dept_id = "1008";
-    var survey_id = "survey-2017-1-even";
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+    var survey_id = req.body.survey_id;
     var i = 0;
     var j = 0;
     const collection = db.get('subject');
@@ -924,6 +924,7 @@ router.get('/sub_excel_rep',function (req ,res,next) {
     collectionc.drop();
     const collectiond = db.get('professor');
     collection.find({"dept_id":dept_id,"col_id": col_id,"prof_id":{"$exists":true, $ne: "NA" }},function (err,data) {
+    collection.find({"dept_id":dept_id,"col_id": col_id,"prof_id":{"$exists":true,$ne: "NA" }},function (err,data) {
         if (err) {
             console.log(err);
             res.end();
@@ -932,13 +933,13 @@ router.get('/sub_excel_rep',function (req ,res,next) {
             i = data.length;
             data.forEach(function (item) {
                 console.log(item.prof_id);
-                collectiond.find({"col_id":col_id,"prof_id":item.prof_id},function(perr,pdata){//bug dept_id should be removed
+                collectiond.find({"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id},function(perr,pdata){
                     if(perr){
                         console.log(perr);
                         res.end();
                     }
                     else {
-                        console.log("pdata:  ",pdata);
+                        console.log(pdata);
 
                         collectionb.aggregate([{$match:{"survey_id":survey_id,"sub_id" : item.sub_id,"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id}} ,
                             {$group :{"_id":"$q_id" ,
@@ -986,13 +987,18 @@ router.get('/sub_excel_rep',function (req ,res,next) {
 
 
 router.get('/sub_whole_rep',function (req ,res,next) {
-    var db = req.db;
-    var col_id = req.body.col_id;
-    var dept_id = req.body.dept_id;
-    var survey_id = req.body.survey_id;
-    /*var prof_name;*/
-    var i =0;
-    var j = 0;
+    let db = req.db;
+    // let col_id = req.body.col_id;
+    // let dept_id = req.body.dept_id;
+    // let survey_id = req.body.survey_id;
+
+    let col_id = req.query['col_id'];
+    let dept_id = req.query['dept_id'];
+    let survey_id = req.query['survey_id'];
+
+    /*let prof_name;*/
+    let i =0;
+    let j = 0;
     const collection = db.get('subject');
     const collectionb = db.get('test_rating_'+req.year);
     const collectionc = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_whole_report');
@@ -1032,7 +1038,7 @@ router.get('/sub_whole_rep',function (req ,res,next) {
                                 sdata.forEach(function (subject) {
                                     if(subject.sub_id != null){
                                         collection.find({"col_id":col_id,"dept_id":dept_id,"sub_id":subject.sub_id},function (suber,subjdata){
-                                            var subject = {
+                                            let subject = {
                                                 sub_id : subjdata[0].sub_id,
                                                 sub_name : subjdata[0].sub_name,
                                                 sem : subjdata[0].sem,
@@ -1095,7 +1101,7 @@ router.get('/sub_whole_rep',function (req ,res,next) {
 
                     }
                 })
-                //var db = req.db;
+                //let db = req.db;
 
                 // we can add survey id here by passing it in this function and puting that constraint on $match in aggregate
 
@@ -1110,14 +1116,14 @@ router.get('/sub_whole_rep',function (req ,res,next) {
 
 
 router.get('/sub_whole_rep_sem',function (req ,res,next) {
-    var db = req.db;
-    var col_id = req.body.col_id;
-    var dept_id = req.body.dept_id;
-    var survey_id = req.body.survey_id;
-    var sem = req.body.sem;
-    /*var prof_name;*/
-    var i =0;
-    var j = 0;
+    let db = req.db;
+    let col_id = req.query['col_id'];
+    let dept_id = req.query['dept_id'];
+    let survey_id = req.query['survey_id'];
+    let sem = req.query['sem'];
+    /*let prof_name;*/
+    let i =0;
+    let j = 0;
     const collection = db.get('subject');
     const collectionb = db.get('test_rating_'+req.year);
     const collectionc = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_whole_report_sem_'+sem);
@@ -1159,7 +1165,7 @@ router.get('/sub_whole_rep_sem',function (req ,res,next) {
                                 sdata.forEach(function (subject) {
                                    if(subject.sub_id != null){
                                        collection.find({"col_id":col_id,"dept_id":dept_id,"sub_id":subject.sub_id,sem:sem},function (suber,subjdata){
-                                           var subject = {
+                                           let subject = {
                                                sub_id : subjdata[0].sub_id,
                                                sub_name : subjdata[0].sub_name,
                                                ratings : []
@@ -1235,10 +1241,10 @@ router.get('/sub_whole_rep_sem',function (req ,res,next) {
 
 
 router.post('/prof_rep',function (req ,res,next) {
-    var db = req.db;
-    var col_id = req.body.col_id;
-    var dept_id = req.body.dept_id;
-    var survey_id = req.body.survey_id;
+    let db = req.db;
+    let col_id = req.body.col_id;
+    let dept_id = req.body.dept_id;
+    let survey_id = req.body.survey_id;
     const collection = db.get('professor');
     const collectionb = db.get('test_rating_' + req.year);
     const collectionc = db.get(survey_id+'_'+col_id+'_'+dept_id+'_prof_report_strict');
@@ -1287,10 +1293,10 @@ router.post('/prof_rep',function (req ,res,next) {
 });
 
 router.post('/profR_rep',function (req,res,next) {
-    var db = req.db;
-    var col_id = req.body.col_id;
-    var dept_id = req.body.dept_id;
-    var survey_id = req.body.survey_id;
+    let db = req.db;
+    let col_id = req.body.col_id;
+    let dept_id = req.body.dept_id;
+    let survey_id = req.body.survey_id;
     const collection = db.get('professor');
     const collectionb = db.get('subject');
     const collectiond = db.get('test_rating_'+ req.year);
@@ -1342,7 +1348,7 @@ router.post('/profR_rep',function (req,res,next) {
                                             res.end();
                                         }
                                         else {
-                                            var subject = {
+                                            let subject = {
                                                 "sub_id": sub.sub_id,
                                                 "sub_name": sub.sub_name,
                                                 "sem": sub.sem,
@@ -1385,10 +1391,10 @@ router.post('/profR_rep',function (req,res,next) {
 });
 
 router.post('/lab_rep',function (req ,res,next) {
-    var db = req.db;
-    var col_id = req.body.col_id;
-    var dept_id = req.body.dept_id;
-    var survey_id = req.body.survey_id;
+    let db = req.db;
+    let col_id = req.body.col_id;
+    let dept_id = req.body.dept_id;
+    let survey_id = req.body.survey_id;
     const collection = db.get('labs');
     const collectionb = db.get('subject');
     const collectiond = db.get('test_rating_'+ req.year);
@@ -1495,13 +1501,13 @@ router.post('/lab_rep',function (req ,res,next) {
 });
 
 router.get('/lab_excel_rep',function (req ,res,next) {
-    var db = req.db;
-    var col_id = "1";
-    var dept_id = "1001";
-    var survey_id = "survey-2017-1-even";
-    var i = 0;
-    var j = 0;
-    const collection = db.get('labs');
+    let db = req.db;
+    let col_id = "1";
+    let dept_id = "1001";
+    let survey_id = "survey-2017-1-even";
+    let i = 0;
+    let j = 0;
+    const collection = db.get('subject');
     const collectionb = db.get('test_rating_'+req.year);
     const collectionc = db.get(survey_id+'_'+col_id+'_'+dept_id+'_lab_excel_report');
     collectionc.drop();
@@ -1545,7 +1551,7 @@ router.get('/lab_excel_rep',function (req ,res,next) {
                         }
                     });
 
-                //var db = req.db;
+                //let db = req.db;
 
                 // we can add survey id here by passing it in this function and puting that constraint on $match in aggregate
 
@@ -1559,12 +1565,12 @@ router.get('/lab_excel_rep',function (req ,res,next) {
 
 
 router.post('/overall_rep',function (req,res) {
-    var db = req.db;
-    var col_id = req.body.col_id;
-    var dept_id = req.body.dept_id;
-    var survey_id = req.body.survey_id;
-    var collection = db.get('test_rating_'+req.year);
-    var collectionb = db.get(survey_id+'_'+col_id+'_'+dept_id+'_overall_report');
+    let db = req.db;
+    let col_id = req.body.col_id;
+    let dept_id = req.body.dept_id;
+    let survey_id = req.body.survey_id;
+    let collection = db.get('test_rating_'+req.year);
+    let collectionb = db.get(survey_id+'_'+col_id+'_'+dept_id+'_overall_report');
     collectionb.drop();
 
     collectionb.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"report":[]},function(err,done){
@@ -1601,25 +1607,20 @@ router.post('/overall_rep',function (req,res) {
                             });
                         })
                     }
-
                 });
             setTimeout(function(){res.end();},5000);
-
         }
     });
-
-
-
 });
 
 
 router.post('/studentS_rep',function (req,res) {
-    var db = req.db;
-    var col_id = req.body.col_id;
-    var dept_id = req.body.dept_id;
-    var survey_id = req.body.survey_id;
-    var collection = db.get('test_rating_'+req.year);
-    var collectionb = db.get(survey_id+'_'+col_id+'_'+dept_id+'_studentSec_report');
+    let db = req.db;
+    let col_id = req.body.col_id;
+    let dept_id = req.body.dept_id;
+    let survey_id = req.body.survey_id;
+    let collection = db.get('test_rating_'+req.year);
+    let collectionb = db.get(survey_id+'_'+col_id+'_'+dept_id+'_studentSec_report');
     collectionb.drop();
 
     collectionb.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"report":[]},function(err,done){
@@ -1668,12 +1669,12 @@ router.post('/studentS_rep',function (req,res) {
 });
 
 router.post('/remark_rep',function (req,res) {
-    var db = req.db;
-    var col_id = req.body.col_id;
-    var dept_id = req.body.dept_id;
-    var survey_id = req.body.survey_id;
-    var collection = db.get('test_rating_'+req.year);
-    var collectionb = db.get(survey_id+'_'+col_id+'_'+dept_id+'_remark_report');
+    let db = req.db;
+    let col_id = req.body.col_id;
+    let dept_id = req.body.dept_id;
+    let survey_id = req.body.survey_id;
+    let collection = db.get('test_rating_'+req.year);
+    let collectionb = db.get(survey_id+'_'+col_id+'_'+dept_id+'_remark_report');
     collectionb.drop();
     collectionb.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"report":[]},function(err,done){
         if(err){
@@ -1727,11 +1728,11 @@ router.post('/remark_rep',function (req,res) {
 });
 
 router.get('/get_sub_reports',function (req,res) {
-    var db = req.db;
-    var survey_id = req.query['survey_id'];
-    var col_id = req.query['col_id'];
-    var dept_id = req.query['dept_id'];
-    var sem = req.query['sem'];
+    let db = req.db;
+    let survey_id = req.query['survey_id'];
+    let col_id = req.query['col_id'];
+    let dept_id = req.query['dept_id'];
+    let sem = req.query['sem'];
     console.log(survey_id, col_id, dept_id, sem);
 
     const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_report');
@@ -1747,16 +1748,36 @@ router.get('/get_sub_reports',function (req,res) {
         }
 
     })
-
-
-
 });
 
-router.get('/get_lab_reports',function (req,res) {
+router.get('/get_sub_excel_reports',function (req,res) {
     var db = req.db;
     var survey_id = req.query['survey_id'];
     var col_id = req.query['col_id'];
     var dept_id = req.query['dept_id'];
+    var sem = req.query['sem'];
+    console.log(survey_id, col_id, dept_id, sem);
+
+    const collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_sub_excel_report');
+    collection.find({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"sem":sem},function (e,done) {
+        if(e) {
+            console.log(e);
+            res.end();
+        }
+        else {
+            console.log(JSON.stringify(done))
+            res.writeHead(200,'Context-Type','application/json')
+            res.end(JSON.stringify(done));
+        }
+
+    })
+});
+
+router.get('/get_lab_reports',function (req,res) {
+    let db = req.db;
+    let survey_id = req.query['survey_id'];
+    let col_id = req.query['col_id'];
+    let dept_id = req.query['dept_id'];
 
     console.log(survey_id, col_id, dept_id);
 
@@ -1779,11 +1800,11 @@ router.get('/get_lab_reports',function (req,res) {
 });
 
 router.get('/get_whole_reports',function (req,res) {
-    var db = req.db;
-    var survey_id = "survey-2017-1-even";
-    var col_id = "1";
-    var dept_id = "1001";
-    var sem = "6";
+    let db = req.db;
+    let survey_id = "survey-2017-1-even";
+    let col_id = "1";
+    let dept_id = "1001";
+    let sem = "6";
 
     console.log(survey_id, col_id, dept_id);
 
@@ -1814,10 +1835,10 @@ router.get('/get_whole_reports',function (req,res) {
 });
 
 router.get('/get_prof_reports',function (req,res) {
-    var db = req.db;
-    var survey_id = req.query['survey_id'];
-    var col_id = req.query['col_id'];
-    var dept_id = req.query['dept_id'];
+    let db = req.db;
+    let survey_id = req.query['survey_id'];
+    let col_id = req.query['col_id'];
+    let dept_id = req.query['dept_id'];
 
     console.log(survey_id, col_id, dept_id);
 
@@ -1837,39 +1858,39 @@ router.get('/get_prof_reports',function (req,res) {
 
 
 router.post('/get_sub_reports_excel',function (req,res) {
-    //var db = req.db;
-    var survey_id = req.body.survey_id;
-    var col_id = req.body.col_id;
-    var dept_id = req.body.dept_id;
-    var sem = req.body.sem;
+    //let db = req.db;
+    let survey_id = req.body.survey_id;
+    let col_id = req.body.col_id;
+    let dept_id = req.body.dept_id;
+    let sem = req.body.sem;
     console.log(survey_id, col_id, dept_id, sem);
 
     //questions = require('../questions.json');
 
-    var proc = spawn('python',["python-files/subject_excel.py", survey_id, col_id, dept_id, sem]);
+    let proc = spawn('python3',["python-files/subject_excel.py", survey_id, col_id, dept_id, sem]);
     console.log("Spawned!!!");
 
     proc.stdout.on('data', function (chunk){
-        var textChunk = chunk.toString();
+        let textChunk = chunk.toString();
         console.log(textChunk)
     });
 });
 
 router.post('/get_dept_report_excel',function (req,res) {
-    //var db = req.db;
-    var survey_id = req.body.survey_id;
-    var col_id = req.body.col_id;
-    var dept_id = req.body.dept_id;
+    //let db = req.db;
+    let survey_id = req.body.survey_id;
+    let col_id = req.body.col_id;
+    let dept_id = req.body.dept_id;
 
     console.log(survey_id, col_id, dept_id);
 
     //questions = require('../questions.json');
 
-    var proc = spawn('python',["python-files/department_excel.py", survey_id, col_id, dept_id]);
+    let proc = spawn('python3',["python-files/department_excel.py", survey_id, col_id, dept_id]);
     console.log("Spawned!!!");
 
     proc.stdout.on('data', function (chunk){
-        var textChunk = chunk.toString();
+        let textChunk = chunk.toString();
         console.log("-" + textChunk)
         if(textChunk === "Omkar"){
             console.log("-------- Completed --------")
@@ -1892,20 +1913,20 @@ router.post('/get_dept_report_excel',function (req,res) {
 
 
 router.post('/get_dept_whole_report_excel',function (req,res) {
-    //var db = req.db;
-    var survey_id = req.body.survey_id;
-    var col_id = req.body.col_id;
-    var dept_id = req.body.dept_id;
+    //let db = req.db;
+    let survey_id = req.body.survey_id;
+    let col_id = req.body.col_id;
+    let dept_id = req.body.dept_id;
 
     console.log(survey_id, col_id, dept_id);
 
     //questions = require('../questions.json');
 
-    var proc = spawn('python3',["python-files/dept_whole.py", survey_id, col_id, dept_id]);
+    let proc = spawn('python3',["python-files/dept_whole.py", survey_id, col_id, dept_id]);
     console.log("Spawned!!!");
 
     proc.stdout.on('data', function (chunk){
-        var textChunk = chunk.toString();
+        let textChunk = chunk.toString();
         console.log("-" + textChunk)
         if(textChunk === "Omkar"){
             console.log("-------- Completed --------")
@@ -2085,23 +2106,6 @@ router.post('/updateSubLab',function(req,res){
     })
 
 }); // update lab
-
-router.post('/deleteLab',function(req,res){
-
-    var db = req.db;
-    const collection = db.get('labs');
-
-    collection.remove({"col_id":req.body.col_id,"dept_id":req.body.dept_id,"lab_id":req.body.lab_id},function(e,data) {
-        if (e) throw e;
-        else {
-            console.log('lab Deleted');
-            res.writeHead(200,'lab Deleted');
-            res.end();
-        }
-    })
-
-});
-
 
 ////////////////////////////////////////////// MAIL AND CONTACT UPDATE /////////////////////////////////////////////////////////
 

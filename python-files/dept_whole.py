@@ -60,6 +60,7 @@ for sem in sems:
     start_col = 0
 
     worksheet = workbook.add_worksheet('Sem - ' + str(sem) )
+    worksheet.protect("forthenightisdarkandfullofterrors")
     cur_sheet_name = 'Sem - ' + str(sem)
     worksheet.set_column(0, 1, 40)
     worksheet.set_column(1, 1, 25)
@@ -71,7 +72,7 @@ for sem in sems:
                 worksheet.write(2, 2, 'COLLEGE NAME', bold)
                 worksheet.write(2, 3, 'BHARATI VIDYAPEETH COLLEGE OF ENGINEERING')
                 worksheet.write(3, 2, 'DEPARTMENT', bold)
-                worksheet.write(3, 3, 'COMPUTER')
+                worksheet.write(3, 3, 'CHEMICAL')
                 worksheet.write(3, 6, 'SEMESTER', bold)
                 worksheet.write(3, 7, 'SEM-' + str(i[j]))
                 chart = workbook.add_chart({'type': 'column'})

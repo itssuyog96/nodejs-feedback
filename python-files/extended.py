@@ -93,6 +93,7 @@ for sem in sems:
     start_col = 0
 
     worksheet = workbook.add_worksheet(clas)
+    worksheet.protect("forthenightisdarkandfullofterrors")
     cur_sheet_name = clas
     worksheet.set_column(0, 1, 9)
     worksheet.set_column(1, 1, 15)
@@ -106,7 +107,7 @@ for sem in sems:
             if(j == 'col_id'):
                 worksheet.write('A1', clas, class_format)
                 worksheet.merge_range('B2:N2', 'BHARATI VIDYAPEETH COLLEGE OF ENGINEERING', title_format)
-                worksheet.merge_range('C4:F4', 'DEPARTMENT : COMPUTER', title_format)
+                worksheet.merge_range('C4:F4', 'DEPARTMENT : CHEMICAL', title_format)
 
                 chart = workbook.add_chart({'type': 'column'})
                 chart.set_legend({'position': 'right'})
@@ -226,6 +227,7 @@ for sem in sems:
                 s = x.split(')')
                 x = s[0]
                 worksheet = workbook.add_worksheet(x)
+                worksheet.protect("forthenightisdarkandfullofterrors")
 
                 worksheet.write('A1', clas, class_format)
                 worksheet.set_column(0, 20, 7)
