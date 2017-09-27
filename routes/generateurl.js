@@ -69,8 +69,7 @@ router.get('/', function (req, res, next){
             from: 'feedbackbvcoenm@bharatividyapeeth.edu',
             to: email_id,
             subject: 'BVCOENM Feedback Login Link',
-            html: "Hi " + username + ", Click on the following link to login into feedback system. Link -> " + url,
-            cc: "sheetal.thakare@gmail.com"
+            html: "Hi " + username + ", Click on the following link to login into feedback system. Link -> " + url
         };
         transporter.sendMail(mailOptions, function (err, info) {
             if(err) console.log(err);

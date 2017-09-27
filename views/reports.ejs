@@ -261,7 +261,7 @@
         })
 
         $.ajax({
-            url:'../../ajax/sub_rep', //frontend
+            url:'../../ajax/profR_rep', //frontend
             method: 'POST',
             data: {col_id: '<%= user.col_id %>', dept_id: $('#dept_id option:selected').val(), survey_id: $('#survey_id option:selected').val()},
             success: function(data){
@@ -273,7 +273,7 @@
         })
 
         $.ajax({
-            url:'../../ajax/prof_rep', //frontend
+            url:'../../ajax/sub_rep', //frontend
             method: 'POST',
             data: {col_id: '<%= user.col_id %>', dept_id: $('#dept_id option:selected').val(), survey_id: $('#survey_id option:selected').val()},
             success: function(data){

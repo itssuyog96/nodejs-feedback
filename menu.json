@@ -37,8 +37,9 @@
     "parent" : [
       {"id" : 1, "name" : "Dashboard", "url" : "../../../principal", "icon" : "icon-home"},
       {"id" : 2, "name" : "Reports", "url" : "../../../", "icon" : "icon-bar-chart"},
-      {"id" : 3, "name" : "Settings", "url" : "../../../principal/settings", "icon" : "icon-settings"},
-      {"id" : 4, "name" : "Profile", "url" : "../../../principal/profile", "icon" : "fa fa-user"}
+      {"id" : 3, "name" : "Remarks", "url" : "../../../", "icon" : "fa fa-comments"},
+      {"id" : 4, "name" : "Settings", "url" : "../../../principal/settings", "icon" : "icon-settings"},
+      {"id" : 5, "name" : "Profile", "url" : "../../../principal/profile", "icon" : "fa fa-user"}
     ],
     "child":[
       {"id" : 1, "name" : "Department Reports", "url" : "../../../principal/departmentreports", "parent_id" : 2, "icon" : "fa fa-building"},
