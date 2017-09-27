@@ -691,6 +691,25 @@ router.post('/getDeptList', function (req, res, next) {
     });
 });
 
+router.get('/getDepartmentName', function (req, res, next) {
+    
+        var db = req.db;
+        var col_id = req.query['col_id'];
+        var dept_id = req.query['dept_id'];
+        var collection = db.get('department');
+        collection.find({'col_id':col_id, 'dept_id':dept_id},function(e,docs){
+            var d = JSON.stringify(docs[0]);
+            console.log(d);
+            if (e) throw e;
+            else {
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.write(d);
+                res.end();
+            }
+    
+        });
+    });
+
 router.post('/getSemList', function (req, res, next) {
 
     var db = req.db;
@@ -1949,7 +1968,7 @@ router.post('/get_dept_whole_report_excel',function (req,res) {
 
     //questions = require('../questions.json');
 
-    var proc = spawn('python3',["python-files/dept_whole.py", survey_id, col_id, dept_id]);
+    var proc = spawn('python',["python-files/dept_whole.py", survey_id, col_id, dept_id]);
     console.log("Spawned!!!");
 
     proc.stdout.on('data', function (chunk){
@@ -1984,7 +2003,7 @@ router.post('/get_dept_whole_extended_report_excel',function (req,res) {
 
     //questions = require('../questions.json');
 
-    var proc = spawn('python3',["python-files/extended.py", survey_id, col_id, dept_id]);
+    var proc = spawn('python',["python-files/extended.py", survey_id, col_id, dept_id]);
     console.log("Spawned!!!");
 
     proc.stdout.on('data', function (chunk){

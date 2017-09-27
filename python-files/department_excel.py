@@ -26,10 +26,11 @@ print(url)
 
 data = response(url)
 jsondata = json.loads(data)
+print(jsondata['dept_name'])
 
-dept_name = jsondata.dept_name
+dept_name = jsondata['dept_name']
 
-workbook = xlsxwriter.Workbook('public/downloads/' + str(survey_id)+"_"+str(dept_name)+".xlsx")
+workbook = xlsxwriter.Workbook('public/downloads/' + str(survey_id)+"_"+str(dept_id)+".xlsx")
 
 header_format = workbook.add_format()
 header_format.set_align('center')
