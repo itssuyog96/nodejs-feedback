@@ -9,6 +9,7 @@ var router = express.Router();
 var tiles = require('../dashmeta.json').hod;
 var menu = require('../menu.json').hod;
 var questions = require('../questions.json');
+var path = require('path');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -76,6 +77,14 @@ router.get('/upload', function(req, res, next) {
 
 });
 
+//----------------------------------------------------------------
+router.get('/upload/download_template', function(req, res, next){
+    //console.log("DIRECTORY NAME:" + path.join(__dirname, "../workbooks"));
+    var file = path.join(__dirname, "../workbooks/StudentDetails.xlsx");
+    res.download(file);
+});
+
+//----------------------------------------------------------------
 router.get('/settings', function(req, res, next) {
 
     if(req.session.login) {
