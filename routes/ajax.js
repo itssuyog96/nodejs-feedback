@@ -381,7 +381,7 @@ router.post('/submit', function (req, res, next) {
         if (key.length == 17) {
             a = key.split('_');
 
-            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":parseInt(req.body[key]), "prof_id" : a[3],"studentOver":""},
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":parseFloat(req.body[key]).toFixed(2), "prof_id" : a[3],"studentOver":""},
                 function (er2,result) {
                     if (er2) console.log(er2);
                     else {
@@ -393,7 +393,7 @@ router.post('/submit', function (req, res, next) {
 
             a = key.split('_');
 
-            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":parseInt(req.body[key]), "lab_id" : a[3],"studentOver":""},
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id,"sem":sem,"sub_id":a[1],"q_id":a[2],"v_rating":parseFloat(req.body[key]).toFixed(2), "lab_id" : a[3],"studentOver":""},
                 function (er2,result) {
                     if (er2) console.log(er2);
                     else {
@@ -415,7 +415,7 @@ router.post('/submit', function (req, res, next) {
                 judge == null;
             }
 
-            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id, "q_id":b[1],"v_rating":parseInt(req.body[key]),"remark":req.body[str],"studentOver":judge},
+            collection.insert({"col_id":col_id, "survey_id":survey_id, "dept_id":dep_id, "q_id":b[1],"v_rating":parseFloat(req.body[key]).toFixed(2),"remark":req.body[str],"studentOver":judge},
                 function (er,result) {
                     if (er) console.log(er);
                     else {
