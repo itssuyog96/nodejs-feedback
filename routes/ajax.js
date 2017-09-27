@@ -840,9 +840,9 @@ router.post('/done', function (req, res, next) {
 
 router.post('/sub_rep',function(req ,res,next) {
     var db = req.db;
-    var col_id = "1";
-    var dept_id = "1008";
-    var survey_id = "survey-2017-1-even";
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+    var survey_id = req.body.survey_id;
     var i = 0;
     var j = 0;
     const collection = db.get('subject');
@@ -1949,7 +1949,7 @@ router.post('/get_dept_whole_report_excel',function (req,res) {
 
     //questions = require('../questions.json');
 
-    var proc = spawn('python',["python-files/dept_whole.py", survey_id, col_id, dept_id]);
+    var proc = spawn('python3',["python-files/dept_whole.py", survey_id, col_id, dept_id]);
     console.log("Spawned!!!");
 
     proc.stdout.on('data', function (chunk){
@@ -1984,7 +1984,7 @@ router.post('/get_dept_whole_extended_report_excel',function (req,res) {
 
     //questions = require('../questions.json');
 
-    var proc = spawn('python',["python-files/extended.py", survey_id, col_id, dept_id]);
+    var proc = spawn('python3',["python-files/extended.py", survey_id, col_id, dept_id]);
     console.log("Spawned!!!");
 
     proc.stdout.on('data', function (chunk){
@@ -2235,7 +2235,7 @@ router.post('/get_comments', function (req, res) {
     var db = req.db;
     var survey_id = req.body.survey_id;
     var col_id = req.body.col_id;
-    var dept_id = req.body.dept_id;
+    var dept_id = '1001';
     var collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_remark_report');
 
     collection.find({"col_id": col_id, "dept_id" : dept_id, "survey_id": survey_id}, function(e, data){
