@@ -69,16 +69,16 @@ class_format.set_bg_color('#008080')
 class_format.set_font_color('white')
 
 bold = workbook.add_format({'bold': True})
-sems = [4, 6, 8]
+sems = [3, 5, 7]
 
 for sem in sems:
 
     print(sem)
-    if(sem == 4):
+    if(sem == 3):
         clas = "SE"
-    elif(sem == 6):
+    elif(sem == 5):
         clas = "TE"
-    elif(sem == 8):
+    elif(sem == 7):
         clas = "BE"
 
     url = "http://localhost:3000/ajax/get_sub_reports?survey_id="+str(survey_id)+"&col_id="+str(col_id)+"&dept_id="+str(dept_id)+"&sem="+str(sem)
@@ -164,16 +164,16 @@ workbook.close()
 
 for sem in sems:
     print(sem)
-    if(sem == 4):
+    if(sem == 3):
         clas = "SE"
-    elif(sem == 6):
+    elif(sem == 5):
         clas = "TE"
-    elif(sem == 8):
+    elif(sem == 7):
         clas = "BE"
 
     workbook = xlsxwriter.Workbook("public/downloads/" + str(survey_id)+"_" + dept_id + "_"+str(clas)+".xlsx")
 
-    url = "http://localhost:3000/ajax/get_sub_excel_reports?survey_id="+str(survey_id)+"&col_id="+str(col_id)+"&dept_id="+str(dept_id)+"&sem="+str(sem)
+    url = "http://localhost:3000/ajax/get_sub_whole_reports?survey_id="+str(survey_id)+"&col_id="+str(col_id)+"&dept_id="+str(dept_id)+"&sem="+str(sem)
     print(url)
     def response(url):
         with urllib.request.urlopen(url) as response:

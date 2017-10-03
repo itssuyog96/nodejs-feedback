@@ -44,7 +44,7 @@ format1.set_font_color('white')
 bold = workbook.add_format({'bold': True})
 
 
-sems = [4, 6, 8]
+sems = [3, 5, 7]
 
 for sem in sems:
 

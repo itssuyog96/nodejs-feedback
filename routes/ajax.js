@@ -932,9 +932,9 @@ router.post('/sub_rep',function(req ,res,next) {
 
 router.get('/sub_excel_rep',function (req ,res,next) {
     var db = req.db;
-    var col_id = "1";
-    var dept_id = "1008";
-    var survey_id = "survey-2017-1-even";
+    var col_id = req.query['col_id'];
+    var dept_id = req.query['dept_id'];
+    var survey_id = req.query['survey_id'];
     var i = 0;
     var j = 0;
     const collection = db.get('subject');
@@ -1253,12 +1253,12 @@ router.get('/sub_whole_rep_sem',function (req ,res,next) {
 
 
 
-router.get('/prof_rep',function (req ,res,next) {
+router.post('/prof_rep',function (req ,res,next) {
     console.log("HI");
     var db = req.db;
-    var col_id = "1";
-    var dept_id = "1008";
-    var survey_id = "survey-2017-1-even";
+    var col_id = req.body.col_id;
+    var dept_id = req.body.dept_id;
+    var survey_id = req.body.survey_id;
     const collection = db.get('professor');
     const collectionb = db.get('test_rating_' + req.year);
     const collectionc = db.get(survey_id+'_'+col_id+'_'+dept_id+'_prof_report_strict');
@@ -1288,7 +1288,7 @@ router.get('/prof_rep',function (req ,res,next) {
                             res.end();
                         }
                         else {
-                            collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id,"prof_name": item.prof_name,"report":d},function (e,done) {
+                            collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id,"prof_name": profdata[0].prof_name,"report":d},function (e,done) {
                                 if(e) {
                                     console.log(e);
                                     res.end();
