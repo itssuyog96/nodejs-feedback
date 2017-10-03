@@ -22,18 +22,52 @@ router.get('/googleurl',function (req,res,next) {
 
 router.get('/hash',function (req,res,next) {
   var db = req.db;
-  var collection = db.get('rating');
+  var collection = db.get('test_rating_2017');
+  var collectionb = db.get('test_rating_2017');
+  console.log("inside hash");
   //const passw = "omkar";
   //const password = crp.crypto(passw);
   //const passwordH = crp.crypto(password);
 
-  collection.update({"col_id":"1"},{"$set":{"survey_id": "survey-2017-1-even"}},{ multi: true },function(e,docs){
-    if (e) show(e);
+  collection.find({survey_id:"survey-2017-1-odd"},function(e,docs){
+    if(e) {show(e);}
     else {
-      console.log("survey id added");
-      res.end();
+      docs.forEach(function(comp,idx,array){
+        if(comp.v_rating){
+          if(typeof comp.v_rating == "string"){
+            console.log(comp._id,comp.v_rating);
+
+            collectionb.update({"_id" : comp._id},{"$set":{"v_rating": parseFloat(parseFloat(comp.v_rating).toFixed(2))}},function(er,d){
+                  if(er){
+                    console.log(er);
+                  }
+
+                  console.log("something went inside: "  );
+                  
+                })
+          }
+        }
+        if(idx == docs.length - 1){
+          console.log("this was a last element");
+          res.end();
+        }
+        // if(typeof(comp.v_rating) == "string"){
+        //   console
+        //   collectionb.update({"_id" : comp._id},{"$set":{"v_rating":parseFloat(comp.v_rating)}},function(er,d){
+        //     if(er){
+        //       console.log(er);
+        //     }
+
+        //     console.log("something went inside");
+        //   })
+        // }
+        // else{
+        //   console.log("OK!!!!!!!!!!!!")
+        // }
+      })
     }
   });
+  
 });
 
 /*function addSubRate(req,res,sub_id,col_id,dept_id,sem,survey_id){

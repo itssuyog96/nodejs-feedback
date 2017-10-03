@@ -55,57 +55,64 @@ app.post('/', function(req, res) {
                     var workbook = XLSX.readFile("StudentExcelFiles/"+req.body.sem_dd+".xlsx");
                     var sheet = workbook.Sheets['details'];
 
-                    console.log("excel data");
-
-                    var db = req.db;
-                    var collection = db.get('student');
-
-                    for(x = 2; x < 100; x++){
-
-                        if(sheet['A' + x.toString()] == undefined)
-                        {
-                            console.log("Empty");
-                            break;
-                        }
-                        else {
-                            name = sheet['B' + x.toString()].v;
-
-                            password = generate.generatePassword();
-                            password = crp.crypto(password);
-
-                            //role = "student";
-                            roll_no = sheet['A' + x.toString()].v;
-                            email_id = sheet['C' + x.toString()].v;
-                            contact = sheet['D' + x.toString()].v;
-                            //uid = sheet['E' + x.toString()].v;
-
-                            /*console.log("name:" + name);
-                            console.log("roll:" + roll_no);
-                            console.log("name:" + email_id);
-                            console.log("contact:" + contact);
-                            console.log("uid: " + uid);
-                            console.log("userid: " + userid);*/
-                        }
-
-                        collection.insert({"col_id":req.user.col_id,"dep_id":req.user.dep_id,"roll_no": roll_no,"name": name,"sem":req.body.sem_dd,"contact":contact,"email_id":email_id, "password":password, "status":"0","role":"student","survey_id":""},function(e,docs){
-                            var d = JSON.stringify(docs);
-                            if (e) throw e;
-                            else {
-                                console.log('student updated');
-                                //res.end();
+                    if(sheet == null){
+                        //exception handling over here
+                        console.log("Check sheet name. It should be 'details'");
+                        res.status(400).send("Upload failed. Sheet name is not 'details'. Reupload after making changes");
+                    }
+                    else{
+                        console.log("excel data");
+                        
+                        var db = req.db;
+                        var collection = db.get('student');
+    
+                        for(x = 2; x < 100; x++){
+    
+                            if(sheet['A' + x.toString()] == undefined)
+                            {
+                                console.log("Empty");
+                                break;
                             }
-
-                        });
-                        /*var proc = spawn('python',["python-files/SMSMessage.py", contact, name, password, uid, "0bfb331611cbcf420b38f73e1936f836", "057829fa5a65fc1ace408f490be486ac"]);
-                         console.log("Spawned!!!");
-
-                         proc.stdout.on('data', function (chunk){
-                         var textChunk = chunk.toString();
-                         console.log(textChunk)
-                         });
-
-                         console.log("Process finished");*/
-
+                            else {
+                                name = sheet['B' + x.toString()].v;
+    
+                                password = generate.generatePassword();
+                                password = crp.crypto(password);
+    
+                                //role = "student";
+                                roll_no = sheet['A' + x.toString()].v;
+                                email_id = sheet['C' + x.toString()].v;
+                                contact = sheet['D' + x.toString()].v;
+                                //uid = sheet['E' + x.toString()].v;
+    
+                                /*console.log("name:" + name);
+                                console.log("roll:" + roll_no);
+                                console.log("name:" + email_id);
+                                console.log("contact:" + contact);
+                                console.log("uid: " + uid);
+                                console.log("userid: " + userid);*/
+                            }
+    
+                            collection.insert({"col_id":req.user.col_id,"dep_id":req.user.dep_id,"roll_no": roll_no,"name": name,"sem":req.body.sem_dd,"contact":contact,"email_id":email_id, "password":password, "status":"0","role":"student","survey_id":""},function(e,docs){
+                                var d = JSON.stringify(docs);
+                                if (e) throw e;
+                                else {
+                                    console.log('student updated');
+                                    //res.end();
+                                }
+    
+                            });
+                            /*var proc = spawn('python',["python-files/SMSMessage.py", contact, name, password, uid, "0bfb331611cbcf420b38f73e1936f836", "057829fa5a65fc1ace408f490be486ac"]);
+                                console.log("Spawned!!!");
+    
+                                proc.stdout.on('data', function (chunk){
+                                var textChunk = chunk.toString();
+                                console.log(textChunk)
+                                });
+    
+                                console.log("Process finished");*/
+    
+                        }
                     }
                     //pysms.sendsms(contact, name, password, uid, "0bfb331611cbcf420b38f73e1936f836", "057829fa5a65fc1ace408f490be486ac");
                 }
@@ -148,7 +155,3 @@ app.post('/manual', function(req, res) {
 });
 
 module.exports = app;
-
-//TODO: upload.ejs -> button placement
-//TODO: integrate upload_file.js with upload.js
-
