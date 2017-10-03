@@ -2225,6 +2225,7 @@ router.post('/getSubjectReports', function (req, res) {
         else{
             res.writeHead(200, {'Content-Type': 'application/json'});
             res.end(JSON.stringify(data[0]));
+            console.log(data[0]);
         }
     })
 });

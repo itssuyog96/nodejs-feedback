@@ -209,7 +209,7 @@
         $('#stud_sec_icon').removeClass('fa-cog');
         $('#overall_icon').removeClass('fa-cog');
         $('#remark_icon').removeClass('fa-cog');
-        $('#prof_icon').removeClass('fa-cog');
+        $('#prof_plot_icon').removeClass('fa-cog');
         $('#stud_sec_icon').removeClass('fa-cog');
 
         $('#prof_icon').removeClass('fa-spin');
@@ -261,7 +261,7 @@
         })
 
         $.ajax({
-            url:'../../ajax/profR_rep', //frontend
+            url:'../../ajax/prof_rep', //frontend
             method: 'POST',
             data: {col_id: '<%= user.col_id %>', dept_id: $('#dept_id option:selected').val(), survey_id: $('#survey_id option:selected').val()},
             success: function(data){
