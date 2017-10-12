@@ -78,6 +78,12 @@
                                     <div class="form-group col-md-2">
                                         <input type="submit" class="btn btn-default submitFormBtn" value="Submit"/>
                                     </div>
+                                    <div class="error-status">
+                                        <p class="center">
+                                            <span id="err-msg" style="color:red;"></span>
+                                        </p>
+
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -97,15 +103,15 @@
                 <div class="portlet-body">
                     <div class="row">
                         <div class="panel-group col-md-12">
-                            <% i = 0;   questions.forEach(function(item) {  %>
+                            <% i = 300;   questions.forEach(function(item) {  %>
                             <%if(item.qid >= 301 && item.qid <= 312){ i++; %>
                             <div class="panel">
                                         <div class="panel-heading">
-                                        <a class="accordion-toggle <% if(i > 1){ %> <%= "collapsed" %> <% } %>" data-toggle="collapse" data-parent="#" href="#collapse<%= i %>">
+                                        <a class="accordion-toggle <% if(i > 100){ %> <%= "collapsed" %> <% } %>" data-toggle="collapse" data-parent="#" href="#collapse<%= i %>">
                                         <%= item.question %>
                                 </a>
                                 </div>
-                                <div id="collapse<%= i %>" class="panel-collapse <% if(i == 1){ %> <%= "in" %> <% } %> collapse" style="height: auto">
+                                <div id="collapse<%= i %>" class="panel-collapse <% if(i != 100){ %> <%= "in" %> <% } %> collapse" style="height: auto">
                                         <div class="panel-body">
 
                                 </div>
@@ -170,20 +176,26 @@
             data: {col_id: '<%= user.col_id %>', 'survey_id': $('#survey_id option:selected').val(), 'dept_id' : $('#dept_id option:selected').val()},
             method: 'POST',
             success: function(data){
+                $('#err-msg').text("");
                 console.log(data);
                 data.report.forEach(function(item){
-                    $('#collapse' + item.q_id[2]).text('');
-                    item.remarks.forEach(function(x){
+                $('#collapse' + item.q_id).text('');
+                item.remarks.forEach(function(x){
 
-                            if(x != ''){
-                                $('#collapse' + item.q_id[2]).append('<li>'+x+'</li>')
-                            }
+                        if(x != ''){
+                            // console.log(x);
+                            $('#collapse' + item.q_id).append('<li>'+x+'</li>')
+                        }
 
                     })
                 })
+                    
+                
+                
             },
             error: function(err){
                 console.log(err);
+                $('#err-msg').text("No comments from " + $('#dept_id option:selected').text() + " department for survey : "+ $('#survey_id option:selected').val());
             }
         })
 

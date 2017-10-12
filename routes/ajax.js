@@ -315,20 +315,11 @@ router.post('/add_col', function (req, res, next) {
 });
 
 
-router.post('/getQuestions', function (req, res, next) {
-
-    var db = req.db;
-    var collection = db.get('question');
-    collection.find(req.body,function(e,docs){
-        var d = JSON.stringify(docs);
-        if (e) throw e;
-        else {
-            res.writeHead(200, {'Content-Type': 'application/json'});
-            res.write(d);
-            res.end();
-        }
-
-    });
+router.get('/getQuestions', function (req, res, next) {
+    var d = question;
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.write(JSON.stringify(d));
+    res.end();
 });
 
 router.post('/getSubject', function (req, res, next) {
@@ -957,7 +948,7 @@ router.get('/sub_excel_rep',function (req ,res,next) {
                         res.end();
                     }
                     else {
-                        console.log("pdata:  ",pdata);
+                        //console.log("pdata:  ",pdata);
 
                         collectionb.aggregate([{$match:{"survey_id":survey_id,"sub_id" : item.sub_id,"col_id":col_id,"dept_id":dept_id,"prof_id":item.prof_id}} ,
                             {$group :{"_id":"$q_id" ,
@@ -972,14 +963,14 @@ router.get('/sub_excel_rep',function (req ,res,next) {
                             }
                             else {
 
-                                console.log('value odf d:  ',d);
+                                //console.log('value odf d:  ',d);
                                 collectionc.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"sem":item.sem,"sub_id":item.sub_id,"sub_name": item.sub_name,"prof_id": item.prof_id,"prof_name":pdata[0].prof_name,"report":d},function (e,done) {
                                     if(e){
                                         console.log(e);
                                         res.end();
                                     }
                                     else{
-                                        console.log('done');
+                                        //console.log('done');
                                         j++;
                                     }
                                     if(j == i){
@@ -1628,13 +1619,13 @@ router.get('/lab_excel_rep',function (req ,res,next) {
 router.post('/overall_rep',function (req,res) {
     var db = req.db;
     var col_id = req.body.col_id;
-    var dept_id = req.body.dept_id;
+    // var dept_id = req.body.dept_id;
     var survey_id = req.body.survey_id;
     var collection = db.get('test_rating_'+req.year);
-    var collectionb = db.get(survey_id+'_'+col_id+'_'+dept_id+'_overall_report');
+    var collectionb = db.get(survey_id+'_'+col_id+'_overall_report');
     collectionb.drop();
 
-    collectionb.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"report":[]},function(err,done){
+    collectionb.insert({"survey_id":survey_id,"col_id":col_id,"report":[]},function(err,done){
         if(err){
             console.log('1ST    ',err);
             res.end();
@@ -1657,7 +1648,7 @@ router.post('/overall_rep',function (req,res) {
                         console.log(data);
                         data.forEach(function(rate) {
                             console.log(rate);
-                            collectionb.update({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},{$push:{report:rate}},function(err,done){
+                            collectionb.update({"survey_id":survey_id,"col_id":col_id},{$push:{report:rate}},function(err,done){
                                 if(err){
                                     console.log('2nd    ',err);
                                     res.end();
@@ -1683,13 +1674,12 @@ router.post('/overall_rep',function (req,res) {
 router.post('/studentS_rep',function (req,res) {
     var db = req.db;
     var col_id = req.body.col_id;
-    var dept_id = req.body.dept_id;
     var survey_id = req.body.survey_id;
     var collection = db.get('test_rating_'+req.year);
-    var collectionb = db.get(survey_id+'_'+col_id+'_'+dept_id+'_studentSec_report');
+    var collectionb = db.get(survey_id+'_'+col_id+'_studentSec_report');
     collectionb.drop();
 
-    collectionb.insert({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id,"report":[]},function(err,done){
+    collectionb.insert({"survey_id":survey_id,"col_id":col_id,"report":[]},function(err,done){
         if(err){
             console.log('1ST    ',err);
             res.end();
@@ -1712,7 +1702,7 @@ router.post('/studentS_rep',function (req,res) {
                         console.log(data);
                         data.forEach(function(rate) {
                             console.log(rate);
-                            collectionb.update({"survey_id":survey_id,"col_id":col_id,"dept_id":dept_id},{$push:{report:rate}},function(err,done){
+                            collectionb.update({"survey_id":survey_id,"col_id":col_id},{$push:{report:rate}},function(err,done){
                                 if(err){
                                     console.log('2nd    ',err);
                                     res.end();
@@ -1818,6 +1808,54 @@ router.get('/get_sub_reports',function (req,res) {
 
 
 });
+
+router.get('/get_overall_reports',function (req,res) {
+    var db = req.db;
+    var survey_id = req.query['survey_id'];
+    var col_id = req.query['col_id'];
+
+    var collection = db.get(survey_id+'_'+col_id+'_overall_report');
+    collection.find({"survey_id":survey_id,"col_id":col_id},function (e,done) {
+        if(e) {
+            console.log(e);
+            res.end();
+        }
+        else {
+            console.log(JSON.stringify(done))
+            res.writeHead(200,'Context-Type','application/json')
+            res.end(JSON.stringify(done));
+        }
+
+    })
+
+
+
+});
+
+router.get('/get_student_sec_reports',function (req,res) {
+    var db = req.db;
+    var survey_id = req.query['survey_id'];
+    var col_id = req.query['col_id'];
+
+    var collection = db.get(survey_id+'_'+col_id+'_studentSec_report');
+    collection.find({"survey_id":survey_id,"col_id":col_id},function (e,done) {
+        if(e) {
+            console.log(e);
+            res.end();
+        }
+        else {
+            console.log(JSON.stringify(done))
+            res.writeHead(200,'Context-Type','application/json')
+            res.end(JSON.stringify(done));
+        }
+
+    })
+
+
+
+});
+
+
 
 router.get('/get_sub_excel_reports',function (req,res) {
     var db = req.db;
@@ -2281,7 +2319,7 @@ router.post('/get_comments', function (req, res) {
     var db = req.db;
     var survey_id = req.body.survey_id;
     var col_id = req.body.col_id;
-    var dept_id = '1001';
+    var dept_id = req.body.dept_id;
     var collection = db.get(survey_id+'_'+col_id+'_'+dept_id+'_remark_report');
 
     collection.find({"col_id": col_id, "dept_id" : dept_id, "survey_id": survey_id}, function(e, data){
