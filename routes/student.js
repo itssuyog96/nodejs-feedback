@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
             user_info.dept_name = docs_b[0].dept_name;
             console.log("Fetched Dept : "+JSON.stringify(docs_b));
 
-            user_info.namex = "Sem : "+ user_info.sem +" | Department : "+user_info.dept_name+" | College : "+user_info.col_name;
+            user_info.namex = "Name : "+ user_info.name +" | Department : "+user_info.dept_name+" | College : "+user_info.col_name;
             console.log("Final User info : "+JSON.stringify(user_info));
 
             const collection_c = db.get('subject');
@@ -30,7 +30,7 @@ router.get('/', function(req, res, next) {
                 {col_id : user_info.col_id, dept_id: user_info.dep_id, sem : user_info.sem}, function(err, docs_c){
 
                     console.log("Fetched Subjects : "+JSON.stringify(docs_c));
-                    res.render('student', {user : user_info, subject : docs_c, particulars : particulars});
+                    res.render('stud_feedback', {user : user_info, subject : docs_c, particulars : particulars});
 
             });
         });
