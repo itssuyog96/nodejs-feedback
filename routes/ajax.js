@@ -28,11 +28,12 @@ var question = require('../questions.json')
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////// -----------------Storing Student Related FeedBack----------------------------/////////////////
+    //// here 'from' and 'to' are mlab ids
 
 router.post('/studFeed',function(req,res,next){
     var db = req.db;
     var comment = req.body.comment
-    var studId = req.body.id   ////////// this is the _id (from mlab) not a key which we created 
+    var studId = req.body.to   ////////// this is the _id (from mlab) not a key which we created 
     var collection = db.get('studFeedBack')
     collection.insert({"studId":studId,"comment": comment},function(er,result){
         if (er){
