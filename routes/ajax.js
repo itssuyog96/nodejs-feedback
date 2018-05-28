@@ -21,6 +21,138 @@ var question = require('../questions.json')
 //var Regex = require('regex');
 
 /* GET home page. */
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////    "RELATED TO STUDENT FEEDBACK"    //////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////// -----------------Storing Student Related FeedBack----------------------------/////////////////
+
+router.post('/studFeed',function(req,res,next){
+    var db = req.db;
+    var comment = req.body.comment
+    var studId = req.body.id   ////////// this is the _id (from mlab) not a key which we created 
+    var collection = db.get('studFeedBack')
+    collection.insert({"studId":studId,"comment": comment},function(er,result){
+        if (er){
+            console.log(er);
+            res.end();
+        }
+        else {
+            res.end();
+        }
+    })
+
+})
+
+    ///// other way to store comments is to store in array under each studId but that requires to create whole collection with studId already defined which needed to be done when student was created///////
+    ///// sol is to store the comments array under student colletion only //////////////
+    // router.get('/studFeed',function(req,res,next){
+    //     var db = req.db;
+    //     var studId = req.body.id
+    //     var comment = req.body.comment
+    //     var collection = db.get('student')
+    //     collection.update({ _id: studId },{ $push: { comments: "this guy is rude" } },function(er,result){
+    //         if (er) {
+    //             console.log(er);
+    //             res.end();
+    //         }
+    //         else {
+    //             console.log('done')
+    //             res.end();
+    //         }
+    //     })
+    
+    // })
+
+
+router.post('/sentimentFeed',function(req,res,next){
+    var db  = req.db;
+    var sentiment = parseFloat(parseFloat(req.body.sentiment).toFixed(2))
+    var collection = db.get('studSentiment')
+    var from = req.body.from
+    var to = req.body.to
+
+    collection.insert({"from":from, "to":to, "sentimentV":sentiment},function(er,result){
+        if (er){
+            console.log(er);
+            res.end();
+        }
+        else {
+            res.end();
+        }
+    })
+})
+
+
+//////------------ fetching student related feedback--------------------/////
+router.post('/getStudFeed', function (req, res, next) {
+
+    var db = req.db;
+    var studId = req.body.id
+    var collection = db.get('studFeed');
+    collection.find({"studId":studId},function(e,docs){
+        var d = JSON.stringify(docs);
+        console.log(d);
+        if (e) {
+            throw e;
+            res.end()
+        }
+        else {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(d);
+            res.end();
+        }
+
+    });
+});
+
+
+////////------------Changing Password -----------------------////////////////////////
+router.post('/changePasswordStud', function (req, res, next) {
+    try {
+        var db = req.db;
+        var collection = db.get('student');
+        var password = crp.crypto(req.body.newpass);
+
+        collection.update({"_id": req.body.id},{"$set":{"password":password}}, function (e, docs) {
+            var d = JSON.stringify(docs);
+            console.log(d);
+            if (e) {
+                throw e;
+                res.end()
+            }
+            else {
+                console.log('password changed');
+                //// To Disable Student from login through Key Again after password changed , but for now we have kept this option open
+                // const collectionb = db.get('student');
+                // collectionb.update({"_id": req.body.id}, {'$set' : {"key" : null}}, function(e2, docs2){
+                //     if(e2) throw e2;
+
+                //     console.log('key deleted');
+                // });
+                res.end();
+            }
+
+        });
+    }
+    catch(error){
+        res.writeHead(500, {'Content-Type': 'text/html'});
+        res.write('Error !' + error);
+        res.end();
+    }
+});
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////   "/RELATED TO STUDENT FEEDBACK"  /////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 router.post('/load_colg', function (req, res, next) {
 
     var db = req.db;
