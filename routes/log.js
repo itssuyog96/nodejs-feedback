@@ -51,6 +51,19 @@ module.exports = function(app, passport) {
         }
     );
 
+    app.post('/login-stud',
+        passport.authenticate('local-login-stud', {
+            failureRedirect: '/login'   /// this needs to change to student specific login
+        }),function (req,res) {
+            req.session.login= 1;
+            var redirectTo = req.session.redirectTo ? req.session.redirectTo : '/student';
+            delete req.session.redirectTo;
+
+            res.redirect(redirectTo);
+        }
+    );
+
+
     app.get('/stud',
         passport.authenticate('studL', { session: true, failureRedirect: '/login' }),
         function(req, res) {
