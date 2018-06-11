@@ -146,6 +146,26 @@ router.post('/changePasswordStud', function (req, res, next) {
 });
 
 
+//----------------------------Signing Tos---------------------------////////////////////
+
+router.post('/signTos',function(req,res,next){
+    var db = req.db;
+    var studId = req.body._id
+    var collection = db.get('student')
+    collection.update({ _id: studId },{ $set: { tos : 1 } },function(er,result){
+        if (er) {
+            console.log(er);
+            res.end();
+        }
+        else {
+            console.log('done')
+            res.end();
+        }
+    })
+
+})
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
